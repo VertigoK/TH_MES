@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Inventory Status</title>
 </head>
 <body>
 	<h1>Inventory Status Page</h1>
