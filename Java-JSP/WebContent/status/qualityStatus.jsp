@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Quality Status</title>
 </head>
 <body>
 	<h1>Quality Status Page</h1>
