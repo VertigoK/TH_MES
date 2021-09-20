@@ -18,7 +18,15 @@ public class MESDAO {
 		this.conn = conn;
 	}
 	
-	// 생산정보 보기
+	// Production Status 보기
+	
+	// Quality Status 보기
+	
+	// Equipment Status 보기
+	
+	// Inventory Status 보기
+	
+	// HR Status 보기
 	
 
 }
