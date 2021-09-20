@@ -39,7 +39,7 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_title('Interactive legend', size=20)
 
-with open('./Test/result_plot.html', 'w') as fn:
+with open('./DataVisualization/plot_to_html_mpld3/result_plot.html', 'w') as fn:
     mpld3.save_html(fig, fn)
 
 # mpld3.show()

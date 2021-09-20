@@ -16,5 +16,5 @@ plt.plot(x,y)
 # mpld3.show()
 
 # (3) save a figure to a html file
-with open('./Test/simple_plot.html', 'w') as fn:
+with open('./DataVisualization/plot_to_html_mpld3/simple_plot.html', 'w') as fn:
     mpld3.save_html(fig, fn)
