@@ -11,11 +11,11 @@
 <body>
 	<div class="container">
 		<a href="/" class="btn btn-primary">Home</a>
-		<a href="/productionStatus" class="btn btn-primary">Production Status</a>
-		<a href="/qualityStatus" class="btn btn-primary">Quality Status</a>
-		<a href="/equipmentStatus" class="btn btn-primary">Equipment Status</a>
-		<a href="/inventoryStatus" class="btn btn-primary">Inventory Status</a>
-		<a href="/hrStatus" class="btn btn-primary">HR Status</a>
+		<a href="/productionStatus" class="btn btn-primary">생산현황</a>
+		<a href="/qualityStatus" class="btn btn-primary">품질현황</a>
+		<a href="/equipmentStatus" class="btn btn-primary">설비현황</a>
+		<a href="/stockStatus" class="btn btn-primary">재고현황</a>
+		<a href="/hrStatus" class="btn btn-primary">HR현황</a>
 	</div>
 </body>
 </html>

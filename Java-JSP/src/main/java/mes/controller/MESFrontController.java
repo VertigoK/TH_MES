@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import mes.action.Action;
 import mes.action.EquipmentStatusAction;
 import mes.action.HRStatusAction;
-import mes.action.InventoryStatusAction;
 import mes.action.ProductionStatusAction;
 import mes.action.QualityStatusAction;
+import mes.action.StockStatusAction;
 import mes.dto.ActionForward;
 
-@WebServlet(urlPatterns = {"/productionStatus", "/qualityStatus", "/equipmentStatus", "/inventoryStatus", "/hrStatus"})
+@WebServlet(urlPatterns = {"/productionStatus", "/qualityStatus", "/equipmentStatus", "/stockStatus", "/hrStatus"})
 public class MESFrontController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -59,8 +59,8 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/inventoryStatus")) {
-			action = new InventoryStatusAction();
+		} else if(command.equals("/stockStatus")) {
+			action = new StockStatusAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

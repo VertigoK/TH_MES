@@ -3,9 +3,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Equipment Status</title>
+	<title>설비현황</title>
 </head>
 <body>
-	<h1>Equipment Status Page</h1>
+	<h1>설비현황 페이지</h1>
 </body>
 </html>

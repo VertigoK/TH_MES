@@ -3,9 +3,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Inventory Status</title>
+	<title>재고현황</title>
 </head>
 <body>
-	<h1>Inventory Status Page</h1>
+	<h1>재고현황 페이지</h1>
 </body>
 </html>

@@ -3,9 +3,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Production Status</title>
+	<title>생산현황</title>
 </head>
 <body>
-	<h1>Production Status Page</h1>
+	<h1>생산현황 페이지</h1>
 </body>
 </html>

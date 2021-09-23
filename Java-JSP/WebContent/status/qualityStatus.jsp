@@ -3,9 +3,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Quality Status</title>
+	<title>품질현황</title>
 </head>
 <body>
-	<h1>Quality Status Page</h1>
+	<h1>품질현황 페이지</h1>
 </body>
 </html>

@@ -1,704 +1,723 @@
--- ���� ���̺�
+-- MariaDB 밑에 'MES' 데이터베이스 생성
+CREATE DATABASE MES;
+
+-- 공장 테이블
 CREATE TABLE `PLANT` (
-	`PLANT_CD`  VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`PLANT_NM`  VARCHAR(10) NOT NULL, -- �����
-	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`PLANT_CD`  VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`PLANT_NM`  VARCHAR(10) NOT NULL COMMENT '공장명', -- 공장명
+	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '공장 테이블';
 
--- ���� ���̺�
+-- 공장 테이블
 ALTER TABLE `PLANT`
-	ADD CONSTRAINT `PK_PLANT` -- ���� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_PLANT` -- 공장 테이블 기본키
 		PRIMARY KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		);
 
--- ���� ���̺�
+-- 공정 테이블
 CREATE TABLE `PROCESS` (
-	`PROCESS_CD` VARCHAR(12) NOT NULL, -- �����ڵ�
-	`PLANT_CD`   VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`    VARCHAR(10) NOT NULL, -- �����ڵ�
-	`PROCESS_NM` VARCHAR(12) NOT NULL, -- ������
-	`USE_TYPE`   VARCHAR(10) NOT NULL, -- Ÿ��
-	`USE_YN`     BOOLEAN     NOT NULL DEFAULT TRUE, -- ��뿩��
-	`REMARK`     VARCHAR(50) NULL,     -- ���
-	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`PROCESS_CD` VARCHAR(12) NOT NULL COMMENT '공정코드', -- 공정코드
+	`PLANT_CD`   VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`    VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`PROCESS_NM` VARCHAR(12) NOT NULL COMMENT '공정명', -- 공정명
+	`USE_TYPE`   VARCHAR(10) NOT NULL COMMENT '타입', -- 타입
+	`USE_YN`     BOOLEAN     NOT NULL DEFAULT TRUE COMMENT '사용여부', -- 사용여부
+	`REMARK`     VARCHAR(50) NULL     COMMENT '비고', -- 비고
+	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '공정 테이블';
 
--- ���� ���̺�
+-- 공정 테이블
 ALTER TABLE `PROCESS`
-	ADD CONSTRAINT `PK_PROCESS` -- ���� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_PROCESS` -- 공정 테이블 기본키
 		PRIMARY KEY (
-			`PROCESS_CD` -- �����ڵ�
+			`PROCESS_CD` -- 공정코드
 		);
 
--- �ٹ���
+-- 근무자
 CREATE TABLE `WORKER` (
-	`WORKER_NO`   INT         NOT NULL, -- �ٹ��ڹ�ȣ
-	`PLANT_CD`    VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`     VARCHAR(10) NOT NULL, -- �����ڵ�
-	`WORKER_LOC`  VARCHAR(15) NOT NULL, -- �ٹ���ġ
-	`WORKER_TIME` VARCHAR(10) NOT NULL, -- �ٹ��ð�
-	`WORKER_NM`   VARCHAR(15) NOT NULL  -- �ٹ��ڸ�
-);
+	`WORKER_NO`   INT         NOT NULL COMMENT '근무자번호', -- 근무자번호
+	`PLANT_CD`    VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`     VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`WORKER_LOC`  VARCHAR(15) NOT NULL COMMENT '근무위치', -- 근무위치
+	`WORKER_TIME` VARCHAR(10) NOT NULL COMMENT '근무시간', -- 근무시간
+	`WORKER_NM`   VARCHAR(15) NOT NULL COMMENT '근무자명' -- 근무자명
+)
+COMMENT '근무자';
 
--- �ٹ���
+-- 근무자
 ALTER TABLE `WORKER`
-	ADD CONSTRAINT `PK_WORKER` -- �ٹ��� �⺻Ű
+	ADD CONSTRAINT `PK_WORKER` -- 근무자 기본키
 		PRIMARY KEY (
-			`WORKER_NO` -- �ٹ��ڹ�ȣ
+			`WORKER_NO` -- 근무자번호
 		);
 
 ALTER TABLE `WORKER`
-	MODIFY COLUMN `WORKER_NO` INT NOT NULL AUTO_INCREMENT;
+	MODIFY COLUMN `WORKER_NO` INT NOT NULL AUTO_INCREMENT COMMENT '근무자번호';
 
 ALTER TABLE `WORKER`
 	AUTO_INCREMENT = 1;
 
--- ���� ���̺�
+-- 라인 테이블
 CREATE TABLE `LINE` (
-	`LINE_CD`   VARCHAR(10) NOT NULL, -- �����ڵ�
-	`PLANT_CD`  VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_NM`   VARCHAR(10) NOT NULL, -- ���θ�
-	`USE_YN`    BOOLEAN     NOT NULL DEFAULT TRUE, -- ��밡�ɿ���
-	`REMARK`    VARCHAR(50) NULL,     -- ���
-	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`LINE_CD`   VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`PLANT_CD`  VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_NM`   VARCHAR(10) NOT NULL COMMENT '라인명', -- 라인명
+	`USE_YN`    BOOLEAN     NOT NULL DEFAULT TRUE COMMENT '사용가능여부', -- 사용가능여부
+	`REMARK`    VARCHAR(50) NULL     COMMENT '비고', -- 비고
+	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '라인 테이블';
 
--- ���� ���̺�
+-- 라인 테이블
 ALTER TABLE `LINE`
-	ADD CONSTRAINT `PK_LINE` -- ���� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_LINE` -- 라인 테이블 기본키
 		PRIMARY KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		);
 
--- �����̷� ���̺�
+-- 생산이력 테이블
 CREATE TABLE `WO_HIST` (
-	`WO_NO`    VARCHAR(10) NOT NULL, -- �������ù�ȣ
-	`PLANT_CD` VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`  VARCHAR(10) NOT NULL, -- �����ڵ�
-	`WO_SEQ`   INT         NOT NULL, -- ��������SEQ
-	`START_DT` DATETIME    NOT NULL, -- �۾�������
-	`END_DT`   DATETIME    NOT NULL, -- �۾�������
-	`INT_QTY`  INT         NOT NULL, -- ���Լ���
-	`OUT_QTY`  INT         NOT NULL, -- �������
-	`NG_QTY`   INT         NOT NULL  -- NG����
-);
+	`WO_NO`    VARCHAR(10) NOT NULL COMMENT '생산지시번호', -- 생산지시번호
+	`PLANT_CD` VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`  VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`WO_SEQ`   INT         NOT NULL COMMENT '생산지시SEQ', -- 생산지시SEQ
+	`START_DT` DATETIME    NOT NULL COMMENT '작업시작일', -- 작업시작일
+	`END_DT`   DATETIME    NOT NULL COMMENT '작업종료일', -- 작업종료일
+	`INT_QTY`  INT         NOT NULL COMMENT '투입수량', -- 투입수량
+	`OUT_QTY`  INT         NOT NULL COMMENT '배출수량', -- 배출수량
+	`NG_QTY`   INT         NOT NULL COMMENT 'NG수량' -- NG수량
+)
+COMMENT '생산이력 테이블';
 
--- �����̷� ���̺�
+-- 생산이력 테이블
 ALTER TABLE `WO_HIST`
-	ADD CONSTRAINT `PK_WO_HIST` -- �����̷� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_WO_HIST` -- 생산이력 테이블 기본키
 		PRIMARY KEY (
-			`WO_NO` -- �������ù�ȣ
+			`WO_NO` -- 생산지시번호
 		);
 
--- �������� ���̺�
+-- 생산정보 테이블
 CREATE TABLE `WO_INFO` (
-	`SERIAL_NO` VARCHAR(30) NOT NULL, -- ��ǰ�Ϸù�ȣ
-	`PLANT_CD`  VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`   VARCHAR(10) NOT NULL, -- �����ڵ�
-	`ITEM_CD`   VARCHAR(10) NOT NULL, -- ǰ���ڵ�
-	`CUST_CD`   VARCHAR(10) NOT NULL, -- �ŷ�ó
-	`WORKER_NO` INT         NOT NULL, -- �ٹ��ڹ�ȣ
-	`DIM_X`     FLOAT       NOT NULL, -- ���α���
-	`DIM_Y`     FLOAT       NOT NULL, -- ���α���
-	`DIM_H`     FLOAT       NOT NULL, -- ���θ鼼������
-	`DIM_W`     FLOAT       NOT NULL, -- ���θ鰡������
-	`HOLE_X`    FLOAT       NOT NULL, -- Ȧ���α���
-	`HOLE_Y`    FLOAT       NOT NULL, -- Ȧ���α���
-	`HOLE_XC`   FLOAT       NOT NULL, -- Ȧ�����߽�
-	`HOLE_YC`   FLOAT       NOT NULL, -- Ȧ�����߽�
-	`COL`       FLOAT       NOT NULL, -- ����������
-	`COL2`      FLOAT       NOT NULL, -- ����������
-	`COL3`      FLOAT       NOT NULL, -- Ȧ����
-	`COL4`      FLOAT       NOT NULL, -- Ȧ����
-	`COL5`      DATE        NOT NULL DEFAULT NOW() -- ����ð�
-);
+	`SERIAL_NO`  VARCHAR(30) NOT NULL COMMENT '제품일련번호', -- 제품일련번호
+	`PLANT_CD`   VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`    VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`ITEM_CD`    VARCHAR(10) NOT NULL COMMENT '품목코드', -- 품목코드
+	`CUST_CD`    VARCHAR(10) NOT NULL COMMENT '거래처', -- 거래처
+	`WORKER_NO`  INT         NOT NULL COMMENT '근무자번호', -- 근무자번호
+	`DIM_X`      FLOAT       NOT NULL COMMENT '가로길이', -- 가로길이
+	`DIM_Y`      FLOAT       NOT NULL COMMENT '세로길이', -- 세로길이
+	`DIM_H`      FLOAT       NOT NULL COMMENT '가로면세로편차', -- 가로면세로편차
+	`DIM_W`      FLOAT       NOT NULL COMMENT '세로면가로편차', -- 세로면가로편차
+	`HOLE_X`     FLOAT       NOT NULL COMMENT '홀가로길이', -- 홀가로길이
+	`HOLE_Y`     FLOAT       NOT NULL COMMENT '홀세로길이', -- 홀세로길이
+	`HOLE_XC`    FLOAT       NOT NULL COMMENT '홀가로중심', -- 홀가로중심
+	`HOLE_YC`    FLOAT       NOT NULL COMMENT '홀세로중심', -- 홀세로중심
+	`STR_X`      FLOAT       NOT NULL COMMENT '가로직진도', -- 가로직진도
+	`STR_Y`      FLOAT       NOT NULL COMMENT '세로직진도', -- 세로직진도
+	`HOLE_D`     FLOAT       NOT NULL COMMENT '홀직경', -- 홀직경
+	`HOLE_RATIO` FLOAT       NOT NULL COMMENT '홀비율', -- 홀비율
+	`PRD_DT`     DATETIME    NOT NULL DEFAULT NOW() COMMENT '생산시간' -- 생산시간
+)
+COMMENT '생산정보 테이블';
 
--- �������� ���̺�
+-- 생산정보 테이블
 ALTER TABLE `WO_INFO`
-	ADD CONSTRAINT `PK_WO_INFO` -- �������� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_WO_INFO` -- 생산정보 테이블 기본키
 		PRIMARY KEY (
-			`SERIAL_NO` -- ��ǰ�Ϸù�ȣ
+			`SERIAL_NO` -- 제품일련번호
 		);
 
--- �������� ���̺�
+-- 생산지시 테이블
 CREATE TABLE `WO_ORD` (
-	`WO_NO`       VARCHAR(10) NOT NULL, -- �������ù�ȣ
-	`PLANT_CD`    VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`     VARCHAR(10) NOT NULL, -- �����ڵ�
-	`DRDER_NO`    VARCHAR(10) NOT NULL, -- �ֹ���ȣ
-	`START_DT`    DATE        NOT NULL DEFAULT NOW(), -- �۾�������
-	`START_SHIFT` VARCHAR(10) NOT NULL, -- �����۾���
-	`END_DT`      DATE        NULL,     -- �۾�������
-	`END_SHIFT`   VARCHAR(10) NULL,     -- �����۾���
-	`FLAG_END`    BOOLEAN     NULL,     -- �۾�����
-	`PLAN_QTY`    INT         NOT NULL  -- ��ȹ����
-);
+	`WO_NO`       VARCHAR(10) NOT NULL COMMENT '생산지시번호', -- 생산지시번호
+	`PLANT_CD`    VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`     VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`DRDER_NO`    VARCHAR(10) NOT NULL COMMENT '주문번호', -- 주문번호
+	`START_DT`    DATE        NOT NULL DEFAULT NOW() COMMENT '작업시작일', -- 작업시작일
+	`START_SHIFT` VARCHAR(10) NOT NULL COMMENT '시작작업조', -- 시작작업조
+	`END_DT`      DATE        NULL     COMMENT '작업종료일', -- 작업종료일
+	`END_SHIFT`   VARCHAR(10) NULL     COMMENT '종료작업조', -- 종료작업조
+	`FLAG_END`    BOOLEAN     NULL     COMMENT '작업상태', -- 작업상태
+	`PLAN_QTY`    INT         NOT NULL COMMENT '계획수량' -- 계획수량
+)
+COMMENT '생산지시 테이블';
 
--- �������� ���̺�
+-- 생산지시 테이블
 ALTER TABLE `WO_ORD`
-	ADD CONSTRAINT `PK_WO_ORD` -- �������� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_WO_ORD` -- 생산지시 테이블 기본키
 		PRIMARY KEY (
-			`WO_NO` -- �������ù�ȣ
+			`WO_NO` -- 생산지시번호
 		);
 
--- ���� ���̺�
+-- 설비 테이블
 CREATE TABLE `EQUIP` (
-	`EQUIP_ID`    VARCHAR(10) NOT NULL, -- ����ID
-	`PLANT_CD`    VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`     VARCHAR(10) NOT NULL, -- �����ڵ�
-	`PROCESS_CD`  VARCHAR(12) NOT NULL, -- �����ڵ�
-	`ERROR_CD`    INT         NULL,     -- �����ڵ�
-	`EQUIP_NM`    VARCHAR(25) NOT NULL, -- �����
-	`EQUIP_MODEL` VARCHAR(10) NOT NULL, -- �𵨸�
-	`CHECK_TERM`  INT         NOT NULL DEFAULT 30, -- �����ֱ�
-	`USE_TYPE`    VARCHAR(15) NOT NULL, -- Ÿ��
-	`USE_YN`      BOOLEAN     NOT NULL DEFAULT TRUE, -- ��뿩��
-	`RUN_TIME`    INT         NOT NULL DEFAULT 0 -- �����ð�
-);
+	`EQUIP_ID`    VARCHAR(10) NOT NULL COMMENT '설비ID', -- 설비ID
+	`PLANT_CD`    VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`     VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`PROCESS_CD`  VARCHAR(12) NOT NULL COMMENT '공정코드', -- 공정코드
+	`ERROR_CD`    INT         NULL     COMMENT '에러코드', -- 에러코드
+	`EQUIP_NM`    VARCHAR(25) NOT NULL COMMENT '설비명', -- 설비명
+	`EQUIP_MODEL` VARCHAR(10) NOT NULL COMMENT '모델명', -- 모델명
+	`CHECK_TERM`  INT         NOT NULL DEFAULT 30 COMMENT '점검주기', -- 점검주기
+	`USE_TYPE`    VARCHAR(15) NOT NULL COMMENT '타입', -- 타입
+	`USE_YN`      BOOLEAN     NOT NULL DEFAULT TRUE COMMENT '사용여부', -- 사용여부
+	`RUN_TIME`    INT         NOT NULL DEFAULT 0 COMMENT '가동시간' -- 가동시간
+)
+COMMENT '설비 테이블';
 
--- ���� ���̺�
+-- 설비 테이블
 ALTER TABLE `EQUIP`
-	ADD CONSTRAINT `PK_EQUIP` -- ���� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_EQUIP` -- 설비 테이블 기본키
 		PRIMARY KEY (
-			`EQUIP_ID` -- ����ID
+			`EQUIP_ID` -- 설비ID
 		);
 
--- ���񿡷��α� ���̺�
+-- 설비에러로그 테이블
 CREATE TABLE `ERR_LOG` (
-	`LOG_NO`     INT         NOT NULL, -- �α׹�ȣ
-	`PLANT_CD`   VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`    VARCHAR(10) NOT NULL, -- �����ڵ�
-	`PROCESS_CD` VARCHAR(12) NOT NULL, -- �����ڵ�
-	`EQUIP_ID`   VARCHAR(10) NOT NULL, -- �����ڵ�
-	`ERROR_CD`   INT         NOT NULL, -- �����ڵ�
-	`ERROR_GD`   CHAR        NOT NULL, -- �������
-	`START_DT`   DATETIME    NOT NULL DEFAULT NOW(), -- �߻��ð�
-	`END_DT`     DATETIME    NULL      -- �����ð�
-);
+	`LOG_NO`     INT         NOT NULL COMMENT '로그번호', -- 로그번호
+	`PLANT_CD`   VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`    VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`PROCESS_CD` VARCHAR(12) NOT NULL COMMENT '공정코드', -- 공정코드
+	`EQUIP_ID`   VARCHAR(10) NOT NULL COMMENT '설비코드', -- 설비코드
+	`ERROR_CD`   INT         NOT NULL COMMENT '에러코드', -- 에러코드
+	`ERROR_GD`   CHAR        NOT NULL COMMENT '에러등급', -- 에러등급
+	`START_DT`   DATETIME    NOT NULL DEFAULT NOW() COMMENT '발생시간', -- 발생시간
+	`END_DT`     DATETIME    NULL     COMMENT '해제시간' -- 해제시간
+)
+COMMENT '설비에러로그 테이블';
 
--- ���񿡷��α� ���̺�
+-- 설비에러로그 테이블
 ALTER TABLE `ERR_LOG`
-	ADD CONSTRAINT `PK_ERR_LOG` -- ���񿡷��α� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_ERR_LOG` -- 설비에러로그 테이블 기본키
 		PRIMARY KEY (
-			`LOG_NO` -- �α׹�ȣ
+			`LOG_NO` -- 로그번호
 		);
 
 ALTER TABLE `ERR_LOG`
-	MODIFY COLUMN `LOG_NO` INT NOT NULL AUTO_INCREMENT;
+	MODIFY COLUMN `LOG_NO` INT NOT NULL AUTO_INCREMENT COMMENT '로그번호';
 
 ALTER TABLE `ERR_LOG`
 	AUTO_INCREMENT = 1;
 
--- ���񿡷����� ���̺�
+-- 설비에러종류 테이블
 CREATE TABLE `ERR_KINDS` (
-	`ERROR_CD`  INT         NOT NULL, -- �����ڵ�
-	`ERROR_GD`  CHAR        NOT NULL, -- �������
-	`ERROR_CT`  VARCHAR(20) NOT NULL, -- ��������
-	`DOWN_DR`   INT         NOT NULL, -- �����ߴܽð�
-	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`ERROR_CD`  INT         NOT NULL COMMENT '에러코드', -- 에러코드
+	`ERROR_GD`  CHAR        NOT NULL COMMENT '에러등급', -- 에러등급
+	`ERROR_CT`  VARCHAR(20) NOT NULL COMMENT '에러내용', -- 에러내용
+	`DOWN_DR`   INT         NOT NULL COMMENT '가동중단시간', -- 가동중단시간
+	`UPDATE_DT` DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '설비에러종류 테이블';
 
--- ���񿡷����� ���̺�
+-- 설비에러종류 테이블
 ALTER TABLE `ERR_KINDS`
-	ADD CONSTRAINT `PK_ERR_KINDS` -- ���񿡷����� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_ERR_KINDS` -- 설비에러종류 테이블 기본키
 		PRIMARY KEY (
-			`ERROR_CD` -- �����ڵ�
+			`ERROR_CD` -- 에러코드
 		);
 
--- ���񿡷����� ���̺� ����ũ �ε���
+-- 설비에러종류 테이블 유니크 인덱스
 CREATE UNIQUE INDEX `UIX_ERR_KINDS`
-	ON `ERR_KINDS` ( -- ���񿡷����� ���̺�
-		`ERROR_GD` ASC -- �������
+	ON `ERR_KINDS` ( -- 설비에러종류 테이블
+		`ERROR_GD` ASC -- 에러등급
 	);
 
--- �ֹ� ���̺�
-CREATE TABLE `ORDER` (
-	`DRDER_NO`     VARCHAR(10) NOT NULL, -- �ֹ���ȣ
-	`ITEM_CD`      VARCHAR(10) NOT NULL, -- ǰ���ڵ�
-	`PLANT_CD`     VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`CUST_CD`      VARCHAR(10) NOT NULL, -- �ŷ�ó
-	`ORDER_QTY`    INT         NOT NULL, -- �ֹ�����
-	`ORDER_DT`     DATE        NOT NULL DEFAULT NOW(), -- �ֹ�����
-	`DELIVERY_DT`  DATE        NOT NULL, -- ������
-	`FINISHED_DT`  DATE        NULL,     -- ������
-	`ORDER_STATUS` BOOLEAN     NOT NULL DEFAULT FALSE, -- �ֹ�����
-	`DELAYED_DT`   INT         NOT NULL DEFAULT 0 -- ����������
-);
+-- 주문 테이블
+CREATE TABLE `PRD_ORDER` (
+	`DRDER_NO`     VARCHAR(10) NOT NULL COMMENT '주문번호', -- 주문번호
+	`ITEM_CD`      VARCHAR(10) NOT NULL COMMENT '품목코드', -- 품목코드
+	`PLANT_CD`     VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`CUST_CD`      VARCHAR(10) NOT NULL COMMENT '거래처', -- 거래처
+	`ORDER_QTY`    INT         NOT NULL COMMENT '주문수량', -- 주문수량
+	`ORDER_DT`     DATE        NOT NULL DEFAULT NOW() COMMENT '주문일자', -- 주문일자
+	`DELIVERY_DT`  DATE        NOT NULL COMMENT '납기일', -- 납기일
+	`FINISHED_DT`  DATE        NULL     COMMENT '마감일', -- 마감일
+	`ORDER_STATUS` BOOLEAN     NOT NULL DEFAULT FALSE COMMENT '주문상태', -- 주문상태
+	`DELAYED_DT`   INT         NOT NULL DEFAULT 0 COMMENT '납기지연일' -- 납기지연일
+)
+COMMENT '주문 테이블';
 
--- �ֹ� ���̺�
-ALTER TABLE `ORDER`
-	ADD CONSTRAINT `PK_ORDER` -- �ֹ� ���̺� �⺻Ű
+-- 주문 테이블
+ALTER TABLE `PRD_ORDER`
+	ADD CONSTRAINT `PK_PRD_ORDER` -- 주문 테이블 기본키
 		PRIMARY KEY (
-			`DRDER_NO` -- �ֹ���ȣ
+			`DRDER_NO` -- 주문번호
 		);
 
--- â�� ���̺�
+-- 창고 테이블
 CREATE TABLE `STORAGE` (
-	`STORAGE_CD`   VARCHAR(10) NOT NULL, -- â���ڵ�
-	`STORAGE_NM`   VARCHAR(20) NOT NULL, -- â����
-	`PLANT_CD`     VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`STORAGE_TYPE` VARCHAR(10) NOT NULL, -- â��Ÿ��
-	`STORAGE_LOC`  VARCHAR(15) NOT NULL  -- â����ġ
-);
+	`STORAGE_CD`   VARCHAR(10) NOT NULL COMMENT '창고코드', -- 창고코드
+	`STORAGE_NM`   VARCHAR(20) NOT NULL COMMENT '창고명', -- 창고명
+	`PLANT_CD`     VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`STORAGE_TYPE` VARCHAR(10) NOT NULL COMMENT '창고타입', -- 창고타입
+	`STORAGE_LOC`  VARCHAR(15) NOT NULL COMMENT '창고위치' -- 창고위치
+)
+COMMENT '창고 테이블';
 
--- â�� ���̺�
+-- 창고 테이블
 ALTER TABLE `STORAGE`
-	ADD CONSTRAINT `PK_STORAGE` -- â�� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_STORAGE` -- 창고 테이블 기본키
 		PRIMARY KEY (
-			`STORAGE_CD` -- â���ڵ�
+			`STORAGE_CD` -- 창고코드
 		);
 
--- â�� ���̺� ����ũ �ε���
+-- 창고 테이블 유니크 인덱스
 CREATE UNIQUE INDEX `UIX_STORAGE`
-	ON `STORAGE` ( -- â�� ���̺�
-		`STORAGE_NM` ASC -- â����
+	ON `STORAGE` ( -- 창고 테이블
+		`STORAGE_NM` ASC -- 창고명
 	);
 
--- ǰ�� ���̺�
+-- 품목 테이블
 CREATE TABLE `ITEM` (
-	`ITEM_CD`    VARCHAR(10) NOT NULL, -- ǰ���ڵ�
-	`CUST_CD`    VARCHAR(10) NOT NULL, -- �ŷ�ó
-	`ITEM_TYPE`  VARCHAR(10) NOT NULL, -- ǰ������
-	`ITEM_NM`    VARCHAR(20) NOT NULL, -- ǰ���
-	`ITEM_SPEC1` FLOAT       NULL,     -- ǰ��԰�1
-	`ITEM_SPEC2` FLOAT       NULL,     -- ǰ��԰�2
-	`ITEM_SPEC3` FLOAT       NULL,     -- ǰ��԰�3
-	`ITEM_SPEC4` FLOAT       NULL,     -- ǰ��԰�4
-	`ITEM_SPEC5` FLOAT       NULL,     -- ǰ��԰�5
-	`ITEM_SPEC6` FLOAT       NULL,     -- ǰ��԰�6
-	`ITEM_SPEC7` FLOAT       NULL,     -- ǰ��԰�7
-	`ITEM_SPEC8` FLOAT       NULL,     -- ǰ��԰�8
-	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`ITEM_CD`    VARCHAR(10) NOT NULL COMMENT '품목코드', -- 품목코드
+	`CUST_CD`    VARCHAR(10) NOT NULL COMMENT '거래처', -- 거래처
+	`ITEM_TYPE`  VARCHAR(10) NOT NULL COMMENT '품목종류', -- 품목종류
+	`ITEM_NM`    VARCHAR(20) NOT NULL COMMENT '품목명', -- 품목명
+	`ITEM_SPEC1` FLOAT       NULL     COMMENT '품목규격1', -- 품목규격1
+	`ITEM_SPEC2` FLOAT       NULL     COMMENT '품목규격2', -- 품목규격2
+	`ITEM_SPEC3` FLOAT       NULL     COMMENT '품목규격3', -- 품목규격3
+	`ITEM_SPEC4` FLOAT       NULL     COMMENT '품목규격4', -- 품목규격4
+	`ITEM_SPEC5` FLOAT       NULL     COMMENT '품목규격5', -- 품목규격5
+	`ITEM_SPEC6` FLOAT       NULL     COMMENT '품목규격6', -- 품목규격6
+	`ITEM_SPEC7` FLOAT       NULL     COMMENT '품목규격7', -- 품목규격7
+	`ITEM_SPEC8` FLOAT       NULL     COMMENT '품목규격8', -- 품목규격8
+	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '품목 테이블';
 
--- ǰ�� ���̺�
+-- 품목 테이블
 ALTER TABLE `ITEM`
-	ADD CONSTRAINT `PK_ITEM` -- ǰ�� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_ITEM` -- 품목 테이블 기본키
 		PRIMARY KEY (
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 CREATE TABLE `ITEM_IO` (
-	`INOUT_CD`        VARCHAR(10) NOT NULL, -- ������ڵ�
-	`PLANT_CD`        VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`ITEM_CD`         VARCHAR(10) NULL,     -- ǰ���ڵ�
-	`CUST_CD`         VARCHAR(10) NULL,     -- �ŷ�ó
-	`ITEM_TYPE`       VARCHAR(10) NULL,     -- ǰ��Ÿ��
-	`STORAGE_FROM`    VARCHAR(10) NOT NULL, -- ���â��
-	`STORAGE_FROM_NM` VARCHAR(20) NOT NULL, -- ���â����
-	`STORAGE_TO`      VARCHAR(10) NOT NULL, -- �̵�â��
-	`STORAGE_TO_NM`   VARCHAR(20) NOT NULL, -- �̵�â����
-	`INOUT_DT`        DATETIME    NOT NULL, -- ������ð�
-	`INOUT_TYPE`      VARCHAR(10) NOT NULL, -- ���������
-	`ITEM_CNT`        INT         NOT NULL  -- �̵�����
-);
+	`INOUT_CD`        VARCHAR(10) NOT NULL COMMENT '입출고코드', -- 입출고코드
+	`PLANT_CD`        VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`ITEM_CD`         VARCHAR(10) NULL     COMMENT '품목코드', -- 품목코드
+	`CUST_CD`         VARCHAR(10) NULL     COMMENT '거래처', -- 거래처
+	`ITEM_TYPE`       VARCHAR(10) NULL     COMMENT '품목타입', -- 품목타입
+	`STORAGE_FROM`    VARCHAR(10) NOT NULL COMMENT '출발창고', -- 출발창고
+	`STORAGE_FROM_NM` VARCHAR(20) NOT NULL COMMENT '출발창고명', -- 출발창고명
+	`STORAGE_TO`      VARCHAR(10) NOT NULL COMMENT '이동창고', -- 이동창고
+	`STORAGE_TO_NM`   VARCHAR(20) NOT NULL COMMENT '이동창고명', -- 이동창고명
+	`INOUT_DT`        DATETIME    NOT NULL COMMENT '입출고시간', -- 입출고시간
+	`INOUT_TYPE`      VARCHAR(10) NOT NULL COMMENT '입출고유형', -- 입출고유형
+	`ITEM_CNT`        INT         NOT NULL COMMENT '이동수량' -- 이동수량
+)
+COMMENT '품목입출고 테이블';
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `PK_ITEM_IO` -- ǰ������� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_ITEM_IO` -- 품목입출고 테이블 기본키
 		PRIMARY KEY (
-			`INOUT_CD` -- ������ڵ�
+			`INOUT_CD` -- 입출고코드
 		);
 
--- ǰ�������Ȳ ���̺�
+-- 품목재고현황 테이블
 CREATE TABLE `STOCK` (
-	`STOCK_NO`   VARCHAR(10) NOT NULL, -- �����ȣ
-	`ITEM_CD`    VARCHAR(10) NOT NULL, -- ǰ���ڵ�
-	`CUST_CD`    VARCHAR(10) NOT NULL, -- �ŷ�ó
-	`STORAGE_CD` VARCHAR(10) NOT NULL, -- â���ڵ�
-	`STORAGE_NM` VARCHAR(20) NOT NULL, -- â����
-	`ITEM_NUM`   INT         NOT NULL DEFAULT 0, -- �����
-	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() -- ������
-);
+	`STOCK_NO`   VARCHAR(10) NOT NULL COMMENT '재고번호', -- 재고번호
+	`ITEM_CD`    VARCHAR(10) NOT NULL COMMENT '품목코드', -- 품목코드
+	`CUST_CD`    VARCHAR(10) NOT NULL COMMENT '거래처', -- 거래처
+	`STORAGE_CD` VARCHAR(10) NOT NULL COMMENT '창고코드', -- 창고코드
+	`STORAGE_NM` VARCHAR(20) NOT NULL COMMENT '창고명', -- 창고명
+	`ITEM_NUM`   INT         NOT NULL DEFAULT 0 COMMENT '재고량', -- 재고량
+	`UPDATE_DT`  DATETIME    NOT NULL DEFAULT NOW() COMMENT '수정일' -- 수정일
+)
+COMMENT '품목재고현황 테이블';
 
--- ǰ�������Ȳ ���̺�
+-- 품목재고현황 테이블
 ALTER TABLE `STOCK`
-	ADD CONSTRAINT `PK_STOCK` -- ǰ�������Ȳ ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_STOCK` -- 품목재고현황 테이블 기본키
 		PRIMARY KEY (
-			`STOCK_NO` -- �����ȣ
+			`STOCK_NO` -- 재고번호
 		);
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 CREATE TABLE `QTY_INFO` (
-	`SERIAL_NO`       VARCHAR(30) NOT NULL, -- ��ǰ�Ϸù�ȣ
-	`PLANT_CD`        VARCHAR(5)  NOT NULL, -- �����ڵ�
-	`LINE_CD`         VARCHAR(10) NOT NULL, -- �����ڵ�
-	`WORKER_NO`       INT         NOT NULL, -- �ٹ��ڹ�ȣ
-	`DIMCHECK_X`      BOOLEAN     NOT NULL, -- ���α��̰˻�
-	`DIMCHECK_Y`      BOOLEAN     NOT NULL, -- ���α��̰˻�
-	`DIMCHECK_HX`     BOOLEAN     NOT NULL, -- �����������˻�
-	`DIMCHECK_WY`     BOOLEAN     NOT NULL, -- �����������˻�
-	`HOLECHECK_D`     BOOLEAN     NOT NULL, -- Ȧ����˻�
-	`HOLECHECK_RATIO` BOOLEAN     NOT NULL, -- Ȧ�����˻�
-	`HOLECHECK_XC`    BOOLEAN     NOT NULL, -- Ȧ�����߽ɰ˻�
-	`HOLECHECK_YC`    BOOLEAN     NOT NULL, -- Ȧ�����߽ɰ˻�
-	`CHECK_RESULT`    BOOLEAN     NOT NULL  -- �˻����հ��
-);
+	`SERIAL_NO`       VARCHAR(30) NOT NULL COMMENT '제품일련번호', -- 제품일련번호
+	`PLANT_CD`        VARCHAR(5)  NOT NULL COMMENT '공장코드', -- 공장코드
+	`LINE_CD`         VARCHAR(10) NOT NULL COMMENT '라인코드', -- 라인코드
+	`WORKER_NO`       INT         NOT NULL COMMENT '근무자번호', -- 근무자번호
+	`DIMCHECK_X`      BOOLEAN     NOT NULL COMMENT '가로길이검사', -- 가로길이검사
+	`DIMCHECK_Y`      BOOLEAN     NOT NULL COMMENT '세로길이검사', -- 세로길이검사
+	`DIMCHECK_HX`     BOOLEAN     NOT NULL COMMENT '가로직진도검사', -- 가로직진도검사
+	`DIMCHECK_WY`     BOOLEAN     NOT NULL COMMENT '세로직진도검사', -- 세로직진도검사
+	`HOLECHECK_D`     BOOLEAN     NOT NULL COMMENT '홀직경검사', -- 홀직경검사
+	`HOLECHECK_RATIO` BOOLEAN     NOT NULL COMMENT '홀비율검사', -- 홀비율검사
+	`HOLECHECK_XC`    BOOLEAN     NOT NULL COMMENT '홀가로중심검사', -- 홀가로중심검사
+	`HOLECHECK_YC`    BOOLEAN     NOT NULL COMMENT '홀세로중심검사', -- 홀세로중심검사
+	`CHECK_RESULT`    BOOLEAN     NOT NULL COMMENT '검사종합결과' -- 검사종합결과
+)
+COMMENT '품질검사정보 테이블';
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 ALTER TABLE `QTY_INFO`
-	ADD CONSTRAINT `PK_QTY_INFO` -- ǰ���˻����� ���̺� �⺻Ű
+	ADD CONSTRAINT `PK_QTY_INFO` -- 품질검사정보 테이블 기본키
 		PRIMARY KEY (
-			`SERIAL_NO` -- ��ǰ�Ϸù�ȣ
+			`SERIAL_NO` -- 제품일련번호
 		);
 
--- ���� ���̺�
+-- 공정 테이블
 ALTER TABLE `PROCESS`
-	ADD CONSTRAINT `FK_PLANT_TO_PROCESS` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_PROCESS` -- 공장 테이블 -> 공정 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- ���� ���̺�
+-- 공정 테이블
 ALTER TABLE `PROCESS`
-	ADD CONSTRAINT `FK_LINE_TO_PROCESS` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_PROCESS` -- 라인 테이블 -> 공정 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- �ٹ���
+-- 근무자
 ALTER TABLE `WORKER`
-	ADD CONSTRAINT `FK_PLANT_TO_WORKER` -- ���� ���̺� -> �ٹ���
+	ADD CONSTRAINT `FK_PLANT_TO_WORKER` -- 공장 테이블 -> 근무자
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �ٹ���
+-- 근무자
 ALTER TABLE `WORKER`
-	ADD CONSTRAINT `FK_LINE_TO_WORKER` -- ���� ���̺� -> �ٹ���
+	ADD CONSTRAINT `FK_LINE_TO_WORKER` -- 라인 테이블 -> 근무자
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- ���� ���̺�
+-- 라인 테이블
 ALTER TABLE `LINE`
-	ADD CONSTRAINT `FK_PLANT_TO_LINE` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_LINE` -- 공장 테이블 -> 라인 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �����̷� ���̺�
+-- 생산이력 테이블
 ALTER TABLE `WO_HIST`
-	ADD CONSTRAINT `FK_WO_ORD_TO_WO_HIST` -- �������� ���̺� -> �����̷� ���̺�
+	ADD CONSTRAINT `FK_WO_ORD_TO_WO_HIST` -- 생산지시 테이블 -> 생산이력 테이블
 		FOREIGN KEY (
-			`WO_NO` -- �������ù�ȣ
+			`WO_NO` -- 생산지시번호
 		)
-		REFERENCES `WO_ORD` ( -- �������� ���̺�
-			`WO_NO` -- �������ù�ȣ
+		REFERENCES `WO_ORD` ( -- 생산지시 테이블
+			`WO_NO` -- 생산지시번호
 		);
 
--- �����̷� ���̺�
+-- 생산이력 테이블
 ALTER TABLE `WO_HIST`
-	ADD CONSTRAINT `FK_PLANT_TO_WO_HIST` -- ���� ���̺� -> �����̷� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_WO_HIST` -- 공장 테이블 -> 생산이력 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �����̷� ���̺�
+-- 생산이력 테이블
 ALTER TABLE `WO_HIST`
-	ADD CONSTRAINT `FK_LINE_TO_WO_HIST` -- ���� ���̺� -> �����̷� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_WO_HIST` -- 라인 테이블 -> 생산이력 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- �������� ���̺�
+-- 생산정보 테이블
 ALTER TABLE `WO_INFO`
-	ADD CONSTRAINT `FK_PLANT_TO_WO_INFO` -- ���� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_WO_INFO` -- 공장 테이블 -> 생산정보 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �������� ���̺�
+-- 생산정보 테이블
 ALTER TABLE `WO_INFO`
-	ADD CONSTRAINT `FK_LINE_TO_WO_INFO` -- ���� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_WO_INFO` -- 라인 테이블 -> 생산정보 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- �������� ���̺�
+-- 생산정보 테이블
 ALTER TABLE `WO_INFO`
-	ADD CONSTRAINT `FK_ITEM_TO_WO_INFO` -- ǰ�� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_ITEM_TO_WO_INFO` -- 품목 테이블 -> 생산정보 테이블
 		FOREIGN KEY (
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		)
-		REFERENCES `ITEM` ( -- ǰ�� ���̺�
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		);
 
--- �������� ���̺�
+-- 생산정보 테이블
 ALTER TABLE `WO_INFO`
-	ADD CONSTRAINT `FK_WORKER_TO_WO_INFO` -- �ٹ��� -> �������� ���̺�
+	ADD CONSTRAINT `FK_WORKER_TO_WO_INFO` -- 근무자 -> 생산정보 테이블
 		FOREIGN KEY (
-			`WORKER_NO` -- �ٹ��ڹ�ȣ
+			`WORKER_NO` -- 근무자번호
 		)
-		REFERENCES `WORKER` ( -- �ٹ���
-			`WORKER_NO` -- �ٹ��ڹ�ȣ
+		REFERENCES `WORKER` ( -- 근무자
+			`WORKER_NO` -- 근무자번호
 		);
 
--- �������� ���̺�
+-- 생산지시 테이블
 ALTER TABLE `WO_ORD`
-	ADD CONSTRAINT `FK_PLANT_TO_WO_ORD` -- ���� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_WO_ORD` -- 공장 테이블 -> 생산지시 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �������� ���̺�
+-- 생산지시 테이블
 ALTER TABLE `WO_ORD`
-	ADD CONSTRAINT `FK_LINE_TO_WO_ORD` -- ���� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_WO_ORD` -- 라인 테이블 -> 생산지시 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- �������� ���̺�
+-- 생산지시 테이블
 ALTER TABLE `WO_ORD`
-	ADD CONSTRAINT `FK_ORDER_TO_WO_ORD` -- �ֹ� ���̺� -> �������� ���̺�
+	ADD CONSTRAINT `FK_PRD_ORDER_TO_WO_ORD` -- 주문 테이블 -> 생산지시 테이블
 		FOREIGN KEY (
-			`DRDER_NO` -- �ֹ���ȣ
+			`DRDER_NO` -- 주문번호
 		)
-		REFERENCES `ORDER` ( -- �ֹ� ���̺�
-			`DRDER_NO` -- �ֹ���ȣ
+		REFERENCES `PRD_ORDER` ( -- 주문 테이블
+			`DRDER_NO` -- 주문번호
 		);
 
--- ���� ���̺�
+-- 설비 테이블
 ALTER TABLE `EQUIP`
-	ADD CONSTRAINT `FK_PLANT_TO_EQUIP` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_EQUIP` -- 공장 테이블 -> 설비 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- ���� ���̺�
+-- 설비 테이블
 ALTER TABLE `EQUIP`
-	ADD CONSTRAINT `FK_LINE_TO_EQUIP` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_EQUIP` -- 라인 테이블 -> 설비 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- ���� ���̺�
+-- 설비 테이블
 ALTER TABLE `EQUIP`
-	ADD CONSTRAINT `FK_PROCESS_TO_EQUIP` -- ���� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_PROCESS_TO_EQUIP` -- 공정 테이블 -> 설비 테이블
 		FOREIGN KEY (
-			`PROCESS_CD` -- �����ڵ�
+			`PROCESS_CD` -- 공정코드
 		)
-		REFERENCES `PROCESS` ( -- ���� ���̺�
-			`PROCESS_CD` -- �����ڵ�
+		REFERENCES `PROCESS` ( -- 공정 테이블
+			`PROCESS_CD` -- 공정코드
 		);
 
--- ���� ���̺�
+-- 설비 테이블
 ALTER TABLE `EQUIP`
-	ADD CONSTRAINT `FK_ERR_KINDS_TO_EQUIP` -- ���񿡷����� ���̺� -> ���� ���̺�
+	ADD CONSTRAINT `FK_ERR_KINDS_TO_EQUIP` -- 설비에러종류 테이블 -> 설비 테이블
 		FOREIGN KEY (
-			`ERROR_CD` -- �����ڵ�
+			`ERROR_CD` -- 에러코드
 		)
-		REFERENCES `ERR_KINDS` ( -- ���񿡷����� ���̺�
-			`ERROR_CD` -- �����ڵ�
+		REFERENCES `ERR_KINDS` ( -- 설비에러종류 테이블
+			`ERROR_CD` -- 에러코드
 		);
 
--- �ֹ� ���̺�
-ALTER TABLE `ORDER`
-	ADD CONSTRAINT `FK_PLANT_TO_ORDER` -- ���� ���̺� -> �ֹ� ���̺�
+-- 주문 테이블
+ALTER TABLE `PRD_ORDER`
+	ADD CONSTRAINT `FK_PLANT_TO_PRD_ORDER` -- 공장 테이블 -> 주문 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- �ֹ� ���̺�
-ALTER TABLE `ORDER`
-	ADD CONSTRAINT `FK_ITEM_TO_ORDER` -- ǰ�� ���̺� -> �ֹ� ���̺�
+-- 주문 테이블
+ALTER TABLE `PRD_ORDER`
+	ADD CONSTRAINT `FK_ITEM_TO_PRD_ORDER` -- 품목 테이블 -> 주문 테이블
 		FOREIGN KEY (
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		)
-		REFERENCES `ITEM` ( -- ǰ�� ���̺�
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		);
 
--- â�� ���̺�
+-- 창고 테이블
 ALTER TABLE `STORAGE`
-	ADD CONSTRAINT `FK_PLANT_TO_STORAGE` -- ���� ���̺� -> â�� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_STORAGE` -- 공장 테이블 -> 창고 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_PLANT_TO_ITEM_IO` -- ���� ���̺� -> ǰ������� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_ITEM_IO` -- 공장 테이블 -> 품목입출고 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO` -- â�� ���̺� -> ǰ������� ���̺�
+	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO` -- 창고 테이블 -> 품목입출고 테이블
 		FOREIGN KEY (
-			`STORAGE_FROM` -- ���â��
+			`STORAGE_FROM` -- 출발창고
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_CD` -- â���ڵ�
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_CD` -- 창고코드
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO2` -- â�� ���̺� -> ǰ������� ���̺�2
+	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO2` -- 창고 테이블 -> 품목입출고 테이블2
 		FOREIGN KEY (
-			`STORAGE_FROM_NM` -- ���â����
+			`STORAGE_FROM_NM` -- 출발창고명
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_NM` -- â����
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_NM` -- 창고명
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO3` -- â�� ���̺� -> ǰ������� ���̺�3
+	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO3` -- 창고 테이블 -> 품목입출고 테이블3
 		FOREIGN KEY (
-			`STORAGE_TO` -- �̵�â��
+			`STORAGE_TO` -- 이동창고
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_CD` -- â���ڵ�
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_CD` -- 창고코드
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO4` -- â�� ���̺� -> ǰ������� ���̺�4
+	ADD CONSTRAINT `FK_STORAGE_TO_ITEM_IO4` -- 창고 테이블 -> 품목입출고 테이블4
 		FOREIGN KEY (
-			`STORAGE_TO_NM` -- �̵�â����
+			`STORAGE_TO_NM` -- 이동창고명
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_NM` -- â����
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_NM` -- 창고명
 		);
 
--- ǰ������� ���̺�
+-- 품목입출고 테이블
 ALTER TABLE `ITEM_IO`
-	ADD CONSTRAINT `FK_ITEM_TO_ITEM_IO` -- ǰ�� ���̺� -> ǰ������� ���̺�
+	ADD CONSTRAINT `FK_ITEM_TO_ITEM_IO` -- 품목 테이블 -> 품목입출고 테이블
 		FOREIGN KEY (
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		)
-		REFERENCES `ITEM` ( -- ǰ�� ���̺�
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		);
 
--- ǰ�������Ȳ ���̺�
+-- 품목재고현황 테이블
 ALTER TABLE `STOCK`
-	ADD CONSTRAINT `FK_ITEM_TO_STOCK` -- ǰ�� ���̺� -> ǰ�������Ȳ ���̺�
+	ADD CONSTRAINT `FK_ITEM_TO_STOCK` -- 품목 테이블 -> 품목재고현황 테이블
 		FOREIGN KEY (
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		)
-		REFERENCES `ITEM` ( -- ǰ�� ���̺�
-			`ITEM_CD`, -- ǰ���ڵ�
-			`CUST_CD`  -- �ŷ�ó
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD`, -- 품목코드
+			`CUST_CD`  -- 거래처
 		);
 
--- ǰ�������Ȳ ���̺�
+-- 품목재고현황 테이블
 ALTER TABLE `STOCK`
-	ADD CONSTRAINT `FK_STORAGE_TO_STOCK` -- â�� ���̺� -> ǰ�������Ȳ ���̺�
+	ADD CONSTRAINT `FK_STORAGE_TO_STOCK` -- 창고 테이블 -> 품목재고현황 테이블
 		FOREIGN KEY (
-			`STORAGE_CD` -- â���ڵ�
+			`STORAGE_CD` -- 창고코드
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_CD` -- â���ڵ�
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_CD` -- 창고코드
 		);
 
--- ǰ�������Ȳ ���̺�
+-- 품목재고현황 테이블
 ALTER TABLE `STOCK`
-	ADD CONSTRAINT `FK_STORAGE_TO_STOCK2` -- â�� ���̺� -> ǰ�������Ȳ ���̺�2
+	ADD CONSTRAINT `FK_STORAGE_TO_STOCK2` -- 창고 테이블 -> 품목재고현황 테이블2
 		FOREIGN KEY (
-			`STORAGE_NM` -- â����
+			`STORAGE_NM` -- 창고명
 		)
-		REFERENCES `STORAGE` ( -- â�� ���̺�
-			`STORAGE_NM` -- â����
+		REFERENCES `STORAGE` ( -- 창고 테이블
+			`STORAGE_NM` -- 창고명
 		);
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 ALTER TABLE `QTY_INFO`
-	ADD CONSTRAINT `FK_PLANT_TO_QTY_INFO` -- ���� ���̺� -> ǰ���˻����� ���̺�
+	ADD CONSTRAINT `FK_PLANT_TO_QTY_INFO` -- 공장 테이블 -> 품질검사정보 테이블
 		FOREIGN KEY (
-			`PLANT_CD` -- �����ڵ�
+			`PLANT_CD` -- 공장코드
 		)
-		REFERENCES `PLANT` ( -- ���� ���̺�
-			`PLANT_CD` -- �����ڵ�
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
 		);
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 ALTER TABLE `QTY_INFO`
-	ADD CONSTRAINT `FK_LINE_TO_QTY_INFO` -- ���� ���̺� -> ǰ���˻����� ���̺�
+	ADD CONSTRAINT `FK_LINE_TO_QTY_INFO` -- 라인 테이블 -> 품질검사정보 테이블
 		FOREIGN KEY (
-			`LINE_CD` -- �����ڵ�
+			`LINE_CD` -- 라인코드
 		)
-		REFERENCES `LINE` ( -- ���� ���̺�
-			`LINE_CD` -- �����ڵ�
+		REFERENCES `LINE` ( -- 라인 테이블
+			`LINE_CD` -- 라인코드
 		);
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 ALTER TABLE `QTY_INFO`
-	ADD CONSTRAINT `FK_WORKER_TO_QTY_INFO` -- �ٹ��� -> ǰ���˻����� ���̺�
+	ADD CONSTRAINT `FK_WORKER_TO_QTY_INFO` -- 근무자 -> 품질검사정보 테이블
 		FOREIGN KEY (
-			`WORKER_NO` -- �ٹ��ڹ�ȣ
+			`WORKER_NO` -- 근무자번호
 		)
-		REFERENCES `WORKER` ( -- �ٹ���
-			`WORKER_NO` -- �ٹ��ڹ�ȣ
+		REFERENCES `WORKER` ( -- 근무자
+			`WORKER_NO` -- 근무자번호
 		);
 
--- ǰ���˻����� ���̺�
+-- 품질검사정보 테이블
 ALTER TABLE `QTY_INFO`
-	ADD CONSTRAINT `FK_WO_INFO_TO_QTY_INFO` -- �������� ���̺� -> ǰ���˻����� ���̺�
+	ADD CONSTRAINT `FK_WO_INFO_TO_QTY_INFO` -- 생산정보 테이블 -> 품질검사정보 테이블
 		FOREIGN KEY (
-			`SERIAL_NO` -- ��ǰ�Ϸù�ȣ
+			`SERIAL_NO` -- 제품일련번호
 		)
-		REFERENCES `WO_INFO` ( -- �������� ���̺�
-			`SERIAL_NO` -- ��ǰ�Ϸù�ȣ
+		REFERENCES `WO_INFO` ( -- 생산정보 테이블
+			`SERIAL_NO` -- 제품일련번호
 		);
