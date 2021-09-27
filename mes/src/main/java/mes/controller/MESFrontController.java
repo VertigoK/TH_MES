@@ -32,7 +32,7 @@ import mes.action.StockItemAction;
 import mes.action.StockPlantAction;
 import mes.dto.ActionForward;
 
-@WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp", "custOrderForm", "/custOrder",
+@WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp", "/custOrderForm", "/custOrder",
 						   "/production", "/production/*", "/quality", "/quality/*",
 						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*"})
 public class MESFrontController extends HttpServlet {
