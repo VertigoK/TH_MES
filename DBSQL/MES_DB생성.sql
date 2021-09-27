@@ -860,3 +860,12 @@ ALTER TABLE `QUALITY`
 		)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE;
+
+		
+-- 사용자 테이블 추가 (9/27/2021)
+create table member(
+		mem_id varchar(15) primary key,
+		mem_pw varchar(20) not null,
+		mem_name varchar(20) not null,
+		mem_date timestamp default now()
+);

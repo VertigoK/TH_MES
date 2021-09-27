@@ -4,9 +4,9 @@ $(document).ready(function() {
 			type : "post",
 			url : "/production",
 			data : "",
-			success : function() {
-				window.location.href = "/lv1/production.jsp";
-			}
+//			success : function() {
+//				window.location.href = "/lv1/production.jsp";
+//			}
 		});
 	});
 });
