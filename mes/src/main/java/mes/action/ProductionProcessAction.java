@@ -17,7 +17,7 @@ public class ProductionProcessAction implements Action {
 		
 		
 		// isRedirect = false (기본값) -> forward() 사용
-		forward.setPath("/lv2/productionprocess.jsp");
+		forward.setPath("/lv2/production_process.jsp");
 		
 		return forward;
 		
