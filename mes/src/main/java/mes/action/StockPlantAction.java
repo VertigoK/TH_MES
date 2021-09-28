@@ -17,7 +17,7 @@ public class StockPlantAction implements Action {
 		
 		
 		// isRedirect = false (기본값) -> forward() 사용
-		forward.setPath("/lv2/stockplant.jsp");
+		forward.setPath("/lv2/stock_plant.jsp");
 		
 		return forward;
 		

@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 
 public class ProductionBean {
 	
-	private String serial_no;
 	private int plant_cd;
 	private int line_cd;
 	private int item_cd;
 	private int worker_no;
+	private String serial_no;
 	private float dim_x;
 	private float dim_y;
 	private float dim_h;
@@ -23,12 +23,6 @@ public class ProductionBean {
 	private float hole_ratio;
 	private Timestamp prd_dt;
 	
-	public String getSerial_no() {
-		return serial_no;
-	}
-	public void setSerial_no(String serial_no) {
-		this.serial_no = serial_no;
-	}
 	public int getPlant_cd() {
 		return plant_cd;
 	}
@@ -52,6 +46,12 @@ public class ProductionBean {
 	}
 	public void setWorker_no(int worker_no) {
 		this.worker_no = worker_no;
+	}
+	public String getSerial_no() {
+		return serial_no;
+	}
+	public void setSerial_no(String serial_no) {
+		this.serial_no = serial_no;
 	}
 	public float getDim_x() {
 		return dim_x;

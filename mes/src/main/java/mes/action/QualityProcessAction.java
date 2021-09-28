@@ -17,7 +17,7 @@ public class QualityProcessAction implements Action {
 		
 		
 		// isRedirect = false (기본값) -> forward() 사용
-		forward.setPath("/lv2/qualityprocess.jsp");
+		forward.setPath("/lv2/quality_process.jsp");
 		
 		return forward;
 		

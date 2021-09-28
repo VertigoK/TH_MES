@@ -17,7 +17,7 @@ public class StockItemAction implements Action {
 		
 		
 		// isRedirect = false (기본값) -> forward() 사용
-		forward.setPath("/lv2/stockitem.jsp");
+		forward.setPath("/lv2/stock_item.jsp");
 		
 		return forward;
 		
