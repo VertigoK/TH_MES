@@ -12,8 +12,8 @@ public class WorkOrderBean {
 	private String start_shift;
 	private Date end_date;
 	private String end_shift;
-	private boolean flag_end;
 	private int plan_qty;
+	private boolean flag_end;
 	
 	public int getWo_no() {
 		return wo_no;
@@ -63,17 +63,17 @@ public class WorkOrderBean {
 	public void setEnd_shift(String end_shift) {
 		this.end_shift = end_shift;
 	}
-	public boolean isFlag_end() {
-		return flag_end;
-	}
-	public void setFlag_end(boolean flag_end) {
-		this.flag_end = flag_end;
-	}
 	public int getPlan_qty() {
 		return plan_qty;
 	}
 	public void setPlan_qty(int plan_qty) {
 		this.plan_qty = plan_qty;
 	}
-	
+	public boolean isFlag_end() {
+		return flag_end;
+	}
+	public void setFlag_end(boolean flag_end) {
+		this.flag_end = flag_end;
+	}
+		
 }

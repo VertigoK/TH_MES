@@ -9,8 +9,9 @@
 </head>
 <body>
 <%
-    Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\Test\\JSP_Test\\WebContent\\run_python_from_jsp.py");
-    BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()));  
+    Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\Test\\JSP_Test\\WebContent\\py\\make_plot.py");
+    BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+    
     String line = null;
     
     while ((line = br.readLine()) != null) {  

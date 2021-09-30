@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<style>
+    <link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
+   	<style>
 		.table1 {
 			font-family: Helvectica;
 			font-size: 10;
@@ -26,50 +27,57 @@
 	<title>공장별 생산 현황</title>
 </head>
 <body>
-	<h3>Plant <%=no%> 생산 현황</h3>
-	<table class="table1 table-striped">
-		<tr>
-			<th>공장코드</th>
-			<th>라인코드</th>
-			<th>픔목코드</th>
-			<th>근무자번호</th>
-			<th>제품일련번호</th>
-			<th>가로길이</th>
-			<th>세로길이</th>
-			<th>가로면 세로편차</th>
-			<th>세로면 가로편차</th>
-			<th>홀 가로길이</th>
-			<th>홀 세로길이</th>
-			<th>홀 가로중심</th>
-			<th>홀 세로중심</th>
-			<th>가로 직진도</th>
-			<th>세로 직진도</th>
-			<th>홀 직경</th>
-			<th>홀 비율</th>
-			<th>생산시간</th>
-		</tr>
-		<c:forEach var="production" items="${productionList}">
-		<tr>
-			<td>${production.getPlant_cd()}</td>
-			<td>${production.getLine_cd()}</td>
-			<td>${production.getItem_cd()}</td>
-			<td>${production.getWorker_no()}</td>
-			<td>${production.getSerial_no()}</td>
-			<td>${production.getDim_x()}</td>
-			<td>${production.getDim_y()}</td>
-			<td>${production.getDim_h()}</td>
-			<td>${production.getDim_w()}</td>
-			<td>${production.getHole_x()}</td>
-			<td>${production.getHole_y()}</td>
-			<td>${production.getHole_xc()}</td>
-			<td>${production.getHole_yc()}</td>
-			<td>${production.getStr_x()}</td>
-			<td>${production.getStr_y()}</td>
-			<td>${production.getHole_d()}</td>
-			<td>${production.getHole_ratio()}</td>
-			<td>${production.getPrd_dt()}</td>
-		</tr>
-		</c:forEach>
-	</table>
+	<div id="header">
+		<jsp:include page="/layout/header.jsp" />
+	</div>
+	<div id="navigation">
+		<jsp:include page="/layout/navigation.jsp" />
+	</div>
+	<div class="content" align="center">
+		<table class="table1 table-striped">
+			<tr>
+				<th>공장코드</th>
+				<th>라인코드</th>
+				<th>픔목코드</th>
+				<th>근무자번호</th>
+				<th>제품일련번호</th>
+				<th>가로길이</th>
+				<th>세로길이</th>
+				<th>가로면 세로편차</th>
+				<th>세로면 가로편차</th>
+				<th>홀 가로길이</th>
+				<th>홀 세로길이</th>
+				<th>홀 가로중심</th>
+				<th>홀 세로중심</th>
+				<th>가로 직진도</th>
+				<th>세로 직진도</th>
+				<th>홀 직경</th>
+				<th>홀 비율</th>
+				<th>생산시간</th>
+			</tr>
+			<c:forEach var="production" items="${productionList}">
+			<tr>
+				<td>${production.getPlant_cd()}</td>
+				<td>${production.getLine_cd()}</td>
+				<td>${production.getItem_cd()}</td>
+				<td>${production.getWorker_no()}</td>
+				<td>${production.getSerial_no()}</td>
+				<td>${production.getDim_x()}</td>
+				<td>${production.getDim_y()}</td>
+				<td>${production.getDim_h()}</td>
+				<td>${production.getDim_w()}</td>
+				<td>${production.getHole_x()}</td>
+				<td>${production.getHole_y()}</td>
+				<td>${production.getHole_xc()}</td>
+				<td>${production.getHole_yc()}</td>
+				<td>${production.getStr_x()}</td>
+				<td>${production.getStr_y()}</td>
+				<td>${production.getHole_d()}</td>
+				<td>${production.getHole_ratio()}</td>
+				<td>${production.getPrd_dt()}</td>
+			</tr>
+			</c:forEach>
+		</table>
+	</div>
 </body>
 </html>

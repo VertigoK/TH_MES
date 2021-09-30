@@ -1,12 +1,15 @@
 $(document).ready(function() {
-	$("#someName").click(function() {
+	$("#runPython").click(function() {
 		$.ajax({
 			type : "post",
-			url : "/production",
+			url : "/generate",
 			data : "",
-//			success : function() {
-//				window.location.href = "/lv1/production.jsp";
-//			}
+			success : function() {
+				window.location.href = "/misc/data_generated.jsp";
+			}
 		});
 	});
+//	$("#periodicCall").click(function() {
+//		$("#div1").load("run_python.jsp");
+//	});
 });

@@ -34,7 +34,8 @@ import mes.dto.ActionForward;
 
 @WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp", "/custOrderForm", "/custOrder",
 						   "/production", "/production/*", "/quality", "/quality/*",
-						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*"})
+						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*",
+						   "/generate", "/generate/*"})
 public class MESFrontController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -55,7 +56,7 @@ public class MESFrontController extends HttpServlet {
 		
 		ActionForward forward = null;
 		Action action = null;
-		
+			
 		if(command.equals("/logInForm")) {
 			forward = new ActionForward();
 			forward.setRedirect(true);
@@ -88,7 +89,7 @@ public class MESFrontController extends HttpServlet {
 		} else if(command.equals("/custOrderForm")) {
 			forward = new ActionForward();
 			forward.setRedirect(true);
-			forward.setPath("/misc/custorder.jsp");
+			forward.setPath("/misc/customer_order.jsp");
 		} else if(command.equals("/custOrder")) {
 			action = new CustOrderAction();
 			try {
@@ -206,6 +207,16 @@ public class MESFrontController extends HttpServlet {
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/generate")) {
+			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\generateData.py");
+		    pr.getErrorStream().close();
+		    pr.getInputStream().close();
+		    pr.getOutputStream().close();
+		    try {
+				pr.waitFor();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
