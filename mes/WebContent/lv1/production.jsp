@@ -7,45 +7,27 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<style>        
-		.dropdown {
-		  display: inline-block;
-		  position: relative;
-		}
-		.dropdown-content {
-		  display: none;
-		  position: absolute;
-		  width: 100%;
-		  overflow: auto;
-		  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
-		}
-		.dropdown:hover .dropdown-content {
-		  display: block;
-		}
-		.dropdown-content a {
-		  display: block;
-		  color: #000000;
-		  padding: 5px;
-		  text-decoration: none;
-		}
-		.dropdown-content a:hover {
-		  color: #FFFFFF;
-		  background-color: #00A4BD;
-		}
-    </style>
+	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
+	<script src="js/ajax.js" type="text/javascript"></script>
     <title>생산 현황</title>
 </head>
 <body>
-	<div class="container" align="center">
+	<div id="header">
+		<jsp:include page="/layout/header.jsp" />
+	</div>
+	<div id="navigation">
+		<jsp:include page="/layout/navigation.jsp" />
+	</div>
+	<div class="content" align="center">
 		<div class="dropdown">
-  			<button>공장별 현황</button>
+  			<button class="btn btn-info">공장별 현황</button>
   			<div class="dropdown-content">
 				<a href="/production/plant?id=plant_cd&no=1">공장 1</a>
 				<a href="/production/plant?id=plant_cd&no=2">공장 2</a>
 			</div>
 		</div>
 		<div class="dropdown">
-  			<button>라인별 현황</button>
+  			<button class="btn btn-info">라인별 현황</button>
   			<div class="dropdown-content">
 				<a href="/production/line?id=line_cd&no=1">라인 1</a>
 				<a href="/production/line?id=line_cd&no=2">라인 2</a>
@@ -63,6 +45,7 @@
 <!-- 				<a href="/production/process?id=process_cd&no=3">조립</a> -->
 <!-- 			</div> -->
 <!-- 		</div> -->
+	<button id="runPython" class="btn btn-warning">생산 시작</button>
 	</div>
 </body>
 </html>

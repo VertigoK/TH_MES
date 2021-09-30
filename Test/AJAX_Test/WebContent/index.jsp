@@ -8,8 +8,8 @@
 	<script src="js/ajax.js" type="text/javascript"></script>
 </head>
 <body>
-	Hit the button to move to the next page!
+	<h3>Hit the button to run a python file.</h3>
 	<br />
-	<button id="nextPage">Next Page</button>
+	<button id="runPython">Run a python file.</button>
 </body>
 </html>

@@ -7,4 +7,4 @@ y = x**2
 print(x, y)
 
 plt.plot(x, y)
-plt.savefig("C:\\projects\\TH_MES\\Test\\JSP_Test\\WebContent\\run_python_from_jsp.png")
+plt.savefig("C:\\projects\\TH_MES\\Test\\JSP_Test\\WebContent\\py\\run_python.png")

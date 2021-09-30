@@ -3,11 +3,13 @@ package mes.dao;
 import static db.JDBCUtility.close;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import mes.dto.CustomerOrderBean;
 import mes.dto.EquipmentBean;
 import mes.dto.ProductionBean;
 import mes.dto.QualityBean;
@@ -171,6 +173,88 @@ public class MESDAO {
 		
 		return qualityList;
 	}
+	
+	// 고객사 제품 발주 정보 등록 
+	public ArrayList<Integer> insertCustOrder(int plant_cd, int item_cd, int cust_cd,
+											  int order_qty, Date delivery_date) {
+		
+		ArrayList<Integer> custOrderResult = new ArrayList<Integer>();
+		
+		int order_no = 0;
+		int insertCustOrderCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql1 = "select max(order_no) from cust_order";
+		String sql2 = "insert into cust_order(plant_cd, item_cd, order_no, cust_cd, order_qty, delivery_date) " +
+					  "values(?,?,?,?,?,?)";
+		
+		try {
+			// 1. 자동 생성된 주문번호 가져오기 (order_no 리턴)
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) order_no = rs.getInt(1) + 1;
+			else order_no = 1;
+			close(pstmt, rs);
+			
+			// 2. cust_order 테이블에 등록하기 (insertCustOrderCount 리턴)
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, plant_cd);
+			pstmt.setInt(2, item_cd);
+			pstmt.setInt(3, order_no);
+			pstmt.setInt(4, cust_cd);
+			pstmt.setInt(5, order_qty);
+			pstmt.setDate(6, delivery_date);
+			insertCustOrderCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("고객사 제품 발주 정보 등록 실패!" + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		custOrderResult.add(order_no);
+		custOrderResult.add(insertCustOrderCount);
+		
+		return custOrderResult;
+		
+	}
+
+	// 고객사 제품 발주 정보 조회
+	public CustomerOrderBean selectCustOrder(int order_no) {
+		
+		CustomerOrderBean custOrder = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from cust_order where order_no = " + order_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				custOrder = new CustomerOrderBean();
+				custOrder.setOrder_no(rs.getInt("order_no"));
+				custOrder.setCust_cd(rs.getInt("cust_cd"));
+				custOrder.setPlant_cd(rs.getInt("plant_cd"));
+				custOrder.setItem_cd(rs.getInt("item_cd"));
+				custOrder.setOrder_qty(rs.getInt("order_qty"));
+				custOrder.setOrder_date(rs.getDate("order_date"));
+				custOrder.setDelivery_date(rs.getDate("delivery_date"));
+				custOrder.setFinished_date(rs.getDate("finished_date"));
+				custOrder.setOrder_status(rs.getBoolean("order_status"));
+				custOrder.setDelayed_date(rs.getInt("delayed_date"));
+			}
+		} catch (SQLException e) {
+			System.out.println("고객사 제품 발주 정보 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return custOrder;
+		
+	}
+	
+	
 	
 	// Production Status 보기
 	

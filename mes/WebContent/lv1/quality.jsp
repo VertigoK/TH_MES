@@ -7,36 +7,17 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<style>        
-		.dropdown {
-		  display: inline-block;
-		  position: relative;
-		}
-		.dropdown-content {
-		  display: none;
-		  position: absolute;
-		  width: 100%;
-		  overflow: auto;
-		  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
-		}
-		.dropdown:hover .dropdown-content {
-		  display: block;
-		}
-		.dropdown-content a {
-		  display: block;
-		  color: #000000;
-		  padding: 5px;
-		  text-decoration: none;
-		}
-		.dropdown-content a:hover {
-		  color: #FFFFFF;
-		  background-color: #00A4BD;
-		}
-    </style>
+	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>품질 현황</title>
 </head>
 <body>
-	<div class="container" align="center">
+	<div id="header">
+		<jsp:include page="/layout/header.jsp" />
+	</div>
+	<div id="navigation">
+		<jsp:include page="/layout/navigation.jsp" />
+	</div>
+	<div class="content" align="center">
 		<div class="dropdown">
   			<button>공장별 현황</button>
   			<div class="dropdown-content">

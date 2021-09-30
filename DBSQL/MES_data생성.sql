@@ -35,13 +35,13 @@ begin not atomic
 			insert into process(plant_cd, line_cd, process_cd, process_nm, use_type)
 			values(i, k, concat('cut_',k), '커팅', '생산');
 			insert into process(plant_cd, line_cd, process_cd, process_nm, use_type)
-			values(i, k, concat('dril_',k), '드릴링', '생산');
+			values(i, k, concat('drill_',k), '드릴링', '생산');
 			insert into process(plant_cd, line_cd, process_cd, process_nm, use_type)
 			values(i, k, concat('assem_',k), '조립', '생산');
 			insert into process(plant_cd, line_cd, process_cd, process_nm, use_type)
 			values(i, k, concat('qc_cut_',k), '수치검사', '검사');
 			insert into process(plant_cd, line_cd, process_cd, process_nm, use_type)
-			values(i, k, concat('qc_dril_',k), '홀검사', '검사');
+			values(i, k, concat('qc_drill_',k), '홀검사', '검사');
 			set j = j + 1;
 			set k = k + 1;
 		end while;
@@ -96,13 +96,13 @@ begin not atomic
 			insert into equipment(plant_cd, line_cd, process_cd, equip_cd, equip_nm, equip_model, use_type)
 			values(i, k, concat('cut_',k), 'eq_cut', concat('커팅머신',k,'호기'), concat('CM-',l), '생산');
 			insert into equipment(plant_cd, line_cd, process_cd, equip_cd, equip_nm, equip_model, use_type)
-			values(i, k, concat('dril_',k), 'eq_dril', concat('드릴링머신',k,'호기'), concat('DM-',l), '생산');
+			values(i, k, concat('drill_',k), 'eq_drill', concat('드릴링머신',k,'호기'), concat('DM-',l), '생산');
 			insert into equipment(plant_cd, line_cd, process_cd, equip_cd, equip_nm, equip_model, use_type)
 			values(i, k, concat('assem_',k), 'eq_assem', concat('조립로봇',k,'호기'), concat('AR-',l), '생산');
 			insert into equipment(plant_cd, line_cd, process_cd, equip_cd, equip_nm, equip_model, use_type)
 			values(i, k, concat('qc_cut_',k), 'eq_qc_cut', concat('치수검사기',k,'호기'), concat('DMI-',l), '검사');
 			insert into equipment(plant_cd, line_cd, process_cd, equip_cd, equip_nm, equip_model, use_type)
-			values(i, k, concat('qc_dril_',k), 'eq_qc_dril', concat('홀검사기',k,'호기'), concat('HMI-',l), '검사');
+			values(i, k, concat('qc_drill_',k), 'eq_qc_drill', concat('홀검사기',k,'호기'), concat('HMI-',l), '검사');
 			set j = j + 1;
 			set k = k + 1;
 		end while;

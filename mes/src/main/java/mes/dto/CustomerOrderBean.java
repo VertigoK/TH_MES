@@ -5,9 +5,9 @@ import java.sql.Date;
 public class CustomerOrderBean {
 	
 	private int order_no;
-	private int item_cd;
-	private int plant_cd;
 	private int cust_cd;
+	private int plant_cd;
+	private int item_cd;
 	private int order_qty;
 	private Date order_date;
 	private Date delivery_date;
@@ -21,11 +21,11 @@ public class CustomerOrderBean {
 	public void setOrder_no(int order_no) {
 		this.order_no = order_no;
 	}
-	public int getItem_cd() {
-		return item_cd;
+	public int getCust_cd() {
+		return cust_cd;
 	}
-	public void setItem_cd(int item_cd) {
-		this.item_cd = item_cd;
+	public void setCust_cd(int cust_cd) {
+		this.cust_cd = cust_cd;
 	}
 	public int getPlant_cd() {
 		return plant_cd;
@@ -33,11 +33,11 @@ public class CustomerOrderBean {
 	public void setPlant_cd(int plant_cd) {
 		this.plant_cd = plant_cd;
 	}
-	public int getCust_cd() {
-		return cust_cd;
+	public int getItem_cd() {
+		return item_cd;
 	}
-	public void setCust_cd(int cust_cd) {
-		this.cust_cd = cust_cd;
+	public void setItem_cd(int item_cd) {
+		this.item_cd = item_cd;
 	}
 	public int getOrder_qty() {
 		return order_qty;
@@ -75,5 +75,5 @@ public class CustomerOrderBean {
 	public void setDelayed_date(int delayed_date) {
 		this.delayed_date = delayed_date;
 	}
-	
+		
 }
