@@ -18,7 +18,7 @@ public class QualityPlantAction implements Action {
 		int no = Integer.parseInt(req.getParameter("no"));
 		
 		QualityPlantService qualityPlantService = new QualityPlantService();
-		ArrayList<QualityBean> qualityList = new ArrayList<QualityBean>();
+		ArrayList<QualityBean> qualityList = null;
 		qualityList = qualityPlantService.getQualityList(id, no);
 		req.setAttribute("qualityList", qualityList);
 		

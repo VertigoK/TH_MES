@@ -23,7 +23,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>공장별 설비 현황</title>
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">

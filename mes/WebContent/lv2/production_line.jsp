@@ -3,6 +3,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<ProductionBean> productiontList = (ArrayList<ProductionBean>) request.getAttribute("productionList");
 	String no = request.getParameter("no");
 %>
@@ -24,8 +25,8 @@
 			width: 100%;
 			text-align: center;
 		}
-	</style>    
-	<title>라인별 생산 현황</title>
+	</style>
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">

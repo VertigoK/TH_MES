@@ -18,7 +18,7 @@ public class ProductionLineAction implements Action {
 		int no = Integer.parseInt(req.getParameter("no"));
 		
 		ProductionLineService productionLineService = new ProductionLineService();
-		ArrayList<ProductionBean> productionList = new ArrayList<ProductionBean>();
+		ArrayList<ProductionBean> productionList = null;
 		productionList = productionLineService.getProductionList(id, no);
 		req.setAttribute("productionList", productionList);
 		

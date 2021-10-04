@@ -17,7 +17,7 @@ import mes.dto.CustomerOrderBean;
 
 public class CustOrderService {
 
-	public List<Object> custOrderProduct(int plant_cd, int item_cd, int cust_cd, int order_qty, Date delivery_date) {
+	public List<Object> custOrderProduct(int cust_cd, int plant_cd, int item_cd, int order_qty, Date delivery_date) {
 		
 		// cust_order 테이블에 새 레코드 생성
 		boolean isCustOrderSuccess = false;
@@ -28,9 +28,9 @@ public class CustOrderService {
 		MESDAO mesDAO = MESDAO.getInstance();
 		mesDAO.setConnection(conn);
 		
-		ArrayList<Integer> custOrderResult = mesDAO.insertCustOrder(plant_cd, item_cd, cust_cd, order_qty, delivery_date);
-		order_no = custOrderResult.get(0);
-		insertCustOrderCount = custOrderResult.get(1);
+		ArrayList<Integer> insertCustOrderResult = mesDAO.insertCustOrder(cust_cd, plant_cd, item_cd, order_qty, delivery_date);
+		order_no = insertCustOrderResult.get(0);
+		insertCustOrderCount = insertCustOrderResult.get(1);
 		
 		if(insertCustOrderCount > 0) {
 			commit(conn);

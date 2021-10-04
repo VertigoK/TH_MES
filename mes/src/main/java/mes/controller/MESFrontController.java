@@ -18,6 +18,11 @@ import mes.action.EquipmentProcessAction;
 import mes.action.HRAction;
 import mes.action.LogInAction;
 import mes.action.LogOutAction;
+import mes.action.OrderAction;
+import mes.action.OrderInListAction;
+import mes.action.OrderOutListAction;
+import mes.action.OurOrderAction;
+import mes.action.OurOrderAutoAction;
 import mes.action.ProductionLineAction;
 import mes.action.ProductionPlantAction;
 import mes.action.ProductionProcessAction;
@@ -30,11 +35,14 @@ import mes.action.SignUpAction;
 import mes.action.StockAction;
 import mes.action.StockItemAction;
 import mes.action.StockPlantAction;
+import mes.action.WorkOrderAction;
+import mes.action.WorkOrderFormAction;
+import mes.action.CheckOrderStockAction;
 import mes.dto.ActionForward;
 
-@WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp", "/custOrderForm", "/custOrder",
+@WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp",
 						   "/production", "/production/*", "/quality", "/quality/*",
-						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*",
+						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*", "/order", "/order/*",
 						   "/generate", "/generate/*"})
 public class MESFrontController extends HttpServlet {
 	
@@ -53,6 +61,11 @@ public class MESFrontController extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 //		String command = req.getServletPath();
 		String command = req.getRequestURI();
+			
+		// /////////////////////////
+		// 주소 확인용 (나중에 삭제 예정)
+		System.out.println(command);
+		// /////////////////////////
 		
 		ActionForward forward = null;
 		Action action = null;
@@ -86,17 +99,6 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/custOrderForm")) {
-			forward = new ActionForward();
-			forward.setRedirect(true);
-			forward.setPath("/misc/customer_order.jsp");
-		} else if(command.equals("/custOrder")) {
-			action = new CustOrderAction();
-			try {
-				forward = action.execute(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		} else if(command.equals("/production")) {
 			action = new ProductionAction();
 			try {
@@ -120,6 +122,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/stock")) {
 			action = new StockAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order")) {
+			action = new OrderAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {
@@ -204,6 +213,70 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/stock/item")) {
 			action = new StockItemAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/inList")) {
+			action = new OrderInListAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/outList")) {
+			action = new OrderOutListAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/custOrderForm")) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("/form/customer_order.jsp");
+		} else if(command.equals("/order/custOrder")) {
+			action = new CustOrderAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/ourOrderForm")) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("/form/our_order.jsp");
+		} else if(command.equals("/order/ourOrder")) {
+			action = new OurOrderAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/inList/checkOrderStock")) {
+			action = new CheckOrderStockAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/production/workOrderForm")) {
+			action = new WorkOrderFormAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/production/workOrder")) {
+			action = new WorkOrderAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/ourOrderAuto")) {
+			action = new OurOrderAutoAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {
