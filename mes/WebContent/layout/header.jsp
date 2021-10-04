@@ -51,8 +51,8 @@
 		</div>
 		<div class="right">
 			<a href="/logInForm" class="btn shadow-none">Log In</a>
-			<!-- <a href="/logOut" class="btn shadow-none">Log out</a> -->
-			<a href="/custOrderForm" class="btn shadow-none">주문</a>		
+<!-- 			<a href="/logOut" class="btn shadow-none">Log out</a> -->
+<!-- 			<a href="/custOrderForm" class="btn shadow-none">주문</a>		 -->
 		</div>
 	</div>
 </body>

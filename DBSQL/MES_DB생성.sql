@@ -91,6 +91,12 @@ ALTER TABLE `PRODUCTION_HIST`
 			`WO_NO` -- 생산지시번호
 		);
 
+ALTER TABLE `PRODUCTION_HIST`
+	MODIFY COLUMN `WO_NO` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `PRODUCTION_HIST`
+	AUTO_INCREMENT = 1;
+
 -- 생산정보 테이블
 CREATE TABLE `PRODUCTION` (
 	`PLANT_CD`   INT         NOT NULL, -- 공장코드
@@ -141,6 +147,12 @@ ALTER TABLE `WORK_ORDER`
 			`WO_NO` -- 생산지시번호
 		);
 
+ALTER TABLE `WORK_ORDER`
+	MODIFY COLUMN `WO_NO` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `WORK_ORDER`
+	AUTO_INCREMENT = 1;
+
 -- 설비 테이블
 CREATE TABLE `EQUIPMENT` (
 	`PLANT_CD`    INT         NOT NULL, -- 공장코드
@@ -154,7 +166,7 @@ CREATE TABLE `EQUIPMENT` (
 	`USE_TYPE`    VARCHAR(15) NOT NULL, -- 타입
 	`USE_YN`      BOOLEAN     NOT NULL DEFAULT TRUE, -- 사용여부
 	`ERROR_CD`    INT         NULL,     -- 에러코드
-	`RUN_TIME`    INT         NOT NULL DEFAULT 0 -- 가동시간
+	`RUN_TIME`    FLOAT       NOT NULL DEFAULT 0 -- 가동시간
 );
 
 -- 설비 테이블
@@ -233,6 +245,12 @@ ALTER TABLE `CUST_ORDER`
 			`ORDER_NO` -- 주문번호
 		);
 
+ALTER TABLE `CUST_ORDER`
+	MODIFY COLUMN `ORDER_NO` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `CUST_ORDER`
+	AUTO_INCREMENT = 1;
+
 -- 창고 테이블
 CREATE TABLE `STORAGE` (
 	`PLANT_CD`     INT         NOT NULL, -- 공장코드
@@ -290,7 +308,7 @@ CREATE TABLE `ITEM_IO` (
 	`PLANT_CD`        INT         NOT NULL, -- 공장코드
 	`ITEM_CD`         INT         NULL,     -- 품목코드
 	`ITEM_TYPE`       VARCHAR(10) NULL,     -- 품목타입
-	`INOUT_CD`        VARCHAR(10) NOT NULL, -- 입출고코드
+	`INOUT_CD`        INT         NOT NULL, -- 입출고코드
 	`INOUT_DT`        TIMESTAMP   NOT NULL DEFAULT NOW(), -- 입출고시간
 	`INOUT_TYPE`      VARCHAR(10) NOT NULL, -- 입출고유형
 	`STORAGE_FROM`    INT         NOT NULL, -- 출발창고
@@ -307,6 +325,12 @@ ALTER TABLE `ITEM_IO`
 		PRIMARY KEY (
 			`INOUT_CD` -- 입출고코드
 		);
+
+ALTER TABLE `ITEM_IO`
+	MODIFY COLUMN `INOUT_CD` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `ITEM_IO`
+	AUTO_INCREMENT = 1;
 
 -- 품목재고현황 테이블
 CREATE TABLE `ITEM_STOCK` (
@@ -336,7 +360,7 @@ ALTER TABLE `ITEM_STOCK`
 CREATE TABLE `QUALITY` (
 	`PLANT_CD`        INT         NOT NULL, -- 공장코드
 	`LINE_CD`         INT         NOT NULL, -- 라인코드
-	`ITEM_CD`         INT         NULL,     -- 품목코드
+	`ITEM_CD`         INT         NOT NULL, -- 품목코드
 	`WORKER_NO`       INT         NOT NULL, -- 근무자번호
 	`SERIAL_NO`       VARCHAR(30) NOT NULL, -- 제품일련번호
 	`DIMCHECK_X`      BOOLEAN     NOT NULL, -- 가로길이검사
@@ -860,12 +884,59 @@ ALTER TABLE `QUALITY`
 		)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE;
-
 		
 -- 사용자 테이블 추가 (9/27/2021)
 create table member(
-		mem_id varchar(15) primary key,
-		mem_pw varchar(20) not null,
-		mem_name varchar(20) not null,
-		mem_date timestamp default now()
+      mem_id varchar(15) primary key,
+      mem_pw varchar(20) not null,
+      mem_nm varchar(20) not null,
+      mem_dt timestamp default now()
 );
+
+-- 자사 자재 발주 테이블 추가 (10/01/2021)
+CREATE TABLE `our_order` (
+  `ORDER_NO` int(11) NOT NULL AUTO_INCREMENT,
+  `CUST_CD` int(11) DEFAULT NULL,
+  `PLANT_CD` int(11) DEFAULT NULL,
+  `ITEM_CD` int(11) DEFAULT NULL,
+  `ORDER_QTY` int(11) DEFAULT NULL,
+  `ORDER_DT` timestamp NULL DEFAULT NULL,
+  `ORDER_STATUS` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`ORDER_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 자사 자재 발주 테이블
+ALTER TABLE `OUR_ORDER`
+	ADD CONSTRAINT `FK_ITEM_TO_OUR_ORDER` -- 품목 테이블 -> 자사 자재 발주 테이블
+		FOREIGN KEY (
+			`CUST_CD` -- 거래처
+		)
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`CUST_CD` -- 거래처
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+-- 자사 자재 발주 테이블
+ALTER TABLE `OUR_ORDER`
+	ADD CONSTRAINT `FK_PLANT_TO_OUR_ORDER` -- 공장 테이블 -> 자사 자재 발주 테이블
+		FOREIGN KEY (
+			`PLANT_CD` -- 공장코드
+		)
+		REFERENCES `PLANT` ( -- 공장 테이블
+			`PLANT_CD` -- 공장코드
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+-- 자사 자재 발주 테이블
+ALTER TABLE `OUR_ORDER`
+	ADD CONSTRAINT `FK_ITEM_TO_OUR_ORDER2` -- 품목 테이블 -> 자사 자재 발주 테이블2
+		FOREIGN KEY (
+			`ITEM_CD` -- 품목코드
+		)
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD` -- 품목코드
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;

@@ -56,6 +56,7 @@
 		<a href="/quality" class="btn shadow-none" id="quality">품질현황</a>
 		<a href="/equipment" class="btn shadow-none" id="equipment">설비현황</a>
 		<a href="/stock" class="btn shadow-none" id="stock">재고현황</a>
+		<a href="/order" class="btn shadow-none" id="hr">주문현황</a>
 		<a href="/hr" class="btn shadow-none" id="hr">HR현황</a>
 	</div>
 </body>

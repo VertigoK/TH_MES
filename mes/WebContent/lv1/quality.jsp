@@ -19,14 +19,14 @@
 	</div>
 	<div class="content" align="center">
 		<div class="dropdown">
-  			<button>공장별 현황</button>
+  			<button class="btn btn-info">공장별 현황</button>
   			<div class="dropdown-content">
 				<a href="/quality/plant?id=plant_cd&no=1">공장 1</a>
 				<a href="/quality/plant?id=plant_cd&no=2">공장 2</a>
 			</div>
 		</div>
 		<div class="dropdown">
-  			<button>라인별 현황</button>
+  			<button class="btn btn-info">라인별 현황</button>
   			<div class="dropdown-content">
 				<a href="/quality/line?id=line_cd&no=1">라인 1</a>
 				<a href="/quality/line?id=line_cd&no=2">라인 2</a>

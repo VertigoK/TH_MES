@@ -3,25 +3,25 @@ package mes.dto;
 import java.sql.Timestamp;
 
 public class LineBean {
-	
-	private int plant_cd;
+
 	private int line_cd;
+	private int plant_cd;
 	private String line_nm;
 	private boolean use_yn;
 	private String remark;
 	private Timestamp update_dt;
 	
-	public int getPlant_cd() {
-		return plant_cd;
-	}
-	public void setPlant_cd(int plant_cd) {
-		this.plant_cd = plant_cd;
-	}
 	public int getLine_cd() {
 		return line_cd;
 	}
 	public void setLine_cd(int line_cd) {
 		this.line_cd = line_cd;
+	}
+	public int getPlant_cd() {
+		return plant_cd;
+	}
+	public void setPlant_cd(int plant_cd) {
+		this.plant_cd = plant_cd;
 	}
 	public String getLine_nm() {
 		return line_nm;

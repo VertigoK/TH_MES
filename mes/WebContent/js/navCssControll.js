@@ -15,6 +15,9 @@ $(document).ready(function() {
 	if (loc == "http://localhost:8088/stock") {
 		$("#stock").addClass("active");
 	};
+		if (loc == "http://localhost:8088/order") {
+		$("#order").addClass("active");
+	};
 	if (loc == "http://localhost:8088/hr") {
 		$("#hr").addClass("active");
 	};

@@ -18,7 +18,7 @@ public class EquipmentPlantAction implements Action {
 		int no = Integer.parseInt(req.getParameter("no"));
 		
 		EquipmentPlantService equipmentPlantService = new EquipmentPlantService();
-		ArrayList<EquipmentBean> equipmentList = new ArrayList<EquipmentBean>();
+		ArrayList<EquipmentBean> equipmentList = null;
 		equipmentList = equipmentPlantService.getEquipmentList(id, no);
 		req.setAttribute("equipmentList", equipmentList);
 
