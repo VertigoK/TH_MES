@@ -25,6 +25,7 @@ public class WorkOrderAction implements Action {
 		CustomerOrderBean custOrder = (CustomerOrderBean) session.getAttribute("custOrderInfo");
 		int plant_cd = custOrder.getPlant_cd();
 		int order_no = custOrder.getOrder_no();
+		int item_cd = custOrder.getItem_cd();
 		
 		int line_cd = Integer.parseInt(req.getParameter("line_cd"));
 		Date start_date = Date.valueOf(req.getParameter("start_date"));
@@ -41,7 +42,8 @@ public class WorkOrderAction implements Action {
 		String end_shift = (String) endDateShift.get(1);
 		
 		// 2. 생산지시 정보 DB에 등록
-		List<Object> workOrderResult = workOrderService.registerWorkOrder(plant_cd, line_cd, order_no, start_date, start_shift, end_date, end_shift, plan_qty);
+		List<Object> workOrderResult = workOrderService.registerWorkOrder(plant_cd, line_cd, order_no, item_cd,
+				start_date, start_shift, end_date, end_shift, plan_qty);
 		isWorkOrderSuccess = (boolean) workOrderResult.get(0);
 		wo_no = (int) workOrderResult.get(1);
 		

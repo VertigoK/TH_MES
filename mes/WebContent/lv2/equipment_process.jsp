@@ -31,7 +31,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>공정별 설비 현황</title>
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">
@@ -41,6 +41,7 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
+		<h5>공정별 설비 현황</h5>
 		<table class="table1 table-striped">
 			<tr>
 				<th>공장코드</th>

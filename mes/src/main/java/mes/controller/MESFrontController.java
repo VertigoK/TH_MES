@@ -37,13 +37,14 @@ import mes.action.StockItemAction;
 import mes.action.StockPlantAction;
 import mes.action.WorkOrderAction;
 import mes.action.WorkOrderFormAction;
+import mes.action.WorkOrderListAction;
 import mes.action.CheckOrderStockAction;
 import mes.dto.ActionForward;
 
 @WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp",
 						   "/production", "/production/*", "/quality", "/quality/*",
 						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*", "/order", "/order/*",
-						   "/generate", "/generate/*"})
+						   "/generate", "/generate/*", "/notice", "/notice/*"})
 public class MESFrontController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -99,6 +100,10 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if(command.equals("/notice")) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("/misc/notice.jsp");
 		} else if(command.equals("/production")) {
 			action = new ProductionAction();
 			try {
@@ -275,6 +280,13 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if(command.equals("/production/workOrderList")) {
+			action = new WorkOrderListAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if(command.equals("/order/ourOrderAuto")) {
 			action = new OurOrderAutoAction();
 			try {
@@ -282,8 +294,13 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/generate")) {
-			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\generateData.py");
+		} else if(command.equals("/production/start")) {
+			
+			// wo_no를 generationData.py에 매개변수로 넘겨주기 위한 추가 코드 필요 !!!
+			int wo_no = Integer.parseInt(req.getParameter("wo_no"));
+			
+			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\test.py");
+//			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\generateData.py");
 		    pr.getErrorStream().close();
 		    pr.getInputStream().close();
 		    pr.getOutputStream().close();
@@ -292,6 +309,9 @@ public class MESFrontController extends HttpServlet {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		    forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("/misc/data_generated.jsp");
 		}
 		
 		// sendRedirect() or forward() 선택

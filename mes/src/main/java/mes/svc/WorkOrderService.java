@@ -49,8 +49,8 @@ public class WorkOrderService {
 		
 	}
 
-	public List<Object> registerWorkOrder(int plant_cd, int line_cd, int order_no, Date start_date, String start_shift,
-			Date end_date, String end_shift, int plan_qty) {
+	public List<Object> registerWorkOrder(int plant_cd, int line_cd, int order_no, int item_cd,
+			Date start_date, String start_shift, Date end_date, String end_shift, int plan_qty) {
 		
 		boolean isWorkOrderSuccess = false;
 		int wo_no = 0;
@@ -60,8 +60,8 @@ public class WorkOrderService {
 		MESDAO mesDAO = MESDAO.getInstance();
 		mesDAO.setConnection(conn);
 		
-		ArrayList<Integer> insertWorkOrderResult = mesDAO.insertWorkOrder(plant_cd, line_cd, order_no, start_date,
-				start_shift, end_date, end_shift, plan_qty);
+		ArrayList<Integer> insertWorkOrderResult = mesDAO.insertWorkOrder(plant_cd, line_cd, order_no, item_cd,
+				start_date, start_shift, end_date, end_shift, plan_qty);
 		insertWorkOrderCount = insertWorkOrderResult.get(0);
 		wo_no = insertWorkOrderResult.get(1);
 		

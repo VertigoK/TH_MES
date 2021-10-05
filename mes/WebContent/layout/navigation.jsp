@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <script src= "/js/navCssControll.js"></script>
     <style>
     	html, body {
@@ -15,8 +15,9 @@
     		width: 100%;
     	}
     	#tab {
+    		margin: 1px 0;
     		float: left;
-    		width: 100px;
+    		width: 50px;
     		height: 100%;
     		background-color: #0D0D0D;
     	}
@@ -24,7 +25,7 @@
 			display: block;
 			background: transparent;
 			color: white;
-			width: 100%;
+			margin: 0 auto;
 			padding: 10px 16px;
 			border: none;
 			outline: none;
@@ -33,10 +34,6 @@
 			cursor: pointer;
 			transition: 0.3s;
 			font-size: 17px;
-		}
-		a:focus, a:active, a:visited {
-		    outline: none;
-		    border: none;
 		}
 		#tab a:hover, #tab a.active {
 			background-color: white;
@@ -47,17 +44,21 @@
 			font-weight: bold;
 			overflow: hidden;
 		}
+		i {
+			text-align: center;
+			width: 100%;
+		}
     </style>
 </head>
 <body>
 	<div id="tab">
-		<a href="/" class="btn shadow-none" id="home">Home</a>
-		<a href="/production" class="btn shadow-none" id="product">생산현황</a>
-		<a href="/quality" class="btn shadow-none" id="quality">품질현황</a>
-		<a href="/equipment" class="btn shadow-none" id="equipment">설비현황</a>
-		<a href="/stock" class="btn shadow-none" id="stock">재고현황</a>
-		<a href="/order" class="btn shadow-none" id="hr">주문현황</a>
-		<a href="/hr" class="btn shadow-none" id="hr">HR현황</a>
+		<a href="/" class="btn shadow-none" id="home"><i class="fas fa-home"></i></a>
+		<a href="/production" class="btn shadow-none" id="product"><i class="fas fa-cogs"></i></a> <!-- 생산 -->
+		<a href="/quality" class="btn shadow-none" id="quality"><i class="fas fa-chart-line"></i></a> <!-- 품질 -->
+		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-sliders-h"></i></a> <!-- 설비 -->
+		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-warehouse"></i></a> <!-- 재고 -->
+		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-id-badge"></i></a> <!-- HR -->
+		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-arrow-circle-left"></i></a> <!-- 뒤로가기 -->
 	</div>
 </body>
 </html>

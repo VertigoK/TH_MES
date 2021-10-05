@@ -33,6 +33,7 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
+		<h5>공장별 설비 현황</h5>
 		<table class="table1 table-striped">
 			<tr>
 				<th>공장코드</th>

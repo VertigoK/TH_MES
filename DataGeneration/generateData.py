@@ -5,18 +5,18 @@ import csv
 import MySQLdb
 
 # 테스트를 위한 매개변수 값 설정 (1) - '제품 1' 생산
-# prdInfo = [1, 2, 1, 7]                                  # 공장코드, 라인코드, 품목코드, 근무자번호
-# prdTime = datetime(2021, 9, 17, 13, 51, 57)             # 첫 제품 생산시간
+# prdInfo = [1, 1, 2, 1, 7]                               # 생산지시번호, 공장코드, 라인코드, 품목코드, 근무자번호
+# prdTime = datetime(2021, 9, 17, 7, 0, 1)                # 첫 제품 생산시간
 # plan_qty = 100                                          # 계획 수량
 # specs = [40.0, 30.0, 0.0, 0.0, 5.0, 5.0, 0.0, 0.0]      # 8개 측정값의 규격치
-# tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]  # 8개 측정값의 허용치
+# tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
 # k = [2.3, 2.3, 2.2, 2.2, 2.3, 2.3, 2.4, 2.5]            # 불량률 조정 factor
 # specs_measured = [0.0, 0.0, 5.0, 1.0]                   # 4개 계산값의 규격치
 # tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
 
 # 테스트를 위한 매개변수 값 설정 (2) - '제품 3' 생산
-# prdInfo = [2, 5, 3, 13]                                 # 공장코드, 라인코드, 품목코드, 근무자번호
-# prdTime = datetime(2021, 9, 19, 8, 12, 35)              # 첫 제품 생산시간
+# prdInfo = [2, 2, 5, 3, 27]                              # 생산지시번호,공장코드, 라인코드, 품목코드, 근무자번호
+# prdTime = datetime(2021, 9, 18, 15, 0, 1)               # 첫 제품 생산시간
 # plan_qty = 150                                          # 계획 수량
 # specs = [50.0, 40.0, 0.0, 0.0, 4.0, 4.0, 0.0, 0.0]      # 8개 측정값의 규격치
 # tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
@@ -25,11 +25,11 @@ import MySQLdb
 # tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
 
 # 테스트를 위한 매개변수 값 설정 (3) - '제품 2' 생산
-prdInfo = [2, 4, 2, 19]                                  # 공장코드, 라인코드, 품목코드, 근무자번호
-prdTime = datetime(2021, 9, 21, 9, 10, 23)             # 첫 제품 생산시간
+prdInfo = [3, 2, 4, 2, 23]                              # 생산지시번호, 공장코드, 라인코드, 품목코드, 근무자번호
+prdTime = datetime(2021, 9, 18, 23, 0, 1)               # 첫 제품 생산시간
 plan_qty = 200                                          # 계획 수량
 specs = [30.0, 20.0, 0.0, 0.0, 3.0, 3.0, 0.0, 0.0]      # 8개 측정값의 규격치
-tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]  # 8개 측정값의 허용치
+tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
 k = [2.4, 2.4, 2.3, 2.2, 2.4, 2.4, 2.3, 2.4]            # 불량률 조정 factor
 specs_measured = [0.0, 0.0, 3.0, 1.0]                   # 4개 계산값의 규격치
 tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
@@ -40,7 +40,7 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     # 1. 생산정보 데이터 생성 및 저장
 
     # prdInfo로부터 각각의 변수값 구하기
-    plant_cd, line_cd, item_cd, worker_no = prdInfo
+    wo_no, plant_cd, line_cd, item_cd, worker_no = prdInfo
     prdInfoData = np.tile(np.array(prdInfo), (plan_qty, 1))
 
     # prd_dt를 저장할 빈 column 정의
@@ -79,20 +79,21 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     computedData = np.concatenate((str_x, str_y, hole_d, hole_ratio), axis=1)
 
     # 생산정보 데이터 모두 합치기
-    productionData = np.concatenate((prdInfoData, serial_noData, measuredData, computedData, prd_dtData), axis=1)
+    productionData = np.concatenate((serial_noData, prdInfoData, measuredData, computedData, prd_dtData), axis=1)
 
     # 생산정보 데이터를 CSV로 저장하기
     df = pd.DataFrame(productionData)
-    df.columns = ['plant_cd', 'line_cd', 'item_cd', 'worker_no', 'serial_no',
+    df.columns = ['serial_no', 'wo_no', 'plant_cd', 'line_cd', 'item_cd', 'worker_no',
                   'dim_x', 'dim_y', 'dim_h', 'dim_w', 'hole_x', 'hole_y', 'hole_xc', 'hole_yc',
                   'str_x', 'str_y', 'hole_d', 'hole_ratio', 'prd_dt']
-    df.to_csv('C:\projects\TH_MES\DataGeneration\Data\productionData.csv', index=False)
+    file_name_production = 'C:\projects\TH_MES\DataGeneration\Data\productionData_' + serial_no + '.csv'
+    df.to_csv(file_name_production, index=False)
 
 
     # 2. 품질검사정보 데이터 생성 및 저장
 
-    # 근무자번호 업데이트 (품질검사공정 근무자 = 생산공정 근무자 + 1)
-    prdInfo[3] += 1
+    # 근무자번호 업데이트 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
+    prdInfo[4] += 1
     prdInfoData = np.tile(np.array(prdInfo), (plan_qty, 1))
 
     # 품질검사에 사용할 8개의 규격치 재조합
@@ -115,18 +116,20 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     checkedData[:,8] = np.all(checkedData[:,:8], axis=1)
 
     # 품질검사정보 데이터 모두 합치기
-    qualityData =np.concatenate((prdInfoData, serial_noData, checkedData), axis=1)
+    qualityData =np.concatenate((serial_noData, prdInfoData, checkedData), axis=1)
 
+    # 품질검사정보 데이터를 CSV로 저장하기
     df = pd.DataFrame(qualityData)
-    df.columns = ['plant_cd', 'line_cd', 'item_cd', 'worker_no', 'serial_no',
+    df.columns = ['serial_no', 'wo_no', 'plant_cd', 'line_cd', 'item_cd', 'worker_no',
                   'dimcheck_x', 'dimcheck_y', 'holecheck_xc', 'holecheck_yc',
                   'dimcheck_hx', 'dimcheck_wy', 'holecheck_d', 'holecheck_ratio', 'check_result']
-    df.to_csv('C:\projects\TH_MES\DataGeneration\Data\qualityData.csv', index=False)
+    file_name_quality = 'C:\projects\TH_MES\DataGeneration\Data\qualityData_' + serial_no + '.csv'
+    df.to_csv(file_name_quality, index=False)
 
 
     # 3. 생산정보 데이터를 DB의 production 테이블에 업로드
     
-    input_file = 'C:\projects\TH_MES\DataGeneration\Data\productionData.csv'
+    input_file = file_name_production
     file_reader = csv.reader(open(input_file, 'r'), delimiter=',')
     header = next(file_reader) # 첫 번째 줄 읽기
 
@@ -137,7 +140,7 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
         data = []
         for i  in range(len(header)):
             data.append(str(row[i].replace(',','')).strip())
-        cursor.execute('insert into production values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', data)
+        cursor.execute('insert into production values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', data)
 
     conn.commit()
     cursor.close()
@@ -146,7 +149,7 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
 
     # 4. 품질검사정보 데이터를 DB의 quality 테이블에 업로드
 
-    input_file = 'C:\projects\TH_MES\DataGeneration\Data\qualityData.csv'
+    input_file = file_name_quality
     file_reader = csv.reader(open(input_file, 'r'), delimiter=',')
     header = next(file_reader) # 첫 번째 줄 읽기
 
@@ -157,7 +160,7 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
         data = []
         for i  in range(len(header)):
             data.append(str(row[i].replace(',','')).strip())
-        cursor.execute('insert into quality values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', data)
+        cursor.execute('insert into quality values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', data)
 
     conn.commit()
     cursor.close()

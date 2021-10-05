@@ -36,11 +36,12 @@
 	<div class="content" align="center">
 		<table class="table1 table-striped">
 			<tr>
+				<th>제품일련번호</th>
+				<th>생산지시번호</th>
 				<th>공장 코드</th>
 				<th>라인 코드</th>
 				<th>픔목 코드</th>
 				<th>근무자 번호</th>
-				<th>제품일련번호</th>
 				<th>가로길이 검사</th>
 				<th>세로길이 검사</th>
 				<th>홀 가로중심 검사</th>
@@ -53,11 +54,12 @@
 			</tr>
 			<c:forEach var="quality" items="${qualityList}">
 			<tr>
+				<td>${quality.getSerial_no()}</td>
+				<td>${quality.getWo_no()}</td>
 				<td>${quality.getPlant_cd()}</td>
 				<td>${quality.getLine_cd()}</td>
 				<td>${quality.getItem_cd()}</td>
 				<td>${quality.getWorker_no()}</td>
-				<td>${quality.getSerial_no()}</td>
 				<td>${quality.isDimcheck_x()}</td>
 				<td>${quality.isDimcheck_y()}</td>
 				<td>${quality.isHolecheck_xc()}</td>

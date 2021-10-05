@@ -1,5 +1,7 @@
 package mes.action;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,10 @@ public class StockAction implements Action {
 		
 		StockService stockService = new StockService();
 		
+		ArrayList<Integer> totalStockList = new ArrayList<Integer>();
+		totalStockList = stockService.getStockTotalList();
+		
+		req.setAttribute("totalStockList", totalStockList);
 		
 		// isRedirect = false (기본값) -> forward() 사용
 		forward.setPath("/lv1/stock.jsp");

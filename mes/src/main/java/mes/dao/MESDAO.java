@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import mes.dto.CustomerOrderBean;
 import mes.dto.EquipmentBean;
+import mes.dto.ItemStockBean;
 import mes.dto.LineBean;
 import mes.dto.MemberBean;
 import mes.dto.OurOrderBean;
@@ -201,11 +202,12 @@ public class MESDAO {
 			
 			while(rs.next()) {
 				production = new ProductionBean();
+				production.setSerial_no(rs.getString("serial_no"));
+				production.setWo_no(rs.getInt("wo_no"));
 				production.setPlant_cd(rs.getInt("plant_cd"));
 				production.setLine_cd(rs.getInt("line_cd"));
 				production.setItem_cd(rs.getInt("item_cd"));
 				production.setWorker_no(rs.getInt("worker_no"));
-				production.setSerial_no(rs.getString("serial_no"));
 				production.setDim_x(rs.getFloat("dim_x"));
 				production.setDim_y(rs.getFloat("dim_y"));
 				production.setDim_h(rs.getFloat("dim_h"));
@@ -248,11 +250,12 @@ public class MESDAO {
 			
 			while(rs.next()) {
 				quality = new QualityBean();
+				quality.setSerial_no(rs.getString("serial_no"));
+				quality.setWo_no(rs.getInt("wo_no"));
 				quality.setPlant_cd(rs.getInt("plant_cd"));
 				quality.setLine_cd(rs.getInt("line_cd"));
 				quality.setItem_cd(rs.getInt("item_cd"));
 				quality.setWorker_no(rs.getInt("worker_no"));
-				quality.setSerial_no(rs.getString("serial_no"));
 				quality.setDimcheck_x(rs.getBoolean("dimcheck_x"));
 				quality.setDimcheck_y(rs.getBoolean("dimcheck_y"));
 				quality.setHolecheck_xc(rs.getBoolean("holecheck_xc"));
@@ -602,6 +605,7 @@ public class MESDAO {
 				workOrder.setPlant_cd(rs.getInt("plant_cd"));
 				workOrder.setLine_cd(rs.getInt("line_cd"));
 				workOrder.setOrder_no(rs.getInt("order_no"));
+				workOrder.setItem_cd(rs.getInt("item_cd"));
 				workOrder.setStart_date(rs.getDate("start_date"));
 				workOrder.setStart_shift(rs.getString("start_shift"));
 				workOrder.setEnd_date(rs.getDate("end_date"));
@@ -621,8 +625,8 @@ public class MESDAO {
 	}
 	
 	// '생산지시' 정보 등록 (work_order 테이블)
-	public ArrayList<Integer> insertWorkOrder(int plant_cd, int line_cd, int order_no, Date start_date,
-			String start_shift, Date end_date, String end_shift, int plan_qty) {
+	public ArrayList<Integer> insertWorkOrder(int plant_cd, int line_cd, int order_no, int item_cd, 
+			Date start_date, String start_shift, Date end_date, String end_shift, int plan_qty) {
 		
 		ArrayList<Integer> insertWorkOrderResult = new ArrayList<Integer>();
 		int insertWorkOrderCount = 0;
@@ -630,8 +634,8 @@ public class MESDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql1 = "select max(wo_no) from work_order";
-		String sql2 = "insert into work_order(wo_no, plant_cd, line_cd, order_no, start_date, start_shift, end_date, end_shift, plan_qty) " +
-					  "values(?,?,?,?,?,?,?,?,?)";
+		String sql2 = "insert into work_order(wo_no, plant_cd, line_cd, order_no, item_cd, start_date, start_shift, end_date, end_shift, plan_qty) " +
+					  "values(?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			// 1. 자동 생성된 생산지시번호 가져오기 (wo_no 리턴)
@@ -647,11 +651,12 @@ public class MESDAO {
 			pstmt.setInt(2, plant_cd);
 			pstmt.setInt(3, line_cd);
 			pstmt.setInt(4, order_no);
-			pstmt.setDate(5, start_date);
-			pstmt.setString(6, start_shift);
-			pstmt.setDate(7, end_date);
-			pstmt.setString(8, end_shift);
-			pstmt.setInt(9, plan_qty);
+			pstmt.setInt(5, item_cd);
+			pstmt.setDate(6, start_date);
+			pstmt.setString(7, start_shift);
+			pstmt.setDate(8, end_date);
+			pstmt.setString(9, end_shift);
+			pstmt.setInt(10, plan_qty);
 			insertWorkOrderCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("생산지시 정보 등록 실패!" + e.getMessage());
@@ -684,6 +689,7 @@ public class MESDAO {
 				workOrder.setPlant_cd(rs.getInt("plant_cd"));
 				workOrder.setLine_cd(rs.getInt("line_cd"));
 				workOrder.setOrder_no(rs.getInt("order_no"));
+				workOrder.setItem_cd(rs.getInt("item_cd"));
 				workOrder.setStart_date(rs.getDate("start_date"));
 				workOrder.setStart_shift(rs.getString("start_shift"));
 				workOrder.setEnd_date(rs.getDate("end_date"));
@@ -701,7 +707,7 @@ public class MESDAO {
 		
 	}
 
-	// 생산지지 생성시 cust_order 테이블 생산지시여부 업데이트
+	// 생산지시 생성시 cust_order 테이블 생산지시여부 업데이트
 	public int updateCustOrder(int order_no) {
 		
 		int updateCount = 0;
@@ -745,6 +751,119 @@ public class MESDAO {
 		
 		return updateCount;
 		
+	}
+
+	// '생산지시 현황' 전체 조회
+	public ArrayList<WorkOrderBean> selectWorkOrderList() {
+		
+		ArrayList<WorkOrderBean> workOrderList = null;
+		WorkOrderBean workOrder = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from work_order";;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				if(i == 0) {
+					workOrderList = new ArrayList<WorkOrderBean>();	// 주문 내역이 없으면 workOrderList = null 리턴
+					i++;
+				}
+				workOrder = new WorkOrderBean();
+				workOrder.setWo_no(rs.getInt("wo_no"));
+				workOrder.setPlant_cd(rs.getInt("plant_cd"));
+				workOrder.setLine_cd(rs.getInt("line_cd"));
+				workOrder.setOrder_no(rs.getInt("order_no"));
+				workOrder.setItem_cd(rs.getInt("item_cd"));
+				workOrder.setStart_date(rs.getDate("start_date"));
+				workOrder.setStart_shift(rs.getString("start_shift"));
+				workOrder.setEnd_date(rs.getDate("end_date"));
+				workOrder.setEnd_shift(rs.getString("end_shift"));
+				workOrder.setPlan_qty(rs.getInt("plan_qty"));
+				workOrder.setFlag_end(rs.getBoolean("flag_end"));
+				workOrderList.add(workOrder);
+			}
+		} catch (SQLException e) {
+			System.out.println("생산지시 현황 전체 조회 실패!" + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return workOrderList;
+		
+	}
+
+
+	// 재고 현황 전체 조회
+	public ArrayList<ItemStockBean> totalStockList() {
+		ArrayList<ItemStockBean> stockList = new ArrayList<ItemStockBean>();
+		ItemStockBean itemStock = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from item_stock";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				itemStock = new ItemStockBean();
+				itemStock.setStock_no(rs.getInt("stock_no"));
+				itemStock.setItem_cd(rs.getInt("item_cd"));
+				itemStock.setItem_type(rs.getString("item_type"));
+				itemStock.setStorage_cd(rs.getInt("storage_cd"));
+				itemStock.setStorage_nm(rs.getString("storage_nm"));
+				itemStock.setItem_qty(rs.getInt("item_qty"));
+				itemStock.setUpdate_dt(rs.getTimestamp("update_dt"));
+				stockList.add(itemStock);
+			}
+		} catch (Exception e) {
+			System.out.println("품목재고현황 조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		return stockList;
+	}
+	
+	// 재고 현황 조회 (w/ no)
+	public ArrayList<ItemStockBean> selectStockList(int no) {
+		ArrayList<ItemStockBean> plantStockList = new ArrayList<ItemStockBean>();
+		ItemStockBean itemStock = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "select * from item_stock where ";
+		switch (no) {
+			case 1: sql += "storage_cd in (select storage_cd from storage where plant_cd = 1) order by storage_cd"; break;
+			case 2: sql += "storage_cd in (select storage_cd from storage where plant_cd = 2) order by storage_cd"; break;
+			case 3: sql += "item_type = '제품' order by storage_cd, item_cd"; break;
+			case 4: sql += "item_type = '자재' order by storage_cd, item_cd"; break;
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				itemStock = new ItemStockBean();
+				itemStock.setStock_no(rs.getInt("stock_no"));
+				itemStock.setItem_cd(rs.getInt("item_cd"));
+				itemStock.setItem_type(rs.getString("item_type"));
+				itemStock.setStorage_cd(rs.getInt("storage_cd"));
+				itemStock.setStorage_nm(rs.getString("storage_nm"));
+				itemStock.setItem_qty(rs.getInt("item_qty"));
+				itemStock.setUpdate_dt(rs.getTimestamp("update_dt"));
+				plantStockList.add(itemStock);
+			}
+		} catch (Exception e) {
+			System.out.println("공장별 품목재고현황 조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		return plantStockList;
 	}
 	
 	

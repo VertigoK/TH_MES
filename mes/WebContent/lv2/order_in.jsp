@@ -64,7 +64,7 @@
 				<td>${orderIn.isWo_status()}</td>
 				<c:choose>
 					<c:when test="${orderIn.isWo_status() == false }">
-						<td><a href="/order/inList/checkOrderStock?order_no=${orderIn.getOrder_no()}">확인</a></td>	
+						<td><a href="/order/inList/checkOrderStock?order_no=${orderIn.getOrder_no()}" class="btn btn-info">확인</a></td>	
 					</c:when>
 					<c:otherwise>
 						<td></td>
