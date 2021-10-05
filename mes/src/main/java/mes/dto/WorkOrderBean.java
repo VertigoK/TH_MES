@@ -8,6 +8,7 @@ public class WorkOrderBean {
 	private int plant_cd;
 	private int line_cd;
 	private int order_no;
+	private int item_cd;
 	private Date start_date;
 	private String start_shift;
 	private Date end_date;
@@ -38,6 +39,12 @@ public class WorkOrderBean {
 	}
 	public void setOrder_no(int order_no) {
 		this.order_no = order_no;
+	}
+	public int getItem_cd() {
+		return item_cd;
+	}
+	public void setItem_cd(int item_cd) {
+		this.item_cd = item_cd;
 	}
 	public Date getStart_date() {
 		return start_date;
@@ -75,5 +82,5 @@ public class WorkOrderBean {
 	public void setFlag_end(boolean flag_end) {
 		this.flag_end = flag_end;
 	}
-		
+	
 }

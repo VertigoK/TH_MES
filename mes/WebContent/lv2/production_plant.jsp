@@ -24,7 +24,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>공장별 생산 현황</title>
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">
@@ -36,11 +36,12 @@
 	<div class="content" align="center">
 		<table class="table1 table-striped">
 			<tr>
+				<th>제품일련번호</th>
+				<th>생산지시번호</th>
 				<th>공장코드</th>
 				<th>라인코드</th>
 				<th>픔목코드</th>
 				<th>근무자번호</th>
-				<th>제품일련번호</th>
 				<th>가로길이</th>
 				<th>세로길이</th>
 				<th>가로면 세로편차</th>
@@ -57,11 +58,12 @@
 			</tr>
 			<c:forEach var="production" items="${productionList}">
 			<tr>
+				<td>${production.getSerial_no()}</td>
+				<td>${production.getWo_no()}</td>
 				<td>${production.getPlant_cd()}</td>
 				<td>${production.getLine_cd()}</td>
 				<td>${production.getItem_cd()}</td>
 				<td>${production.getWorker_no()}</td>
-				<td>${production.getSerial_no()}</td>
 				<td>${production.getDim_x()}</td>
 				<td>${production.getDim_y()}</td>
 				<td>${production.getDim_h()}</td>

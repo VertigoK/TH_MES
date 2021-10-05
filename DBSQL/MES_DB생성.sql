@@ -99,11 +99,12 @@ ALTER TABLE `PRODUCTION_HIST`
 
 -- 생산정보 테이블
 CREATE TABLE `PRODUCTION` (
+	`SERIAL_NO`  VARCHAR(30) NOT NULL, -- 제품일련번호
+	`WO_NO`      INT         NOT NULL, -- 생산지시번호 (10/05/2021 추가)
 	`PLANT_CD`   INT         NOT NULL, -- 공장코드
 	`LINE_CD`    INT         NOT NULL, -- 라인코드
 	`ITEM_CD`    INT         NOT NULL, -- 품목코드
 	`WORKER_NO`  INT         NOT NULL, -- 근무자번호
-	`SERIAL_NO`  VARCHAR(30) NOT NULL, -- 제품일련번호
 	`DIM_X`      FLOAT       NOT NULL, -- 가로길이
 	`DIM_Y`      FLOAT       NOT NULL, -- 세로길이
 	`DIM_H`      FLOAT       NOT NULL, -- 가로면세로편차
@@ -130,12 +131,13 @@ ALTER TABLE `PRODUCTION`
 CREATE TABLE `WORK_ORDER` (
 	`PLANT_CD`    INT         NOT NULL, -- 공장코드
 	`LINE_CD`     INT         NOT NULL, -- 라인코드
+	`ITEM_CD`     INT         NOT NULL, -- 품목코드 (10/05/2021 추가)
 	`ORDER_NO`    INT         NOT NULL, -- 주문번호
 	`WO_NO`       INT         NOT NULL, -- 생산지시번호
 	`START_DATE`  DATE        NOT NULL DEFAULT NOW(), -- 작업시작일
 	`START_SHIFT` VARCHAR(10) NOT NULL, -- 시작작업조
-	`END_DATE`    DATE        NULL,     -- 작업종료일
-	`END_SHIFT`   VARCHAR(10) NULL,     -- 종료작업조
+	`END_DATE`    DATE        NOT NULL, -- 작업종료일 (10/05/2021 수정)
+	`END_SHIFT`   VARCHAR(10) NOT NULL, -- 종료작업조 (10/05/2021 수정)
 	`FLAG_END`    BOOLEAN     NULL,     -- 작업상태
 	`PLAN_QTY`    INT         NOT NULL  -- 계획수량
 );
@@ -236,6 +238,7 @@ CREATE TABLE `CUST_ORDER` (
 	`FINISHED_DATE` DATE    NULL,     -- 마감일
 	`ORDER_STATUS`  BOOLEAN NOT NULL DEFAULT FALSE, -- 주문상태
 	`DELAYED_DATE`  INT     NOT NULL DEFAULT 0 -- 납기지연일
+	`WO_STATUS`			BOOLEAN NOT NULL DEFAULT FALSE; -- (10/05/2021 추가)
 );
 
 -- 주문 테이블
@@ -358,11 +361,12 @@ ALTER TABLE `ITEM_STOCK`
 
 -- 품질검사정보 테이블
 CREATE TABLE `QUALITY` (
+	`SERIAL_NO`       VARCHAR(30) NOT NULL, -- 제품일련번호
+	`WO_NO`           INT         NOT NULL, -- 생산지시번호
 	`PLANT_CD`        INT         NOT NULL, -- 공장코드
 	`LINE_CD`         INT         NOT NULL, -- 라인코드
 	`ITEM_CD`         INT         NOT NULL, -- 품목코드
 	`WORKER_NO`       INT         NOT NULL, -- 근무자번호
-	`SERIAL_NO`       VARCHAR(30) NOT NULL, -- 제품일련번호
 	`DIMCHECK_X`      BOOLEAN     NOT NULL, -- 가로길이검사
 	`DIMCHECK_Y`      BOOLEAN     NOT NULL, -- 세로길이검사
 	`HOLECHECK_XC`    BOOLEAN     NOT NULL, -- 홀가로중심검사
@@ -937,6 +941,57 @@ ALTER TABLE `OUR_ORDER`
 		)
 		REFERENCES `ITEM` ( -- 품목 테이블
 			`ITEM_CD` -- 품목코드
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+
+
+-- 10/05/2021 추가
+-- 공지사항 테이블
+CREATE TABLE `NOTICE` (
+  `NOTICE_NO` int(11) NOT NULL AUTO_INCREMENT,
+  `TITLE` varchar(40) DEFAULT NULL,
+  `CONTENT` varchar(255) DEFAULT NULL,
+  `DATE` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`NOTICE_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 생산정보 테이블
+ALTER TABLE `PRODUCTION`
+	ADD CONSTRAINT `FK_ITEM_TO_PRODUCTION` -- 품목 테이블 -> 생산정보 테이블
+		FOREIGN KEY (
+			`ITEM_CD` -- 품목코드
+		)
+		REFERENCES `ITEM` ( -- 품목 테이블
+			`ITEM_CD` -- 품목코드
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+delete from production;
+
+-- 생산정보 테이블
+ALTER TABLE `PRODUCTION`
+	ADD CONSTRAINT `FK_WORK_ORDER_TO_PRODUCTION` -- 생산지시 테이블 -> 생산정보 테이블
+		FOREIGN KEY (
+			`WO_NO` -- 생산지시번호
+		)
+		REFERENCES `WORK_ORDER` ( -- 생산지시 테이블
+			`WO_NO` -- 생산지시번호
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+	
+-- 품질검사정보 테이블
+ALTER TABLE `QUALITY`
+	ADD CONSTRAINT `FK_WORK_ORDER_TO_QUALITY` -- 생산지시 테이블 -> 품질검사정보 테이블
+		FOREIGN KEY (
+			`WO_NO` -- 생산지시번호
+		)
+		REFERENCES `WORK_ORDER` ( -- 생산지시 테이블
+			`WO_NO` -- 생산지시번호
 		)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE;

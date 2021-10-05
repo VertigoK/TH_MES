@@ -23,19 +23,19 @@ public class CheckOrderStockAction implements Action {
 		int order_no = Integer.parseInt(req.getParameter("order_no"));
 		CustOrderService custOrderService = new CustOrderService();
 		CustomerOrderBean custOrder = custOrderService.getCustOrder(order_no);
-		session.setAttribute("custOrderInfo", custOrder);
+		session.setAttribute("custOrderInfo", custOrder);			// session attribute 생성
 		
 		// 2. plant_cd와 item_cd에 해당하는 제품과 자재의 재고수량 조회
 		CheckOrderStockService checkOrderStockService = new CheckOrderStockService();
 		int plant_cd = custOrder.getPlant_cd();
 		int item_cd = custOrder.getItem_cd();
 		ArrayList<Integer> stockQtys = checkOrderStockService.getStockQuantity(plant_cd, item_cd);
-		session.setAttribute("stockQtysInfo", stockQtys);
+		session.setAttribute("stockQtysInfo", stockQtys);			// session attribute 생성
 		
 		// 3. item_cd와 order_qty, stockQtys를 바탕으로 제품 생산수량 및 자재별(item_cd=4,5,6) 소요수량, 발주수량 계산
 		int order_qty = custOrder.getOrder_qty();
 		ArrayList<Integer> requiredQtys = checkOrderStockService.computeRequiredQuantity(item_cd, order_qty, stockQtys);
-		session.setAttribute("requiredQtysInfo", requiredQtys);
+		session.setAttribute("requiredQtysInfo", requiredQtys);		// session attribute 생성
 		
 		forward = new ActionForward();
 		// isRedirect = false (기본값) -> forward() 사용

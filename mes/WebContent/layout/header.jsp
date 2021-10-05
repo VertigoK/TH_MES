@@ -15,25 +15,23 @@
 			display: table;
 			padding: 0 5px;
 			width: 100%;
-			height: 20px;
-			background-color: #C0CDD6;
+			height: 10px;
 		}
 		.left p {
 			display: table-cell;
-			line-height: 40px;
 			letter-spacing: 5px;
 		}
 		.right {
 			height: 100%;
-			width: 160px;
-			/* width: 170px // log out */
+			width: 170px;
 			display: table-cell;
+			text-align: right;
 		}
 		.right .btn {
 			text-decoration: none;
 			color: #0D0D0D;
 			border: 1px solid #0D0D0D;
-			padding: 5px 8px;
+			padding: 0 8px;
 			border-radius: 5px;
 			background-color: white;
 		}
@@ -42,17 +40,18 @@
 			color: white;
 			background-color: gray;
 		}
+		.logout:hover span { display:none; }
+		.logout:hover:after { content:'Log out'; }
 	</style>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="left">
-			<p><strong>Telstar-Hommel</strong></p>
+			<p>Company Name</p>
 		</div>
 		<div class="right">
-			<a href="/logInForm" class="btn shadow-none">Log In</a>
-<!-- 			<a href="/logOut" class="btn shadow-none">Log out</a> -->
-<!-- 			<a href="/custOrderForm" class="btn shadow-none">주문</a>		 -->
+			<!-- <a href="/logInForm" class="btn shadow-none">Log In</a> -->
+			<a href="/logOut" class="btn shadow-none logout"><span>이름</span></a>	
 		</div>
 	</div>
 </body>

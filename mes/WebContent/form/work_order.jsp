@@ -70,7 +70,7 @@
 			</tr>
 		</table>
 		<br /><br /><br />
-		<h5>공장 <%=custOrder.getPlant_cd()%> 라인 현황</h5>
+		<h5>[공장 <%=custOrder.getPlant_cd()%>] 라인 현황</h5>
 		<table class="table1 table-striped">
 			<tr>
 				<th>라인코드</th>
@@ -88,34 +88,37 @@
 			</c:forEach>
 		</table>
 		<br /><br /><br />
-		<h5>공장 <%=custOrder.getPlant_cd()%> 생산지시 현황</h5>
+		<h5>[공장 <%=custOrder.getPlant_cd()%>] 생산지시 현황</h5>
 		<table class="table1 table-striped">
 			<tr>
+				<th>주문번호</th>
 				<th>생산지시번호</th>
 				<th>공장코드</th>
 				<th>라인코드</th>
-				<th>주문번호</th>
 				<th>작업시작일</th>
 				<th>시작작업조</th>
 				<th>작업종료일</th>
 				<th>종료작업조</th>
+				<th>계획수량</th>
 				<th>작업상태</th>
 			</tr>
 			<c:forEach var="workOrderList" items="${workOrderList}">
 			<tr>
+				<td>${workOrderList.getOrder_no()}</td>
 				<td>${workOrderList.getWo_no()}</td>
 				<td>${workOrderList.getPlant_cd()}</td>
 				<td>${workOrderList.getLine_cd()}</td>
-				<td>${workORderList.getOrder_no()}</td>
 				<td>${workOrderList.getStart_date()}</td>
 				<td>${workOrderList.getStart_shift()}</td>
 				<td>${workOrderList.getEnd_date()}</td>
 				<td>${workOrderList.getEnd_shift()}</td>
+				<td>${workOrderList.getPlan_qty()}</td>
 				<td>${workOrderList.isFlag_end()}</td>
 			</tr>
 			</c:forEach>
 		</table>
 		<br /><br /><br />
+		<h5>생산지시 작성</h5>
 		<form action="/production/workOrder" method="post">
 			<table class="table1">
 				<tr>
@@ -158,7 +161,7 @@
 			</table>
 			<br />
 			<input type="reset" value="Reset" class="text-white btn btn-success"/>
-			<input type="submit" value="Submit" class="text-white btn btn-warning"/>
+			<input type="submit" value="Submit" class="text-white btn btn-danger"/>
 		</form>
 	</div>	
 </body>

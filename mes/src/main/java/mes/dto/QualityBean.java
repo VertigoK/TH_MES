@@ -2,11 +2,12 @@ package mes.dto;
 
 public class QualityBean {
 	
+	private String serial_no;
+	private int wo_no;
 	private int plant_cd;
 	private int line_cd;
 	private int item_cd;
 	private int worker_no;
-	private String serial_no;
 	private boolean dimcheck_x;
 	private boolean dimcheck_y;
 	private boolean holecheck_xc;
@@ -17,6 +18,18 @@ public class QualityBean {
 	private boolean holecheck_ratio;
 	private boolean check_result;
 	
+	public String getSerial_no() {
+		return serial_no;
+	}
+	public void setSerial_no(String serial_no) {
+		this.serial_no = serial_no;
+	}
+	public int getWo_no() {
+		return wo_no;
+	}
+	public void setWo_no(int wo_no) {
+		this.wo_no = wo_no;
+	}
 	public int getPlant_cd() {
 		return plant_cd;
 	}
@@ -40,12 +53,6 @@ public class QualityBean {
 	}
 	public void setWorker_no(int worker_no) {
 		this.worker_no = worker_no;
-	}
-	public String getSerial_no() {
-		return serial_no;
-	}
-	public void setSerial_no(String serial_no) {
-		this.serial_no = serial_no;
 	}
 	public boolean isDimcheck_x() {
 		return dimcheck_x;
