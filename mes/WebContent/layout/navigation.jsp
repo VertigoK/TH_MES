@@ -58,6 +58,7 @@
 		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-sliders-h"></i></a> <!-- 설비 -->
 		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-warehouse"></i></a> <!-- 재고 -->
 		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-id-badge"></i></a> <!-- HR -->
+		<a href="/order" class="btn shadow-none" id="order">주문</a> <!-- 주문 -->
 		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-arrow-circle-left"></i></a> <!-- 뒤로가기 -->
 	</div>
 </body>

@@ -5,6 +5,7 @@ $(document).ready(function() {
 	var eq = "http://localhost:8088/equipment";
 	var st = "http://localhost:8088/stock";
 	var hr = "http://localhost:8088/hr";
+	var od = "http://localhost:8088/order" 
 	
 	if (loc == "http://localhost:8088/") {
 		$("#home").addClass("active");
@@ -23,6 +24,9 @@ $(document).ready(function() {
 	};
 	if (loc.indexOf(hr) != -1) {
 		$("#hr").addClass("active");
+	};
+	if (loc.indexOf(od) != -1) {
+		$("#order").addClass("active");
 	};
 	
 	/*if(loc.match(/http:\/\/localhost:8088\/[\w]+\/[\w\=\&\?]+/g)) {
