@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
-	<title>주문 현황</title>
+	<link rel="stylesheet" href="/css/lv1StyleSheet.css" />
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">
@@ -17,12 +17,8 @@
 	<div id="navigation">
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
-	<div class="content" align="center">
-		<div class="item">
-			<a href="/order/outList" class="btn btn-info">자재 발주 현황</a>
-			<a href="/order/inList" class="btn btn-info">제품 주문 현황</a>
-			<a href="/order/custOrderForm" class="btn btn-danger">제품 주문</a>
-		</div>
-	</div>		
+	<div class="content">
+		<h5>품목 입출고 현황</h5>
+	</div>
 </body>
 </html>

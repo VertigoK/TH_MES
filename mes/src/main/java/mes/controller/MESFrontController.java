@@ -26,6 +26,7 @@ import mes.action.OurOrderAutoAction;
 import mes.action.ProductionLineAction;
 import mes.action.ProductionPlantAction;
 import mes.action.ProductionProcessAction;
+import mes.action.ProductionStartAction;
 import mes.action.ProductionAction;
 import mes.action.QualityAction;
 import mes.action.QualityLineAction;
@@ -33,6 +34,7 @@ import mes.action.QualityPlantAction;
 import mes.action.QualityProcessAction;
 import mes.action.SignUpAction;
 import mes.action.StockAction;
+import mes.action.StockInOutAction;
 import mes.action.StockItemAction;
 import mes.action.StockPlantAction;
 import mes.action.WorkOrderAction;
@@ -223,6 +225,13 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if(command.equals("/stock/inout")) {
+			action = new StockInOutAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if(command.equals("/order/inList")) {
 			action = new OrderInListAction();
 			try {
@@ -295,23 +304,12 @@ public class MESFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if(command.equals("/production/start")) {
-			
-			// wo_no를 generationData.py에 매개변수로 넘겨주기 위한 추가 코드 필요 !!!
-			int wo_no = Integer.parseInt(req.getParameter("wo_no"));
-			
-			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\test.py");
-//			Process pr = Runtime.getRuntime().exec("python C:\\projects\\TH_MES\\DataGeneration\\generateData.py");
-		    pr.getErrorStream().close();
-		    pr.getInputStream().close();
-		    pr.getOutputStream().close();
-		    try {
-				pr.waitFor();
-			} catch (InterruptedException e) {
+			action = new ProductionStartAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		    forward = new ActionForward();
-			forward.setRedirect(true);
-			forward.setPath("/misc/data_generated.jsp");
 		}
 		
 		// sendRedirect() or forward() 선택

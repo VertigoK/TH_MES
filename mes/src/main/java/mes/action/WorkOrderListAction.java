@@ -22,6 +22,7 @@ public class WorkOrderListAction implements Action {
 		// isRedirect = false (기본값) -> forward() 사용
 		forward.setPath("/lv2/production_workorder.jsp");
 		return forward;
+		
 	}
 
 }

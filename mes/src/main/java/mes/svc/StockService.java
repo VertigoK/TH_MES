@@ -69,5 +69,6 @@ public class StockService {
 		
 		close(conn);
 		return stockTotalList;
+		
 	}
 }

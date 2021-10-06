@@ -33,39 +33,41 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<h5>라인별 설비 현황</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>공장코드</th>
-				<th>라인코드</th>
-				<th>공정코드</th>
-				<th>설비ID</th>
-				<th>설비코드</th>
-				<th>설비명</th>
-				<th>모델명</th>
-				<th>점검주기</th>
-				<th>타입</th>
-				<th>사용가능여부</th>
-				<th>에러코드</th>
-				<th>가동시간</th>
-			</tr>
-			<c:forEach var="equipment" items="${equipmentList}">
-			<tr>
-				<td>${equipment.getPlant_cd()}</td>
-				<td>${equipment.getLine_cd()}</td>
-				<td>${equipment.getProcess_cd()}</td>
-				<td>${equipment.getEquip_id()}</td>
-				<td>${equipment.getEquip_cd()}</td>
-				<td>${equipment.getEquip_nm()}</td>
-				<td>${equipment.getEquip_model()}</td>
-				<td>${equipment.getCheck_term()}</td>
-				<td>${equipment.getUse_type()}</td>
-				<td>${equipment.isUse_yn()}</td>
-				<td>${equipment.getError_cd()}</td>
-				<td>${equipment.getRun_time()}</td>
-			</tr>
-			</c:forEach>
-		</table>
+		<div class="item">
+			<h5>라인별 설비 현황</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>공장코드</th>
+					<th>라인코드</th>
+					<th>공정코드</th>
+					<th>설비ID</th>
+					<th>설비코드</th>
+					<th>설비명</th>
+					<th>모델명</th>
+					<th>점검주기</th>
+					<th>타입</th>
+					<th>사용가능여부</th>
+					<th>에러코드</th>
+					<th>가동시간</th>
+				</tr>
+				<c:forEach var="equipment" items="${equipmentList}">
+				<tr>
+					<td>${equipment.getPlant_cd()}</td>
+					<td>${equipment.getLine_cd()}</td>
+					<td>${equipment.getProcess_cd()}</td>
+					<td>${equipment.getEquip_id()}</td>
+					<td>${equipment.getEquip_cd()}</td>
+					<td>${equipment.getEquip_nm()}</td>
+					<td>${equipment.getEquip_model()}</td>
+					<td>${equipment.getCheck_term()}</td>
+					<td>${equipment.getUse_type()}</td>
+					<td>${equipment.isUse_yn()}</td>
+					<td>${equipment.getError_cd()}</td>
+					<td>${equipment.getRun_time()}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

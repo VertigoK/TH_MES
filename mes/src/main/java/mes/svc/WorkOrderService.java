@@ -15,17 +15,14 @@ import mes.dto.WorkOrderBean;
 
 public class WorkOrderService {
 
-	public List<Object> getEndDateShift(Date start_date, String start_shift, int plan_qty) {
-		
-		String end_shift = null;
-		
+	public List<Object> computeEndDateShift(Date start_date, String start_shift, int plan_qty) {
+			
 		String start_time = null;
 		switch(start_shift) {
 			case "주간": start_time = "07:00:01"; break;
 			case "주야간": start_time = "15:00:01"; break;
 			case "야간": start_time = "23:00:01"; break;
 		}
-		
 		Timestamp startDateTime = Timestamp.valueOf(start_date.toString() + " " + start_time);
 		
 		long now = System.currentTimeMillis();
@@ -37,6 +34,7 @@ public class WorkOrderService {
 		Time shift2 = new Time(Timestamp.valueOf(end_date.toString() + " " + "15:00:00").getTime());
 		Time shift3 = new Time(Timestamp.valueOf(end_date.toString() + " " + "23:00:00").getTime());
 		
+		String end_shift = null;
 		if(end_time.getTime() >= shift3.getTime()) {
 			end_shift = "야간";
 		} else if(end_time.getTime() >= shift2.getTime()) {

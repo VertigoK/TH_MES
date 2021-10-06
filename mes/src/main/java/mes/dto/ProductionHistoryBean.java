@@ -7,6 +7,7 @@ public class ProductionHistoryBean {
 	private int wo_no;
 	private int plant_cd;
 	private int line_cd;
+	private int item_cd;
 	private int wo_seq;
 	private Timestamp start_dt;
 	private Timestamp end_dt;
@@ -31,6 +32,12 @@ public class ProductionHistoryBean {
 	}
 	public void setLine_cd(int line_cd) {
 		this.line_cd = line_cd;
+	}
+	public int getItem_cd() {
+		return item_cd;
+	}
+	public void setItem_cd(int item_cd) {
+		this.item_cd = item_cd;
 	}
 	public int getWo_seq() {
 		return wo_seq;
