@@ -32,37 +32,41 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<h5>생산지시 현황</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>생산지시번호</th>
-				<th>공장코드</th>
-				<th>라인코드</th>
-				<th>주문번호</th>
-				<th>작업시작일</th>
-				<th>시작작업조</th>
-				<th>작업종료일</th>
-				<th>종료작업조</th>
-				<th>계획수량</th>
-				<th>작업상태</th>
-				<th>생산시작</th>
-			</tr>
-			<c:forEach var="workOrderList" items="${workOrderList}">
-			<tr>
-				<td>${workOrderList.getWo_no()}</td>
-				<td>${workOrderList.getPlant_cd()}</td>
-				<td>${workOrderList.getLine_cd()}</td>
-				<td>${workOrderList.getOrder_no()}</td>
-				<td>${workOrderList.getStart_date()}</td>
-				<td>${workOrderList.getStart_shift()}</td>
-				<td>${workOrderList.getEnd_date()}</td>
-				<td>${workOrderList.getEnd_shift()}</td>
-				<td>${workOrderList.getPlan_qty()}</td>
-				<td>${workOrderList.isFlag_end()}</td>
-				<td><a href="/production/start?wo_no=${workOrderList.getWo_no()}" class="btn btn-danger">생산</a></td>
-			</tr>
-			</c:forEach>
-		</table>
+		<div class="item">
+			<h5>생산지시 현황</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>생산지시번호</th>
+					<th>공장코드</th>
+					<th>라인코드</th>
+					<th>주문번호</th>
+					<th>품목코드</th>
+					<th>작업시작일</th>
+					<th>시작작업조</th>
+					<th>작업종료일</th>
+					<th>종료작업조</th>
+					<th>계획수량</th>
+					<th>작업상태</th>
+					<th>생산시작</th>
+				</tr>
+				<c:forEach var="workOrder" items="${workOrderList}">
+				<tr>
+					<td>${workOrder.getWo_no()}</td>
+					<td>${workOrder.getPlant_cd()}</td>
+					<td>${workOrder.getLine_cd()}</td>
+					<td>${workOrder.getOrder_no()}</td>
+					<td>${workOrder.getItem_cd()}</td>
+					<td>${workOrder.getStart_date()}</td>
+					<td>${workOrder.getStart_shift()}</td>
+					<td>${workOrder.getEnd_date()}</td>
+					<td>${workOrder.getEnd_shift()}</td>
+					<td>${workOrder.getPlan_qty()}</td>
+					<td>${workOrder.isFlag_end()}</td>
+					<td><a href="/production/start?wo_no=${workOrder.getWo_no()}" class="btn btn-danger">생산</a></td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

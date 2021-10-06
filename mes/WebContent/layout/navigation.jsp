@@ -19,7 +19,9 @@
     		float: left;
     		width: 50px;
     		height: 100%;
-    		background-color: #0D0D0D;
+    		background-color: #022945;
+/*     		background-color: #073454; */
+/*     		background-color: #0D0D0D; */
     	}
     	#tab a {
 			display: block;
@@ -39,7 +41,9 @@
 			background-color: white;
 			border-radius: 0;
 			border-left-style: solid;
-			border-left-color: #0D0D0D;
+			border-left-color: #022945;
+/* 			border-left-color: #073454; */
+/* 			border-left-color: #0D0D0D; */
 			color: black;
 			font-weight: bold;
 			overflow: hidden;
@@ -53,13 +57,13 @@
 <body>
 	<div id="tab">
 		<a href="/" class="btn shadow-none" id="home"><i class="fas fa-home"></i></a>
-		<a href="/production" class="btn shadow-none" id="product"><i class="fas fa-cogs"></i></a> <!-- 생산 -->
-		<a href="/quality" class="btn shadow-none" id="quality"><i class="fas fa-chart-line"></i></a> <!-- 품질 -->
-		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-sliders-h"></i></a> <!-- 설비 -->
-		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-warehouse"></i></a> <!-- 재고 -->
-		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-id-badge"></i></a> <!-- HR -->
-		<a href="/order" class="btn shadow-none" id="order">주문</a> <!-- 주문 -->
-		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-arrow-circle-left"></i></a> <!-- 뒤로가기 -->
+		<a href="/production" class="btn shadow-none" id="product"><i class="fas fa-industry"></i></a> <!-- 생산 -->
+		<a href="/quality" class="btn shadow-none" id="quality"><i class="fas fa-award"></i></a> <!-- 품질 -->
+		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-tools"></i></a> <!-- 설비 -->
+		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-cubes"></i></a> <!-- 재고 -->
+		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-user-friends"></i></i></a> <!-- HR -->
+		<a href="/order" class="btn shadow-none" id="order"><i class="fas fa-shopping-cart"></i></a> <!-- 주문 -->
+		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-undo-alt"></i></a> <!-- 뒤로가기 -->
 	</div>
 </body>
 </html>

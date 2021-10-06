@@ -33,29 +33,31 @@ ArrayList<OurOrderBean> orderInList = (ArrayList<OurOrderBean>) request.getAttri
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<h5>자사 자재 발주 현황</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>주문번호</th>
-				<th>공급회사</th>
-				<th>납품공장</th>
-				<th>납품자재</th>
-				<th>주문수량</th>
-				<th>주문일</th>
-				<th>납품상태</th>
-			</tr>
-			<c:forEach var="orderOut" items="${orderOutList}">
-			<tr>
-				<td>${orderOut.getOrder_no()}</td>
-				<td>${orderOut.getCust_cd()}</td>
-				<td>${orderOut.getPlant_cd()}</td>
-				<td>${orderOut.getItem_cd()}</td>
-				<td>${orderOut.getOrder_qty()}</td>
-				<td>${orderOut.getOrder_dt()}</td>
-				<td>${orderOut.isOrder_status()}</td>
-			</tr>
-			</c:forEach>
-		</table>
+		<div class="item">
+			<h5>자사 자재 발주 현황</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>주문번호</th>
+					<th>공급회사</th>
+					<th>납품공장</th>
+					<th>납품자재</th>
+					<th>주문수량</th>
+					<th>주문일</th>
+					<th>납품상태</th>
+				</tr>
+				<c:forEach var="orderOut" items="${orderOutList}">
+				<tr>
+					<td>${orderOut.getOrder_no()}</td>
+					<td>${orderOut.getCust_cd()}</td>
+					<td>${orderOut.getPlant_cd()}</td>
+					<td>${orderOut.getItem_cd()}</td>
+					<td>${orderOut.getOrder_qty()}</td>
+					<td>${orderOut.getOrder_dt()}</td>
+					<td>${orderOut.isOrder_status()}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

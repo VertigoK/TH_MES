@@ -32,12 +32,12 @@ public class CheckOrderStockService {
 		}
 		
 		ArrayList<Integer> requiredQtys = new ArrayList<Integer>();
-		int temp = (int) Math.ceil((order_qty - stockQtys.get(0)) * 1.05);
+		int temp = (int) Math.ceil((order_qty - stockQtys.get(0)) * 1.1);
 		if(temp < 0) requiredQtys.add(0);
 		else requiredQtys.add(temp);	// 제품 계획수량
 		
 		for(int i = 1; i < 4; i++) {
-			int temp1 = (int) Math.ceil(k[i] * requiredQtys.get(0) * 1.05);
+			int temp1 = (int) Math.ceil(k[i] * requiredQtys.get(0) * 1.1);
 			int temp2 = temp1 - stockQtys.get(i);
 			if(temp2 < 0) requiredQtys.add(0); 
 			else requiredQtys.add(temp2);	// 자재1, 자재2, 자재3 발주수량

@@ -18,32 +18,34 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<div class="dropdown">
-  			<button class="btn btn-info">공장별 현황</button>
-  			<div class="dropdown-content">
-				<a href="/equipment/plant?id=plant_cd&no=1">공장 1</a>
-				<a href="/equipment/plant?id=plant_cd&no=2">공장 2</a>
+		<div class="item">
+			<div class="dropdown">
+	  			<button class="btn btn-info">공장별 설비 현황</button>
+	  			<div class="dropdown-content">
+					<a href="/equipment/plant?id=plant_cd&no=1">공장 1</a>
+					<a href="/equipment/plant?id=plant_cd&no=2">공장 2</a>
+				</div>
 			</div>
-		</div>
-		<div class="dropdown">
-  			<button class="btn btn-info">라인별 현황</button>
-  			<div class="dropdown-content">
-				<a href="/equipment/line?id=line_cd&no=1">라인 1</a>
-				<a href="/equipment/line?id=line_cd&no=2">라인 2</a>
-				<a href="/equipment/line?id=line_cd&no=3">라인 3</a>
-				<a href="/equipment/line?id=line_cd&no=4">라인 4</a>
-				<a href="/equipment/line?id=line_cd&no=5">라인 5</a>
-				<a href="/equipment/line?id=line_cd&no=6">라인 6</a>
+			<div class="dropdown">
+	  			<button class="btn btn-info">라인별 설비 현황</button>
+	  			<div class="dropdown-content">
+					<a href="/equipment/line?id=line_cd&no=1">라인 1</a>
+					<a href="/equipment/line?id=line_cd&no=2">라인 2</a>
+					<a href="/equipment/line?id=line_cd&no=3">라인 3</a>
+					<a href="/equipment/line?id=line_cd&no=4">라인 4</a>
+					<a href="/equipment/line?id=line_cd&no=5">라인 5</a>
+					<a href="/equipment/line?id=line_cd&no=6">라인 6</a>
+				</div>
 			</div>
-		</div>
-		<div class="dropdown">
-  			<button class="btn btn-info">공정별 현황</button>
-  			<div class="dropdown-content">
-				<a href="/equipment/process?id=process_cd&no=1">커팅</a>
-				<a href="/equipment/process?id=process_cd&no=2">드릴링</a>
-				<a href="/equipment/process?id=process_cd&no=3">조립</a>
-				<a href="/equipment/process?id=process_cd&no=4">치수검사</a>
-				<a href="/equipment/process?id=process_cd&no=5">홀검사</a>
+			<div class="dropdown">
+	  			<button class="btn btn-info">공정별 설비 현황</button>
+	  			<div class="dropdown-content">
+					<a href="/equipment/process?id=process_cd&no=1">커팅</a>
+					<a href="/equipment/process?id=process_cd&no=2">드릴링</a>
+					<a href="/equipment/process?id=process_cd&no=3">조립</a>
+					<a href="/equipment/process?id=process_cd&no=4">치수검사</a>
+					<a href="/equipment/process?id=process_cd&no=5">홀검사</a>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -800,6 +800,7 @@ public class MESDAO {
 
 	// 재고 현황 전체 조회
 	public ArrayList<ItemStockBean> totalStockList() {
+		
 		ArrayList<ItemStockBean> stockList = new ArrayList<ItemStockBean>();
 		ItemStockBean itemStock = null;
 		PreparedStatement pstmt = null;
@@ -822,15 +823,18 @@ public class MESDAO {
 				stockList.add(itemStock);
 			}
 		} catch (Exception e) {
-			System.out.println("품목재고현황 조회 실패: "+ e.getMessage());
+			System.out.println("품목 재고 현황 조회 실패! "+ e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
+		
 		return stockList;
+		
 	}
 	
 	// 재고 현황 조회 (w/ no)
 	public ArrayList<ItemStockBean> selectStockList(int no) {
+		
 		ArrayList<ItemStockBean> plantStockList = new ArrayList<ItemStockBean>();
 		ItemStockBean itemStock = null;
 		PreparedStatement pstmt = null;
@@ -843,6 +847,7 @@ public class MESDAO {
 			case 3: sql += "item_type = '제품' order by storage_cd, item_cd"; break;
 			case 4: sql += "item_type = '자재' order by storage_cd, item_cd"; break;
 		}
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -859,11 +864,139 @@ public class MESDAO {
 				plantStockList.add(itemStock);
 			}
 		} catch (Exception e) {
-			System.out.println("공장별 품목재고현황 조회 실패: "+ e.getMessage());
+			System.out.println("공장별 품목 재고 현황 조회 실패! "+ e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
+		
 		return plantStockList;
+		
+	}
+
+	// 근무자번호 조회 (w/ line_cd, start_shift)
+	public int selectWorkerNo(int line_cd, String start_shift) {
+		
+		int worker_no = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select worker_no from worker where line_cd = ? " +
+					 " and worker_loc = '생산' and worker_time = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, line_cd);
+			pstmt.setString(2, start_shift);
+			rs = pstmt.executeQuery();
+			if(rs.next()) worker_no = rs.getInt(1);
+		} catch (Exception e) {
+			System.out.println("근무자 번호 조회 실패! "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return worker_no;
+		
+	}
+
+	// 생산정보(production) 조회 (w/ wo_no)
+	public ArrayList<ProductionBean> selectProductionDataList(int wo_no) {
+		
+		ArrayList<ProductionBean> productionDataList = null; 
+		ProductionBean productionData = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from production where wo_no = " + wo_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				if(i == 0) {
+					productionDataList = new ArrayList<ProductionBean>();	// 조회 결과가 없으면 productionDataList = null 리턴
+					i++;
+				}
+				productionData = new ProductionBean();
+				productionData.setSerial_no(rs.getString("serial_no"));
+				productionData.setWo_no(rs.getInt("wo_no"));
+				productionData.setPlant_cd(rs.getInt("plant_cd"));
+				productionData.setLine_cd(rs.getInt("line_cd"));
+				productionData.setItem_cd(rs.getInt("item_cd"));
+				productionData.setWorker_no(rs.getInt("worker_no"));
+				productionData.setDim_x(rs.getFloat("dim_x"));
+				productionData.setDim_y(rs.getFloat("dim_y"));
+				productionData.setDim_h(rs.getFloat("dim_h"));
+				productionData.setDim_w(rs.getFloat("dim_w"));
+				productionData.setHole_x(rs.getFloat("hole_x"));
+				productionData.setHole_y(rs.getFloat("hole_y"));
+				productionData.setHole_xc(rs.getFloat("hole_xc"));
+				productionData.setHole_yc(rs.getFloat("hole_yc"));
+				productionData.setStr_x(rs.getFloat("str_x"));
+				productionData.setStr_y(rs.getFloat("str_y"));
+				productionData.setHole_d(rs.getFloat("hole_d"));
+				productionData.setHole_ratio(rs.getFloat("hole_ratio"));
+				productionData.setPrd_dt(rs.getTimestamp("prd_dt"));
+				productionDataList.add(productionData);
+			}
+		} catch (Exception e) {
+			System.out.println("생산 데이터 조회 실패! "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return productionDataList;
+		
+	}
+		
+	// 품질검사정보(quality) 조회 (w/ wo_no)
+	public ArrayList<QualityBean> selectQualityDataList(int wo_no) {
+		
+		ArrayList<QualityBean> qualityDataList = null;
+		QualityBean qualityData = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from quality where wo_no = " + wo_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				if(i == 0) {
+					qualityDataList = new ArrayList<QualityBean>();	// 조회 결과가 없으면 qualityDataList = null 리턴
+					i++;
+				}
+				qualityData = new QualityBean();
+				qualityData.setSerial_no(rs.getString("serial_no"));
+				qualityData.setWo_no(rs.getInt("wo_no"));
+				qualityData.setPlant_cd(rs.getInt("plant_cd"));
+				qualityData.setLine_cd(rs.getInt("line_cd"));
+				qualityData.setItem_cd(rs.getInt("item_cd"));
+				qualityData.setWorker_no(rs.getInt("worker_no"));
+				qualityData.setDimcheck_x(rs.getBoolean("dimcheck_x"));
+				qualityData.setDimcheck_y(rs.getBoolean("dimcheck_y"));
+				qualityData.setHolecheck_xc(rs.getBoolean("holecheck_xc"));
+				qualityData.setHolecheck_yc(rs.getBoolean("holecheck_yc"));
+				qualityData.setDimcheck_hx(rs.getBoolean("dimcheck_hx"));
+				qualityData.setDimcheck_wy(rs.getBoolean("dimcheck_wy"));
+				qualityData.setHolecheck_d(rs.getBoolean("holecheck_d"));
+				qualityData.setHolecheck_ratio(rs.getBoolean("holecheck_ratio"));
+				qualityData.setCheck_result(rs.getBoolean("check_result"));
+				qualityDataList.add(qualityData);
+			}
+		} catch (Exception e) {
+			System.out.println("품질검사 데이터 조회 실패! "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return qualityDataList;
+		
 	}
 	
 	

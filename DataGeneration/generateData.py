@@ -3,36 +3,72 @@ import pandas as pd
 from datetime import datetime, timedelta
 import csv
 import MySQLdb
+import argparse
 
-# 테스트를 위한 매개변수 값 설정 (1) - '제품 1' 생산
-# prdInfo = [1, 1, 2, 1, 7]                               # 생산지시번호, 공장코드, 라인코드, 품목코드, 근무자번호
-# prdTime = datetime(2021, 9, 17, 7, 0, 1)                # 첫 제품 생산시간
-# plan_qty = 100                                          # 계획 수량
-# specs = [40.0, 30.0, 0.0, 0.0, 5.0, 5.0, 0.0, 0.0]      # 8개 측정값의 규격치
-# tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
-# k = [2.3, 2.3, 2.2, 2.2, 2.3, 2.3, 2.4, 2.5]            # 불량률 조정 factor
-# specs_measured = [0.0, 0.0, 5.0, 1.0]                   # 4개 계산값의 규격치
-# tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
+# Initialize parser.
+parser = argparse.ArgumentParser()
 
-# 테스트를 위한 매개변수 값 설정 (2) - '제품 3' 생산
-# prdInfo = [2, 2, 5, 3, 27]                              # 생산지시번호,공장코드, 라인코드, 품목코드, 근무자번호
-# prdTime = datetime(2021, 9, 18, 15, 0, 1)               # 첫 제품 생산시간
-# plan_qty = 150                                          # 계획 수량
-# specs = [50.0, 40.0, 0.0, 0.0, 4.0, 4.0, 0.0, 0.0]      # 8개 측정값의 규격치
-# tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
-# k = [2.3, 2.3, 2.3, 2.3, 2.3, 2.3, 2.4, 2.5]            # 불량률 조정 factor
-# specs_measured = [0.0, 0.0, 4.0, 1.0]                   # 4개 계산값의 규격치
-# tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
+# Add arguments.
+parser.add_argument(
+    "--prdInfo",
+    nargs="+",
+    type=int,
+    default=[]
+)
+parser.add_argument(
+    "--prdTime",
+    nargs="+",
+    type=str,
+    default=[]
+)
+parser.add_argument(
+    "--plan_qty",
+    nargs="+",
+    type=int,
+    default=[]
+)
 
-# 테스트를 위한 매개변수 값 설정 (3) - '제품 2' 생산
-prdInfo = [3, 2, 4, 2, 23]                              # 생산지시번호, 공장코드, 라인코드, 품목코드, 근무자번호
-prdTime = datetime(2021, 9, 18, 23, 0, 1)               # 첫 제품 생산시간
-plan_qty = 200                                          # 계획 수량
-specs = [30.0, 20.0, 0.0, 0.0, 3.0, 3.0, 0.0, 0.0]      # 8개 측정값의 규격치
-tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
-k = [2.4, 2.4, 2.3, 2.2, 2.4, 2.4, 2.3, 2.4]            # 불량률 조정 factor
-specs_measured = [0.0, 0.0, 3.0, 1.0]                   # 4개 계산값의 규격치
-tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치 -> 마지막 값을 0.01에서 0.1로 수정!
+# Parse the command line.
+args = parser.parse_args()
+
+# Define arguments.
+prdInfo = args.prdInfo          # 생산지시번호, 공장코드, 라인코드, 품목코드, 근무자번호
+prdTime = datetime.strptime(args.prdTime[0] + ' ' + args.prdTime[1].split('.')[0], '%Y-%m-%d %H:%M:%S')   # 첫 제품 생산시간
+plan_qty = args.plan_qty[0]     # 계획 수량
+
+item_cd = prdInfo[3]
+
+if item_cd == 1:
+    specs = [40.0, 30.0, 0.0, 0.0, 5.0, 5.0, 0.0, 0.0]      # 8개 측정값의 규격치
+    tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
+    k = [2.5, 2.5, 2.4, 2.4, 2.5, 2.5, 2.6, 2.7]            # 불량률 조정 factor
+    specs_measured = [0.0, 0.0, 5.0, 1.0]                   # 4개 계산값의 규격치
+    tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치
+elif item_cd == 2:
+    specs = [30.0, 20.0, 0.0, 0.0, 3.0, 3.0, 0.0, 0.0]
+    tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]
+    k = [2.6, 2.6, 2.5, 2.4, 2.6, 2.7, 2.5, 2.6]
+    specs_measured = [0.0, 0.0, 3.0, 1.0]
+    tols_measured = [0.01, 0.01, 0.1, 0.1]
+else:
+    specs = [50.0, 40.0, 0.0, 0.0, 4.0, 4.0, 0.0, 0.0]
+    tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]
+    k = [2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5]
+    specs_measured = [0.0, 0.0, 4.0, 1.0]
+    tols_measured = [0.01, 0.01, 0.1, 0.1]
+
+
+print(prdInfo)
+print(prdTime)
+print(plan_qty)
+print(item_cd)
+print(specs)
+print(tols)
+print(k)
+print(specs_measured)
+print(tols_measured)
+
+
 
 # 생산정보/품질검사정보 데이터 생성 / 저장(CSV) / 업로드(DB) 함수 정의
 def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tols_measured):
@@ -166,6 +202,8 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     cursor.close()
     conn.close()
 
+    print("DONE!!!")
 
-# 최종 테스트!
+
+# 실행
 simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tols_measured)

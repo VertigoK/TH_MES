@@ -34,52 +34,55 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<table class="table1 table-striped">
-			<tr>
-				<th>제품일련번호</th>
-				<th>생산지시번호</th>
-				<th>공장코드</th>
-				<th>라인코드</th>
-				<th>픔목코드</th>
-				<th>근무자번호</th>
-				<th>가로길이</th>
-				<th>세로길이</th>
-				<th>가로면 세로편차</th>
-				<th>세로면 가로편차</th>
-				<th>홀 가로길이</th>
-				<th>홀 세로길이</th>
-				<th>홀 가로중심</th>
-				<th>홀 세로중심</th>
-				<th>가로 직진도</th>
-				<th>세로 직진도</th>
-				<th>홀 직경</th>
-				<th>홀 비율</th>
-				<th>생산시간</th>
-			</tr>
-			<c:forEach var="production" items="${productionList}">
-			<tr>
-				<td>${production.getSerial_no()}</td>
-				<td>${production.getWo_no()}</td>
-				<td>${production.getPlant_cd()}</td>
-				<td>${production.getLine_cd()}</td>
-				<td>${production.getItem_cd()}</td>
-				<td>${production.getWorker_no()}</td>
-				<td>${production.getDim_x()}</td>
-				<td>${production.getDim_y()}</td>
-				<td>${production.getDim_h()}</td>
-				<td>${production.getDim_w()}</td>
-				<td>${production.getHole_x()}</td>
-				<td>${production.getHole_y()}</td>
-				<td>${production.getHole_xc()}</td>
-				<td>${production.getHole_yc()}</td>
-				<td>${production.getStr_x()}</td>
-				<td>${production.getStr_y()}</td>
-				<td>${production.getHole_d()}</td>
-				<td>${production.getHole_ratio()}</td>
-				<td>${production.getPrd_dt()}</td>
-			</tr>
-			</c:forEach>
-		</table>
+		<div class="item">
+			<h5>공장별 생산 데이터</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>제품일련번호</th>
+					<th>생산지시번호</th>
+					<th>공장코드</th>
+					<th>라인코드</th>
+					<th>픔목코드</th>
+					<th>근무자번호</th>
+					<th>가로길이</th>
+					<th>세로길이</th>
+					<th>가로면 세로편차</th>
+					<th>세로면 가로편차</th>
+					<th>홀 가로길이</th>
+					<th>홀 세로길이</th>
+					<th>홀 가로중심</th>
+					<th>홀 세로중심</th>
+					<th>가로 직진도</th>
+					<th>세로 직진도</th>
+					<th>홀 직경</th>
+					<th>홀 비율</th>
+					<th>생산시간</th>
+				</tr>
+				<c:forEach var="production" items="${productionList}">
+				<tr>
+					<td>${production.getSerial_no()}</td>
+					<td>${production.getWo_no()}</td>
+					<td>${production.getPlant_cd()}</td>
+					<td>${production.getLine_cd()}</td>
+					<td>${production.getItem_cd()}</td>
+					<td>${production.getWorker_no()}</td>
+					<td>${production.getDim_x()}</td>
+					<td>${production.getDim_y()}</td>
+					<td>${production.getDim_h()}</td>
+					<td>${production.getDim_w()}</td>
+					<td>${production.getHole_x()}</td>
+					<td>${production.getHole_y()}</td>
+					<td>${production.getHole_xc()}</td>
+					<td>${production.getHole_yc()}</td>
+					<td>${production.getStr_x()}</td>
+					<td>${production.getStr_y()}</td>
+					<td>${production.getHole_d()}</td>
+					<td>${production.getHole_ratio()}</td>
+					<td>${production.getPrd_dt()}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

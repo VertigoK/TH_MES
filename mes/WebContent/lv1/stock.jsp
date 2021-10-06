@@ -1,7 +1,7 @@
 <%@page import="mes.dto.ItemStockBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	ArrayList<Integer> totalStockList = (ArrayList<Integer>) request.getAttribute("totalStockList");	
 %>
@@ -15,7 +15,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css" />
-	<title>재고현황</title>
+	<title>Telstar-Hommel</title>
 	<style>
 		.line {
 			width: 140px;
@@ -115,9 +115,7 @@
 				<div class="title-left"><h5>재고 입출고 내역</h5></div>
 				<div class="title-right">
 					<div class="flex">
-						<a href="">
-							<p>더보기</p><i class="fas fa-caret-right"></i>
-						</a>
+						<a href="/stock/inout">상세보기</a>
 					</div>
 				</div>
 			</div>

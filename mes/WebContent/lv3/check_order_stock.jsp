@@ -36,93 +36,95 @@
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
-		<h5>제품 주문 정보</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>주문번호</th>
-				<th>주문회사</th>
-				<th>생산공장</th>
-				<th>주문제품</th>
-				<th>주문수량</th>
-				<th>주문일</th>
-				<th>납기일</th>
-				<th>마감일</th>
-				<th>납품상태</th>
-				<th>납기지연일</th>
-			</tr>
-			<tr>
-				<td><%=custOrder.getOrder_no()%></td>
-				<td><%=custOrder.getItem_cd()%></td>
-				<td><%=custOrder.getPlant_cd()%></td>
-				<td><%=custOrder.getItem_cd()%></td>
-				<td style="color:red"><%=custOrder.getOrder_qty()%></td>
-				<td><%=custOrder.getOrder_date()%></td>
-				<td><%=custOrder.getDelivery_date()%></td>
-				<td><%=custOrder.getFinished_date()%></td>
-				<td><%=custOrder.isOrder_status()%></td>
-				<td><%=custOrder.getDelayed_date()%></td>
-			</tr>
-		</table>
-		<br /><br /><br />
-		<h5>[공장 <%=custOrder.getPlant_cd()%>] 제품 / 자재 재고수량</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>제품</th>
-				<th>제품 <%=custOrder.getItem_cd()%></th>
-				<th>자재</th>
-				<th>자재 1</th>
-				<th>자재 2</th>
-				<th>자재 3</th>
-			</tr>
-			<tr>
-				<td>재고수량</td>
-				<td><%=stockQtys.get(0)%></td>
-				<td>재고수량</td>
-				<td><%=stockQtys.get(1)%></td>
-				<td><%=stockQtys.get(2)%></td>
-				<td><%=stockQtys.get(3)%></td>
-			</tr>
-		</table>
-		<br /><br /><br />
-		<h5>[공장 <%=custOrder.getPlant_cd()%>] 생산 계획수량 = (주문수량-재고수량)X1.05 / 자재 발주수량</h5>
-		<table class="table1 table-striped">
-			<tr>
-				<th>제품</th>
-				<th>제품 <%=custOrder.getItem_cd()%></th>
-				<th>자재</th>
-				<th>자재 1</th>
-				<th>자재 2</th>
-				<th>자재 3</th>
-			</tr>
-			<tr>
-				<td style="color:red">계획수량</td>
-				<td style="color:red"><%=requiredQtys.get(0)%></td>
-				<td style="color:blue">발주수량</td>
-				<td style="color:blue"><%=requiredQtys.get(1)%></td>
-				<td style="color:blue"><%=requiredQtys.get(2)%></td>
-				<td style="color:blue"><%=requiredQtys.get(3)%></td>
-			</tr>
-		</table>
-		<br /><br /><br />
-		<c:choose>
-		
-		
-			<c:when test="<%=requiredQtys.get(0) == 0%>">
-				<h5>제품 재고가 충분하므로 제품을 생산할 필요 없습니다. 제품을 출고하시겠습니까?</h5>
-				<a href="#" class="btn btn-warning">확인</a>
-			</c:when>
-		
-		
-		
-			<c:when test="<%=requiredQtys.get(1) == 0 && requiredQtys.get(2) == 0 && requiredQtys.get(3) == 0%>">
-				<h5>자재 재고가 충분하므로 자재를 발주할 필요 없습니다. 생산지시 페이지로 이동하시겠습니까?</h5>
-				<a href="/production/workOrderForm" class="btn btn-warning">확인</a>
-			</c:when>	
-			<c:otherwise>
-				<h5>자재 재고가 부족하므로 발주가 필요합니다. 자재를 자동 발주하시겠습니까?</h5>
-				<a href="/order/ourOrderAuto" class="btn btn-warning">확인</a>
-			</c:otherwise>
-		</c:choose>
+		<div class="item">
+			<h5>제품 주문 정보</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>주문번호</th>
+					<th>주문회사</th>
+					<th>생산공장</th>
+					<th>주문제품</th>
+					<th>주문수량</th>
+					<th>주문일</th>
+					<th>납기일</th>
+					<th>마감일</th>
+					<th>납품상태</th>
+					<th>납기지연일</th>
+				</tr>
+				<tr>
+					<td><%=custOrder.getOrder_no()%></td>
+					<td><%=custOrder.getItem_cd()%></td>
+					<td><%=custOrder.getPlant_cd()%></td>
+					<td><%=custOrder.getItem_cd()%></td>
+					<td style="color:red"><%=custOrder.getOrder_qty()%></td>
+					<td><%=custOrder.getOrder_date()%></td>
+					<td><%=custOrder.getDelivery_date()%></td>
+					<td><%=custOrder.getFinished_date()%></td>
+					<td><%=custOrder.isOrder_status()%></td>
+					<td><%=custOrder.getDelayed_date()%></td>
+				</tr>
+			</table>
+			<br /><br /><br />
+			<h5>[공장 <%=custOrder.getPlant_cd()%>] 제품 재고수량 및 자재 재고수량</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>제품</th>
+					<th>제품 <%=custOrder.getItem_cd()%></th>
+					<th>자재</th>
+					<th>자재 1</th>
+					<th>자재 2</th>
+					<th>자재 3</th>
+				</tr>
+				<tr>
+					<td>재고수량</td>
+					<td><%=stockQtys.get(0)%></td>
+					<td>재고수량</td>
+					<td><%=stockQtys.get(1)%></td>
+					<td><%=stockQtys.get(2)%></td>
+					<td><%=stockQtys.get(3)%></td>
+				</tr>
+			</table>
+			<br /><br /><br />
+			<h5>[공장 <%=custOrder.getPlant_cd()%>] 생산 계획수량 및 자재 발주수량</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>제품</th>
+					<th>제품 <%=custOrder.getItem_cd()%></th>
+					<th>자재</th>
+					<th>자재 1</th>
+					<th>자재 2</th>
+					<th>자재 3</th>
+				</tr>
+				<tr>
+					<td style="color:red"><strong>계획수량</strong></td>
+					<td style="color:red"><strong><%=requiredQtys.get(0)%></strong></td>
+					<td style="color:blue"><strong>발주수량</strong></td>
+					<td style="color:blue"><strong><%=requiredQtys.get(1)%></strong></td>
+					<td style="color:blue"><strong><%=requiredQtys.get(2)%></strong></td>
+					<td style="color:blue"><strong><%=requiredQtys.get(3)%></strong></td>
+				</tr>
+			</table>
+			<br /><br /><br />
+			<c:choose>
+			
+			
+				<c:when test="<%=requiredQtys.get(0) == 0%>">
+					<h5>제품 재고가 충분하므로 제품을 생산할 필요 없습니다. 제품을 출고하시겠습니까?</h5>
+					<a href="#" class="btn btn-warning">확인</a>
+				</c:when>
+			
+			
+			
+				<c:when test="<%=requiredQtys.get(1) == 0 && requiredQtys.get(2) == 0 && requiredQtys.get(3) == 0%>">
+					<h5>자재 재고가 충분하므로 자재를 발주할 필요 없습니다. 생산지시 페이지로 이동하시겠습니까?</h5>
+					<a href="/production/workOrderForm" class="btn btn-warning">확인</a>
+				</c:when>	
+				<c:otherwise>
+					<h5>자재 재고가 부족하므로 발주가 필요합니다. 자재를 자동 발주하시겠습니까?</h5>
+					<a href="/order/ourOrderAuto" class="btn btn-warning">확인</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 </body>
 </html>

@@ -2,7 +2,6 @@ package mes.action;
 
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +36,7 @@ public class WorkOrderAction implements Action {
 		
 		// 1. end_date과 end_shift 계산
 		WorkOrderService workOrderService = new WorkOrderService();
-		List<Object> endDateShift = workOrderService.getEndDateShift(start_date, start_shift, plan_qty);
+		List<Object> endDateShift = workOrderService.computeEndDateShift(start_date, start_shift, plan_qty);
 		Date end_date = (Date) endDateShift.get(0);
 		String end_shift = (String) endDateShift.get(1);
 		
