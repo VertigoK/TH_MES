@@ -28,6 +28,7 @@ import mes.action.ProductionPlantAction;
 import mes.action.ProductionProcessAction;
 import mes.action.ProductionStartAction;
 import mes.action.ProductionAction;
+import mes.action.ProductionHistoryAction;
 import mes.action.QualityAction;
 import mes.action.QualityLineAction;
 import mes.action.QualityPlantAction;
@@ -305,6 +306,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/production/start")) {
 			action = new ProductionStartAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/production/history")) {
+			action = new ProductionHistoryAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

@@ -63,7 +63,7 @@ public class ProductionStartAction implements Action {
 			
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/misc/production_start_success.jsp");
+			forward.setPath("/production/history");
 		}
 		
 		return forward;

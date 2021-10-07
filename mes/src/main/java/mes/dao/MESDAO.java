@@ -193,8 +193,8 @@ public class MESDAO {
 		ProductionBean production = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 테스트 용도로 20개만 조회하기 
-		String sql = "select * from production where " + id +  " = " + no + " limit 20";
+		// 테스트 용도로 30개만 조회하기 
+		String sql = "select * from production where " + id +  " = " + no + " limit 30";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -241,8 +241,8 @@ public class MESDAO {
 		QualityBean quality = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 테스트 용도로 20개만 조회하기 
-		String sql = "select * from quality where " + id +  " = " + no + " limit 20";
+		// 테스트 용도로 30개만 조회하기 
+		String sql = "select * from quality where " + id +  " = " + no + " limit 30";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -996,6 +996,21 @@ public class MESDAO {
 		}
 		
 		return qualityDataList;
+		
+	}
+
+	public int[] selectGoodBadQuantity(int wo_no) {
+		
+		int[] qtys = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql1 = "select count(*) from quality";
+		String sql2 = "select count(*) from quality where check_result = 0";
+		
+		???????? <- 현재 여기 작성 중 !!!!!
+		
+		return qtys;
 		
 	}
 	

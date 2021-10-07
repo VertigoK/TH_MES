@@ -30,8 +30,8 @@
 		.right .btn {
 			text-decoration: none;
 			color: #0D0D0D;
-			border: 1px solid #022945;
-/* 			border: 1px solid #073454; */
+			border: 1px solid #0F0121;
+/* 			border: 1px solid #022945; */
 /* 			border: 1px solid #0D0D0D; */
 			padding: 0 8px;
 			border-radius: 5px;
