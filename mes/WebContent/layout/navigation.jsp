@@ -19,8 +19,8 @@
     		float: left;
     		width: 50px;
     		height: 100%;
-    		background-color: #022945;
-/*     		background-color: #073454; */
+    		background-color: #0F0121;
+/*     		background-color: #022945; */
 /*     		background-color: #0D0D0D; */
     	}
     	#tab a {
@@ -41,8 +41,8 @@
 			background-color: white;
 			border-radius: 0;
 			border-left-style: solid;
-			border-left-color: #022945;
-/* 			border-left-color: #073454; */
+			border-left-color: #0F0121;
+/* 			border-left-color: #022945; */
 /* 			border-left-color: #0D0D0D; */
 			color: black;
 			font-weight: bold;

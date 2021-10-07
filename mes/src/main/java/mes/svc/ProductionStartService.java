@@ -1,11 +1,8 @@
 package mes.svc;
 
-import static db.JDBCUtility.close;
-import static db.JDBCUtility.getConnection;
+import static db.JDBCUtility.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -83,15 +80,6 @@ public class ProductionStartService {
 		Process pr = null;
 		try {
 			pr = Runtime.getRuntime().exec(pathArgs);
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()));  
-		    String line = null;
-		    
-		    while ((line = br.readLine()) != null) {  
-		        System.out.println(line);  
-		    }
-		    br.close();
-			
 			pr.getErrorStream().close();
 		    pr.getInputStream().close();
 		    pr.getOutputStream().close();

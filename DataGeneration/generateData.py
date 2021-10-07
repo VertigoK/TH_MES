@@ -58,18 +58,6 @@ else:
     tols_measured = [0.01, 0.01, 0.1, 0.1]
 
 
-print(prdInfo)
-print(prdTime)
-print(plan_qty)
-print(item_cd)
-print(specs)
-print(tols)
-print(k)
-print(specs_measured)
-print(tols_measured)
-
-
-
 # 생산정보/품질검사정보 데이터 생성 / 저장(CSV) / 업로드(DB) 함수 정의
 def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tols_measured):
     
@@ -117,20 +105,30 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     # 생산정보 데이터 모두 합치기
     productionData = np.concatenate((serial_noData, prdInfoData, measuredData, computedData, prd_dtData), axis=1)
 
-    # 생산정보 데이터를 CSV로 저장하기
+    # 생산정보 데이터를 DataFrame으로 변환
     df = pd.DataFrame(productionData)
     df.columns = ['serial_no', 'wo_no', 'plant_cd', 'line_cd', 'item_cd', 'worker_no',
                   'dim_x', 'dim_y', 'dim_h', 'dim_w', 'hole_x', 'hole_y', 'hole_xc', 'hole_yc',
                   'str_x', 'str_y', 'hole_d', 'hole_ratio', 'prd_dt']
-    file_name_production = 'C:\projects\TH_MES\DataGeneration\Data\productionData_' + serial_no + '.csv'
+
+    # 생산시간 흐름에 따른 근무자번호(worker_no) 업데이트
+    start_dt = df['prd_dt'].iloc[0]
+    worker_line_cd = math.ceil(worker_no / 6)
+    i = 1
+    while (df['prd_dt'] - start_dt >= i * timedelta(hours=8)).any():
+        if worker_no + 2 < worker_line_cd * 6:
+            worker_no += 2
+        else:
+            worker_no += 2 - 6
+        df.loc[df['prd_dt'] - start_dt >= i * timedelta(hours=8), 'worker_no'] = worker_no
+        i += 1
+
+    # 생산정보 데이터를 CSV로 저장
+    file_name_production = 'C:\projects\TH_MES\DataGeneration\Data\production_' + serial_no + '.csv'
     df.to_csv(file_name_production, index=False)
 
 
     # 2. 품질검사정보 데이터 생성 및 저장
-
-    # 근무자번호 업데이트 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
-    prdInfo[4] += 1
-    prdInfoData = np.tile(np.array(prdInfo), (plan_qty, 1))
 
     # 품질검사에 사용할 8개의 규격치 재조합
     specs_qc = specs[:2] + specs[-2:] + specs_measured
@@ -154,13 +152,18 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     # 품질검사정보 데이터 모두 합치기
     qualityData =np.concatenate((serial_noData, prdInfoData, checkedData), axis=1)
 
-    # 품질검사정보 데이터를 CSV로 저장하기
-    df = pd.DataFrame(qualityData)
-    df.columns = ['serial_no', 'wo_no', 'plant_cd', 'line_cd', 'item_cd', 'worker_no',
+    # 품질검사정보 데이터를 DataFrame으로 변환
+    df1 = pd.DataFrame(qualityData)
+    df1.columns = ['serial_no', 'wo_no', 'plant_cd', 'line_cd', 'item_cd', 'worker_no',
                   'dimcheck_x', 'dimcheck_y', 'holecheck_xc', 'holecheck_yc',
                   'dimcheck_hx', 'dimcheck_wy', 'holecheck_d', 'holecheck_ratio', 'check_result']
-    file_name_quality = 'C:\projects\TH_MES\DataGeneration\Data\qualityData_' + serial_no + '.csv'
-    df.to_csv(file_name_quality, index=False)
+
+    # 근무자번호 변경 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
+    df1['worker_no'] = df['worker'] + 1
+
+    # 품질검사정보 데이터를 CSV로 저장
+    file_name_quality = 'C:\projects\TH_MES\DataGeneration\Data\quality_' + serial_no + '.csv'
+    df1.to_csv(file_name_quality, index=False)
 
 
     # 3. 생산정보 데이터를 DB의 production 테이블에 업로드
@@ -202,8 +205,6 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
     cursor.close()
     conn.close()
 
-    print("DONE!!!")
 
-
-# 실행
+# 데이터 생성 함수 실행
 simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tols_measured)
