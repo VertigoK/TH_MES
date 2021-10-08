@@ -1,4 +1,8 @@
+<%@page import="mes.dto.ProductionHistoryBean"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	ProductionHistoryBean productionHistory = (ProductionHistoryBean) session.getAttribute("productionHistoryInfo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +31,33 @@
 	</div>
 	<div class="content" align="center">
 		<div class="item">
-			<h5>생산/품질검사/생산이력 데이터 생성 성공</h5>
+			<h5>신규 생성된 생산이력</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>생산지시번호</th>
+					<th>공장코드</th>
+					<th>라인코드</th>
+					<th>품목코드</th>
+					<th>생산지시SEQ</th>
+					<th>작업시작시간</th>
+					<th>작업종료시간</th>
+					<th>투입수량</th>
+					<th>배출수량</th>
+					<th>NG수량</th>
+				</tr>
+				<tr>
+					<td><%=productionHistory.getWo_no()%></td>
+					<td><%=productionHistory.getPlant_cd()%></td>
+					<td><%=productionHistory.getLine_cd()%></td>
+					<td><%=productionHistory.getItem_cd()%></td>
+					<td><%=productionHistory.getWo_seq()%></td>
+					<td><%=productionHistory.getStart_dt()%></td>
+					<td><%=productionHistory.getEnd_dt()%></td>
+					<td><%=productionHistory.getIn_qty()%></td>
+					<td><%=productionHistory.getOut_qty()%></td>
+					<td><%=productionHistory.getNg_qty()%></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </body>

@@ -20,7 +20,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>고객사 제품 주문 성공</title>
+	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">

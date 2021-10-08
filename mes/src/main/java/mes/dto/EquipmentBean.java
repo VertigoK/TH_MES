@@ -2,10 +2,10 @@ package mes.dto;
 
 public class EquipmentBean {
 	
+	private int equip_id;
 	private int plant_cd;
 	private int line_cd;
 	private String process_cd;
-	private int equip_id;
 	private String equip_cd;
 	private String equip_nm;
 	private String equip_model;
@@ -13,8 +13,14 @@ public class EquipmentBean {
 	private String use_type;
 	private boolean use_yn;
 	private int error_cd;
-	private float run_time;
+	private int run_time;
 	
+	public int getEquip_id() {
+		return equip_id;
+	}
+	public void setEquip_id(int equip_id) {
+		this.equip_id = equip_id;
+	}
 	public int getPlant_cd() {
 		return plant_cd;
 	}
@@ -32,12 +38,6 @@ public class EquipmentBean {
 	}
 	public void setProcess_cd(String process_cd) {
 		this.process_cd = process_cd;
-	}
-	public int getEquip_id() {
-		return equip_id;
-	}
-	public void setEquip_id(int equip_id) {
-		this.equip_id = equip_id;
 	}
 	public String getEquip_cd() {
 		return equip_cd;
@@ -81,11 +81,11 @@ public class EquipmentBean {
 	public void setError_cd(int error_cd) {
 		this.error_cd = error_cd;
 	}
-	public float getRun_time() {
+	public int getRun_time() {
 		return run_time;
 	}
-	public void setRun_time(float run_time) {
+	public void setRun_time(int run_time) {
 		this.run_time = run_time;
 	}
-
+	
 }

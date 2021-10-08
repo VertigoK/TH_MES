@@ -1,12 +1,13 @@
 package mes.dao;
 
-import static db.JDBCUtility.close;
+import static db.JDBCUtility.*;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import mes.dto.CustomerOrderBean;
@@ -16,6 +17,7 @@ import mes.dto.LineBean;
 import mes.dto.MemberBean;
 import mes.dto.OurOrderBean;
 import mes.dto.ProductionBean;
+import mes.dto.ProductionHistoryBean;
 import mes.dto.QualityBean;
 import mes.dto.WorkOrderBean;
 
@@ -133,7 +135,7 @@ public class MESDAO {
 		
 	}
 	
-	// Equipment List 조회 (공장별, 라인별, 공정별)
+	// '설비(equipment)' 목록 조회 (공장별, 라인별, 공정별)
 	public ArrayList<EquipmentBean> selectEquipmentList(String id, int no) {
 		
 		ArrayList<EquipmentBean> equipmentList = new ArrayList<EquipmentBean>();
@@ -173,11 +175,11 @@ public class MESDAO {
 				equipment.setUse_type(rs.getString("use_type"));
 				equipment.setUse_yn(rs.getBoolean("use_yn"));
 				equipment.setError_cd(rs.getInt("error_cd"));
-				equipment.setRun_time(rs.getFloat("run_time"));
+				equipment.setRun_time(rs.getInt("run_time"));
 				equipmentList.add(equipment);
 			}
 		} catch (SQLException e) {
-			System.out.println("설비 현황 조회 실패!" + e.getMessage());
+			System.out.println("설비 목록 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -186,7 +188,7 @@ public class MESDAO {
 		
 	}
 	
-	// Production List 조회 (공장별, 라인별)
+	// '생산정보(production)' 목록 조회 (공장별, 라인별)
 	public ArrayList<ProductionBean> selectProductionList(String id, int no) {
 		
 		ArrayList<ProductionBean> productionList = new ArrayList<ProductionBean>();
@@ -225,7 +227,7 @@ public class MESDAO {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("생산 현황 조회 실패!" + e.getMessage());
+			System.out.println("생산정보 목록 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -234,7 +236,7 @@ public class MESDAO {
 		
 	}
 
-	// Quality List 조회 (공장별, 라인별)
+	// 품질검사정보(quality) 목록 조회 (공장별, 라인별)
 	public ArrayList<QualityBean> selectQualityList(String id, int no) {
 		
 		ArrayList<QualityBean> qualityList = new ArrayList<QualityBean>();
@@ -269,7 +271,7 @@ public class MESDAO {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("품질 현황 조회 실패!" + e.getMessage());
+			System.out.println("품질검사정보 목록 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -277,7 +279,7 @@ public class MESDAO {
 		return qualityList;
 	}
 	
-	// 고객사 제품 주문 정보 등록 (cust_order 테이블)
+	// 고객사 '제품 주문(cust_order)' 데이터 등록
 	public ArrayList<Integer> insertCustOrder(int cust_cd, int plant_cd, int item_cd,
 											  int order_qty, Date delivery_date) {
 		
@@ -308,7 +310,7 @@ public class MESDAO {
 			pstmt.setDate(6, delivery_date);
 			insertCustOrderCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("고객사 제품 주문 정보 등록 실패!" + e.getMessage());
+			System.out.println("고객사 제품 주문 데이터 등록 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -320,7 +322,7 @@ public class MESDAO {
 		
 	}
 	
-	// 자사 자재 발주 정보 등록 (our_order 테이블)
+	// 자사 '자재 발주(our_order)' 데이터 등록
 	public ArrayList<Integer> insertOurOrder(int cust_cd, int plant_cd, int item_cd, int order_qty) {
 		
 		ArrayList<Integer> insertOurOrderResult = new ArrayList<Integer>();
@@ -349,7 +351,7 @@ public class MESDAO {
 			pstmt.setInt(5, order_qty);
 			insertOurOrderCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("자사 자재 발주 정보 등록 실패!" + e.getMessage());
+			System.out.println("자사 자재 발주 데이터 등록 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -361,7 +363,7 @@ public class MESDAO {
 		
 	}
 
-	// '고객 제품 주문' 정보 조회 (w/ order_no)
+	// 고객 '제품 주문' 목록 조회 (w/ order_no)
 	public CustomerOrderBean selectCustOrder(int order_no) {
 		
 		CustomerOrderBean custOrder = null;
@@ -387,7 +389,7 @@ public class MESDAO {
 				custOrder.setDelayed_date(rs.getInt("delayed_date"));
 			}
 		} catch (SQLException e) {
-			System.out.println("고객사 제품 주문 정보 조회 실패! " + e.getMessage());
+			System.out.println("고객사 제품 주문 목록 조회 실패! " + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -396,7 +398,7 @@ public class MESDAO {
 		
 	}
 	
-	// '자사 자재 발주' 정보 조회 (w/ order_no)
+	// 자사 '자재 발주' 목록 조회 (w/ order_no)
 	public OurOrderBean selectOurOrder(int order_no) {
 		
 		OurOrderBean ourOrder = null;
@@ -419,7 +421,7 @@ public class MESDAO {
 				ourOrder.setOrder_status(rs.getBoolean("order_status"));
 			}
 		} catch (SQLException e) {
-			System.out.println("자사 자재 발주 정보 조회 실패! " + e.getMessage());
+			System.out.println("자사 자재 발주 목록 조회 실패! " + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -428,7 +430,7 @@ public class MESDAO {
 		
 	}
 
-	// '고객 제품 주문' 정보 조회 (전체)
+	// 고객 '제품 주문' 목록 전체 조회
 	public ArrayList<CustomerOrderBean> selectOrderInList() {
 		
 		ArrayList<CustomerOrderBean> orderInList = null;
@@ -462,7 +464,7 @@ public class MESDAO {
 				orderInList.add(orderIn);
 			}
 		} catch (SQLException e) {
-			System.out.println("고객 제품 주문 정보 전체 조회 실패! " + e.getMessage());
+			System.out.println("고객 제품 주문 목록 전체 조회 실패! " + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -471,7 +473,7 @@ public class MESDAO {
 		
 	}
 
-	// '자사 자재 발주' 정보 조회 (전체)
+	// 자사 '자재 발주' 목록 전체 조회
 	public ArrayList<OurOrderBean> selectOrderOutList() {
 		
 		ArrayList<OurOrderBean> orderOutList = null;
@@ -501,7 +503,7 @@ public class MESDAO {
 				orderOutList.add(orderOut);
 			}
 		} catch (SQLException e) {
-			System.out.println("자사 자재 발주 정보 전체 조회 실패! " + e.getMessage());
+			System.out.println("자사 자재 발주 목록 전체 조회 실패! " + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -510,7 +512,7 @@ public class MESDAO {
 		
 	}
 
-	// '제품과 자재 재고량' 조회 (w/ plant_cd, item_cd) 
+	// '제품 재고량' 및 '자재 재고량' 조회 (w/ plant_cd, item_cd) 
 	public ArrayList<Integer> selectStockQuantity(int plant_cd, int item_cd) {
 		
 		ArrayList<Integer> stockQtys = new ArrayList<Integer>();
@@ -537,7 +539,7 @@ public class MESDAO {
 			}
 			close(pstmt, rs);
 		} catch (SQLException e) {
-			System.out.println("제품과 자재 재고량 조회 실패!" + e.getMessage());
+			System.out.println("제품 재고량 및 자재 재고량 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -546,7 +548,7 @@ public class MESDAO {
 		
 	}
 	
-	// '라인 현황' 조회 (w/ plant_cd)
+	// '라인(line)' 목록 조회 (w/ plant_cd)
 	public ArrayList<LineBean> selectLineList(int plant_cd) {
 		
 		ArrayList<LineBean> lineList = new ArrayList<LineBean>();
@@ -571,7 +573,7 @@ public class MESDAO {
 				lineList.add(line);
 			}
 		} catch (SQLException e) {
-			System.out.println("라인 현황 조회 실패!" + e.getMessage());
+			System.out.println("라인 목록 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -580,7 +582,7 @@ public class MESDAO {
 		
 	}
 
-	// '생산지시 현황' 조회 (w/ plant_cd)
+	// '생산지시(work_order)' 목록 조회 (w/ plant_cd)
 	public ArrayList<WorkOrderBean> selectWorkOrderList(int plant_cd) {
 		
 		ArrayList<WorkOrderBean> workOrderList = null;
@@ -615,7 +617,7 @@ public class MESDAO {
 				workOrderList.add(workOrder);
 			}
 		} catch (SQLException e) {
-			System.out.println("생산지시 현황 조회 실패!" + e.getMessage());
+			System.out.println("생산지시 목록 조회 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -624,7 +626,7 @@ public class MESDAO {
 		
 	}
 	
-	// '생산지시' 정보 등록 (work_order 테이블)
+	// '생산지시(work_order)' 데이터 등록
 	public ArrayList<Integer> insertWorkOrder(int plant_cd, int line_cd, int order_no, int item_cd, 
 			Date start_date, String start_shift, Date end_date, String end_shift, int plan_qty) {
 		
@@ -659,7 +661,7 @@ public class MESDAO {
 			pstmt.setInt(10, plan_qty);
 			insertWorkOrderCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("생산지시 정보 등록 실패!" + e.getMessage());
+			System.out.println("생산지시 데이터 등록 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -671,7 +673,7 @@ public class MESDAO {
 		
 	}
 
-	// '생산지시' 정보 조회 (w/ wo_no)
+	// '생산지시' 목록 조회 (w/ wo_no)
 	public WorkOrderBean selectWorkOrder(int wo_no) {
 		
 		WorkOrderBean workOrder = null;
@@ -698,7 +700,7 @@ public class MESDAO {
 				workOrder.setFlag_end(rs.getBoolean("flag_end"));
 			}
 		} catch (SQLException e) {
-			System.out.println("생산지시 정보 조회 실패! " + e.getMessage());
+			System.out.println("생산지시 목록 조회 실패! " + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -719,7 +721,7 @@ public class MESDAO {
 			pstmt = conn.prepareStatement(sql);
 			updateCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("생산지시 정보 조회 실패! " + e.getMessage());
+			System.out.println("제품 주문 테이블 생산지시여부 업데이트 실패! " + e.getMessage());
 		} finally {
 			close(pstmt);
 		}
@@ -728,32 +730,7 @@ public class MESDAO {
 		
 	}
 
-	// 자동 자재 발주 성공시 item_stock 테이블 업데이트 (자재 발주 = 자재 입고)
-	public int updateItemStock(int plant_cd, int item_cd, int order_qty) {
-		
-		int updateCount = 0;
-		
-		PreparedStatement pstmt = null;
-		String sql = "update item_stock set item_qty = item_qty + ?, update_dt = now() " +
-					 " where item_cd = ? and storage_nm = ?"; 
-	
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, order_qty);
-			pstmt.setInt(2, item_cd);
-			pstmt.setString(3, "자재창고" + plant_cd);
-			updateCount = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("item_stock 테이블 업데이트 실패! " + e.getMessage());
-		} finally {
-			close(pstmt);
-		}
-		
-		return updateCount;
-		
-	}
-
-	// '생산지시 현황' 전체 조회
+	// '생산지시(work_order)' 목록 전체 조회
 	public ArrayList<WorkOrderBean> selectWorkOrderList() {
 		
 		ArrayList<WorkOrderBean> workOrderList = null;
@@ -798,7 +775,7 @@ public class MESDAO {
 	}
 
 
-	// 재고 현황 전체 조회
+	// '품목 재고 현황' 목록 전체 조회
 	public ArrayList<ItemStockBean> totalStockList() {
 		
 		ArrayList<ItemStockBean> stockList = new ArrayList<ItemStockBean>();
@@ -823,7 +800,7 @@ public class MESDAO {
 				stockList.add(itemStock);
 			}
 		} catch (Exception e) {
-			System.out.println("품목 재고 현황 조회 실패! "+ e.getMessage());
+			System.out.println("품목 재고 현황 전체 조회 실패! "+ e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -832,7 +809,7 @@ public class MESDAO {
 		
 	}
 	
-	// 재고 현황 조회 (w/ no)
+	// 공장별 '품목 재고 현황' 목록 조회 (w/ no)
 	public ArrayList<ItemStockBean> selectStockList(int no) {
 		
 		ArrayList<ItemStockBean> plantStockList = new ArrayList<ItemStockBean>();
@@ -873,7 +850,7 @@ public class MESDAO {
 		
 	}
 
-	// 근무자번호 조회 (w/ line_cd, start_shift)
+	// '근무자번호' 조회 (w/ line_cd, start_shift)
 	public int selectWorkerNo(int line_cd, String start_shift) {
 		
 		int worker_no = 0;
@@ -899,7 +876,7 @@ public class MESDAO {
 		
 	}
 
-	// 생산정보(production) 조회 (w/ wo_no)
+	// '생산정보(production)' 목록 조회 (w/ wo_no)
 	public ArrayList<ProductionBean> selectProductionDataList(int wo_no) {
 		
 		ArrayList<ProductionBean> productionDataList = null; 
@@ -907,12 +884,13 @@ public class MESDAO {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from production where wo_no = " + wo_no;
+		String sql = "select * from production where wo_no = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, wo_no);
 			rs = pstmt.executeQuery();
-			
+					
 			int i = 0;
 			while(rs.next()) {
 				if(i == 0) {
@@ -942,7 +920,7 @@ public class MESDAO {
 				productionDataList.add(productionData);
 			}
 		} catch (Exception e) {
-			System.out.println("생산 데이터 조회 실패! "+ e.getMessage());
+			System.out.println("생산정보 목록 조회 실패! "+ e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -951,7 +929,7 @@ public class MESDAO {
 		
 	}
 		
-	// 품질검사정보(quality) 조회 (w/ wo_no)
+	// '품질검사정보(quality)' 목록 조회 (w/ wo_no)
 	public ArrayList<QualityBean> selectQualityDataList(int wo_no) {
 		
 		ArrayList<QualityBean> qualityDataList = null;
@@ -990,7 +968,7 @@ public class MESDAO {
 				qualityDataList.add(qualityData);
 			}
 		} catch (Exception e) {
-			System.out.println("품질검사 데이터 조회 실패! "+ e.getMessage());
+			System.out.println("품질검사정보 목록 조회 실패! "+ e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -998,21 +976,247 @@ public class MESDAO {
 		return qualityDataList;
 		
 	}
-
+	
+	// 품질검사정보(quality) 투입수량(in_qty), 배출수량(out_qty), NG수량(ng_qty) 조회 (w/ wo_no)
 	public int[] selectGoodBadQuantity(int wo_no) {
 		
-		int[] qtys = null;
+		int[] qtys = new int[3];
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql1 = "select count(*) from quality";
 		String sql2 = "select count(*) from quality where check_result = 0";
 		
-		???????? <- 현재 여기 작성 중 !!!!!
+		try {
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) qtys[0] = rs.getInt(1);
+			close(pstmt, rs);
+			
+			pstmt = conn.prepareStatement(sql2);
+			rs = pstmt.executeQuery();
+			if(rs.next()) qtys[2] = rs.getInt(1);
+			close(pstmt, rs);
+			
+			qtys[1] = qtys[0] - qtys[2];
+		} catch (Exception e) {
+			System.out.println("품질검사 투입수량/배출수량/NG수량 조회 실패! "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
 		
 		return qtys;
 		
 	}
+	
+	// '생산이력(production_hist)' 데이터 등록
+	public int insertProductionHistory(int wo_no, int plant_cd, int line_cd, int item_cd,
+			Timestamp start_dt, Timestamp end_dt, int in_qty, int out_qty, int ng_qty) {
+		
+		int insertProductionHistoryCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "insert into production_hist(wo_no, plant_cd, line_cd, item_cd, start_dt, end_dt, in_qty, out_qty, ng_qty) " +
+					 "values(?,?,?,?,?,?,?,?,?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, wo_no);
+			pstmt.setInt(2, plant_cd);
+			pstmt.setInt(3, line_cd);
+			pstmt.setInt(4, item_cd);
+			pstmt.setTimestamp(5, start_dt);
+			pstmt.setTimestamp(6, end_dt);
+			pstmt.setInt(7, in_qty);
+			pstmt.setInt(8, out_qty);
+			pstmt.setInt(9, ng_qty);
+			insertProductionHistoryCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("생산이력 데이터 등록 실패!"+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return insertProductionHistoryCount;
+		
+	}
+
+	// '설비(equipment)' 테이블 '가동시간(run_time)' 업데이트
+	public int updateEquipmentRunTime(int line_cd, int run_time) {
+		
+		int updateEquipmentRunTimeCount = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = "update equipment set run_time = run_time + ? where line_cd = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, run_time);
+			pstmt.setInt(2, line_cd);
+			updateEquipmentRunTimeCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("설비 가동시간 업데이트 실패!"+ e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateEquipmentRunTimeCount;
+		
+	}
+
+	// '설비(equipment)' 목록 전체 조회
+	public ArrayList<EquipmentBean> selectEquipmentList() {
+		
+		ArrayList<EquipmentBean> equipmentList = null;
+		EquipmentBean equipment = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from equipment";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				if(i == 0) {
+					equipmentList = new ArrayList<EquipmentBean>();	// 조회 결과가 없으면 equipmentList = null 리턴
+					i++;
+				}
+				equipment = new EquipmentBean();
+				equipment.setPlant_cd(rs.getInt("plant_cd"));
+				equipment.setLine_cd(rs.getInt("line_cd"));
+				equipment.setProcess_cd(rs.getString("process_cd"));
+				equipment.setEquip_id(rs.getInt("equip_id"));
+				equipment.setEquip_cd(rs.getString("equip_cd"));
+				equipment.setEquip_nm(rs.getString("equip_nm"));
+				equipment.setEquip_model(rs.getString("equip_model"));
+				equipment.setCheck_term(rs.getInt("check_term"));
+				equipment.setUse_type(rs.getString("use_type"));
+				equipment.setUse_yn(rs.getBoolean("use_yn"));
+				equipment.setError_cd(rs.getInt("error_cd"));
+				equipment.setRun_time(rs.getInt("run_time"));
+				equipmentList.add(equipment);
+			}
+		} catch (SQLException e) {
+			System.out.println("설비 목록 전체 조회 실패!" + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return equipmentList;
+		
+	}
+
+	// '생산이력(production_hist)' 목록 조회 (w/ wo_no)
+	public ProductionHistoryBean selectProductionHistory(int wo_no) {
+		
+		ProductionHistoryBean productionHistory = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from production_hist where wo_no = " + wo_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				productionHistory = new ProductionHistoryBean();
+				productionHistory.setWo_no(rs.getInt("wo_no"));
+				productionHistory.setPlant_cd(rs.getInt("plant_cd"));
+				productionHistory.setLine_cd(rs.getInt("line_cd"));
+				productionHistory.setItem_cd(rs.getInt("item_cd"));
+				productionHistory.setWo_seq(rs.getInt("wo_seq"));
+				productionHistory.setStart_dt(rs.getTimestamp("start_dt"));
+				productionHistory.setEnd_dt(rs.getTimestamp("end_dt"));
+				productionHistory.setIn_qty(rs.getInt("in_qty"));
+				productionHistory.setOut_qty(rs.getInt("out_qty"));
+				productionHistory.setNg_qty(rs.getInt("ng_qty"));
+			}
+		} catch (SQLException e) {
+			System.out.println("생산 이력 목록 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return productionHistory;
+		
+	}
+
+	// '품목 입출고(item_io)' 테이블에 자재 입고 등록
+	public int insertItemInOut(int plant_cd, int item_cd, String item_type, Timestamp inout_dt, String inout_type,
+			int storage_from, String storage_from_nm, int storage_to, String storage_to_nm, int cust_cd, int item_cnt) {
+		
+		int insertItemInOutCount = 0;
+		int inout_cd = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql1 = "select max(inout_cd) from item_io";
+		String sql2 = "insert into item_io values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		try {
+			// 1. 자동 생성된 입출고코드 가져오기
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) inout_cd = rs.getInt(1) + 1;
+			else inout_cd = 1;
+			close(pstmt, rs);
+			
+			// 2. item_io 테이블에 등록하기
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, inout_cd);
+			pstmt.setInt(2, plant_cd);
+			pstmt.setInt(3, item_cd);
+			pstmt.setString(4, item_type);
+			pstmt.setTimestamp(5, inout_dt);
+			pstmt.setString(6, inout_type);
+			pstmt.setInt(7, storage_from);
+			pstmt.setString(8, storage_from_nm);
+			pstmt.setInt(9, storage_to);
+			pstmt.setString(10, storage_to_nm);
+			pstmt.setInt(11, cust_cd);
+			pstmt.setInt(12, item_cnt);
+			insertItemInOutCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("품목 입출고 테이블에 자재 입고 등록 실패!" + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return insertItemInOutCount;
+		
+	}
+
+	// item_stock 테이블 업데이트
+	public int updateItemStock(int item_cd, int storage_cd, int item_cnt, Timestamp start_dt) {
+		
+		int updateCount = 0;
+		
+		PreparedStatement pstmt = null;		
+		String sql = "update item_stock set item_qty = item_qty + ?, update_dt = ? " +
+				 " where item_cd = ? and storage_cd = ?"; 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, item_cnt);
+			pstmt.setTimestamp(2, start_dt);
+			pstmt.setInt(3, item_cd);
+			pstmt.setInt(4, storage_cd);
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("품목 재고 현황 테이블 업데이트 실패! " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+	
+		return updateCount;
+		
+	}
+
+	
 	
 	
 	

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import csv
 import MySQLdb
 import argparse
+import math
 
 # Initialize parser.
 parser = argparse.ArgumentParser()
@@ -41,19 +42,19 @@ item_cd = prdInfo[3]
 if item_cd == 1:
     specs = [40.0, 30.0, 0.0, 0.0, 5.0, 5.0, 0.0, 0.0]      # 8개 측정값의 규격치
     tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]   # 8개 측정값의 허용치
-    k = [2.5, 2.5, 2.4, 2.4, 2.5, 2.5, 2.6, 2.7]            # 불량률 조정 factor
+    k = [2.7, 2.7, 2.6, 2.6, 2.7, 2.7, 2.8, 2.9]            # 불량률 조정 factor
     specs_measured = [0.0, 0.0, 5.0, 1.0]                   # 4개 계산값의 규격치
     tols_measured = [0.01, 0.01, 0.1, 0.1]                  # 4개 계산값의 허용치
 elif item_cd == 2:
     specs = [30.0, 20.0, 0.0, 0.0, 3.0, 3.0, 0.0, 0.0]
     tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]
-    k = [2.6, 2.6, 2.5, 2.4, 2.6, 2.7, 2.5, 2.6]
+    k = [2.8, 2.8, 2.7, 2.6, 2.8, 2.9, 2.7, 2.8]
     specs_measured = [0.0, 0.0, 3.0, 1.0]
     tols_measured = [0.01, 0.01, 0.1, 0.1]
 else:
     specs = [50.0, 40.0, 0.0, 0.0, 4.0, 4.0, 0.0, 0.0]
     tols = [0.1, 0.1, 0.001, 0.001, 0.1, 0.1, 0.05, 0.05]
-    k = [2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5]
+    k = [2.7, 2.7, 2.7, 2.7, 2.7, 2.7, 2.7, 2.7]
     specs_measured = [0.0, 0.0, 4.0, 1.0]
     tols_measured = [0.01, 0.01, 0.1, 0.1]
 
@@ -158,8 +159,8 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
                   'dimcheck_x', 'dimcheck_y', 'holecheck_xc', 'holecheck_yc',
                   'dimcheck_hx', 'dimcheck_wy', 'holecheck_d', 'holecheck_ratio', 'check_result']
 
-    # 근무자번호 변경 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
-    df1['worker_no'] = df['worker'] + 1
+        # 근무자번호 변경 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
+    df1['worker_no'] = df['worker_no'] + 1
 
     # 품질검사정보 데이터를 CSV로 저장
     file_name_quality = 'C:\projects\TH_MES\DataGeneration\Data\quality_' + serial_no + '.csv'
