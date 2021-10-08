@@ -1,6 +1,7 @@
 package mes.action;
 
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import mes.dto.ActionForward;
 import mes.dto.CustomerOrderBean;
+import mes.dto.OurOrderBean;
+import mes.svc.ItemInOutService;
+import mes.svc.ItemStockService;
 import mes.svc.OurOrderAutoService;
 
 public class OurOrderAutoAction implements Action {
@@ -26,13 +30,14 @@ public class OurOrderAutoAction implements Action {
 		
 		int plant_cd = custOrder.getPlant_cd();
 		
+		// 자재가 3 종류이므로 자재별로 하나씩 등록 및 업데이트
 		for(int i = 1; i < 4; i++) {
-			int item_cd = i + 3;	// item_cd = 4, 5, 6 (자재)
+			int item_cd = i + 3;	// item_cd = 4, 5, 6 (자재1, 자재2, 자재3)
 			int cust_cd = item_cd;
 			int order_qty = requiredQtys.get(i);
+			
 			if(order_qty != 0) {
-				
-				// 1. our_order 테이블에 등록
+				// 1. our_order 테이블에 자재별 순서대로 하나씩 등록
 				boolean isOurOrderSuccess = false;
 				int order_no = 0;
 				
@@ -51,23 +56,44 @@ public class OurOrderAutoAction implements Action {
 					out.flush();
 					out.close();
 				} else {
-					// 2. item_stock 테이블에 발주(=입고)된 자재 업데이트
-					boolean isModifySuccess = false;
-					isModifySuccess = ourOrderAutoService.modifyItemStock(plant_cd, item_cd, order_qty);
+					// 2. 신규 발주된 our_order 데이터 조회
+					OurOrderBean ourOrder =  ourOrderAutoService.getOurOrder(order_no);					
 					
-					if(!isModifySuccess) {
+					// 3. item_io 테이블에 신규 발주(=입고)된 자재 등록
+					boolean isRegisterSuccess = false;
+					ItemInOutService itemInOutService = new ItemInOutService();
+					isRegisterSuccess = itemInOutService.registerMaterialIn(ourOrder);
+					
+					if(!isRegisterSuccess) {
 						res.setContentType("text/html; charset=utf-8");
 						PrintWriter out = res.getWriter();
 						out.println("<script>");
-						out.println("alert('item_stock 테이블의 업데이트에 실패했습니다!');");
+						out.println("alert('자재 입고 등록에 실패했습니다!!');");
 						out.println("history.go(-1);");
 						out.println("</script>");
 						out.flush();
 						out.close();
 					} else {
-						forward = new ActionForward();
-						forward.setRedirect(true);	// sendRedirect() 사용
-						forward.setPath("/order/outList");
+						// 4. item_stock 테이블에 발주(=입고)된 자재 업데이트
+						boolean isModifySuccess = false;
+						Timestamp order_dt = ourOrder.getOrder_dt();
+						ItemStockService itemStockService = new ItemStockService();	
+						isModifySuccess = itemStockService.modifyItemStockMaterialIn(plant_cd, item_cd, order_qty, order_dt);
+						
+						if(!isModifySuccess) {
+							res.setContentType("text/html; charset=utf-8");
+							PrintWriter out = res.getWriter();
+							out.println("<script>");
+							out.println("alert('품목 재고현황의 업데이트에 실패했습니다!');");
+							out.println("history.go(-1);");
+							out.println("</script>");
+							out.flush();
+							out.close();
+						} else {
+							forward = new ActionForward();
+							forward.setRedirect(true);	// sendRedirect() 사용
+							forward.setPath("/order/outList");
+						}
 					}	
 				}
 			}		

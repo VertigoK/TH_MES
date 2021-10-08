@@ -47,11 +47,11 @@ public class CustOrderAction implements Action {
 			CustomerOrderBean custOrder = custOrderService.getCustOrder(order_no);
 			HttpSession session = req.getSession();
 			session.setAttribute("custOrderInfo", custOrder);
+			
+			forward = new ActionForward();
+			forward.setRedirect(true);	// sendRedirect() 사용
+			forward.setPath("/misc/customer_order_success.jsp");
 		}
-		
-		forward = new ActionForward();
-		forward.setRedirect(true);	// sendRedirect() 사용
-		forward.setPath("/misc/customer_order_success.jsp");
 		
 		return forward;
 		

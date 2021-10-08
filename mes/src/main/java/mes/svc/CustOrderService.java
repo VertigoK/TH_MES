@@ -2,10 +2,6 @@ package mes.svc;
 
 import static db.JDBCUtility.*;
 
-import static db.JDBCUtility.commit;
-import static db.JDBCUtility.getConnection;
-import static db.JDBCUtility.rollback;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;

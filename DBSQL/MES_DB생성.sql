@@ -73,13 +73,14 @@ ALTER TABLE `LINE`
 
 -- 생산이력 테이블
 CREATE TABLE `PRODUCTION_HIST` (
+	`WO_NO`    INT       NOT NULL, -- 생산지시번호
 	`PLANT_CD` INT       NOT NULL, -- 공장코드
 	`LINE_CD`  INT       NOT NULL, -- 라인코드
-	`WO_NO`    INT       NOT NULL, -- 생산지시번호
+	`ITEM_CD`  INT       NOT NULL, -- 품목코드
 	`WO_SEQ`   INT       NOT NULL, -- 생산지시SEQ
 	`START_DT` TIMESTAMP NOT NULL, -- 작업시작일
 	`END_DT`   TIMESTAMP NOT NULL, -- 작업종료일
-	`INT_QTY`  INT       NOT NULL, -- 투입수량
+	`IN_QTY`   INT       NOT NULL, -- 투입수량
 	`OUT_QTY`  INT       NOT NULL, -- 배출수량
 	`NG_QTY`   INT       NOT NULL  -- NG수량
 );
@@ -168,7 +169,7 @@ CREATE TABLE `EQUIPMENT` (
 	`USE_TYPE`    VARCHAR(15) NOT NULL, -- 타입
 	`USE_YN`      BOOLEAN     NOT NULL DEFAULT TRUE, -- 사용여부
 	`ERROR_CD`    INT         NULL,     -- 에러코드
-	`RUN_TIME`    FLOAT       NOT NULL DEFAULT 0 -- 가동시간
+	`RUN_TIME`    INT       	NOT NULL DEFAULT 0 -- 가동시간
 );
 
 -- 설비 테이블
@@ -237,8 +238,8 @@ CREATE TABLE `CUST_ORDER` (
 	`DELIVERY_DATE` DATE    NOT NULL, -- 납기일
 	`FINISHED_DATE` DATE    NULL,     -- 마감일
 	`ORDER_STATUS`  BOOLEAN NOT NULL DEFAULT FALSE, -- 주문상태
-	`DELAYED_DATE`  INT     NOT NULL DEFAULT 0 -- 납기지연일
-	`WO_STATUS`			BOOLEAN NOT NULL DEFAULT FALSE; -- (10/05/2021 추가)
+	`DELAYED_DATE`  INT     NOT NULL DEFAULT 0, -- 납기지연일
+	`WO_STATUS`		BOOLEAN NOT NULL DEFAULT FALSE -- (10/05/2021 추가)
 );
 
 -- 주문 테이블
@@ -900,12 +901,12 @@ create table member(
 -- 자사 자재 발주 테이블 추가 (10/01/2021)
 CREATE TABLE `our_order` (
   `ORDER_NO` int(11) NOT NULL AUTO_INCREMENT,
-  `CUST_CD` int(11) DEFAULT NULL,
-  `PLANT_CD` int(11) DEFAULT NULL,
-  `ITEM_CD` int(11) DEFAULT NULL,
-  `ORDER_QTY` int(11) DEFAULT NULL,
-  `ORDER_DT` timestamp NULL DEFAULT NULL,
-  `ORDER_STATUS` tinyint(1) DEFAULT NULL,
+  `CUST_CD` int(11) NOT NULL,
+  `PLANT_CD` int(11) NOT NULL,
+  `ITEM_CD` int(11) NOT NULL,
+  `ORDER_QTY` int(11) NOT NULL,
+  `ORDER_DT` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ORDER_STATUS` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`ORDER_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -992,6 +993,18 @@ ALTER TABLE `QUALITY`
 		)
 		REFERENCES `WORK_ORDER` ( -- 생산지시 테이블
 			`WO_NO` -- 생산지시번호
+		)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+		
+-- 생산이력 테이블 추가(10/06/2021)
+ALTER TABLE `PRODUCTION_HIST`
+	ADD CONSTRAINT `FK_ITEM_TO_PRODUCTION_HIST` -- 품목 테이블 -> 생산이력 테이블
+		FOREIGN KEY (
+			`ITEM_CD` -- 생산지시번호
+		)
+		REFERENCES `ITEM` ( -- 생산지시 테이블
+			`ITEM_CD` -- 생산지시번호
 		)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE;

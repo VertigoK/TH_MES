@@ -47,7 +47,7 @@ import mes.dto.ActionForward;
 @WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp",
 						   "/production", "/production/*", "/quality", "/quality/*",
 						   "/equipment", "/equipment/*", "/stock", "/stock/*", "/hr", "/hr/*", "/order", "/order/*",
-						   "/generate", "/generate/*", "/notice", "/notice/*"})
+						   "/generate", "/generate/*", "/notice", "/notice/*", "/item", "/item/*"})
 public class MESFrontController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

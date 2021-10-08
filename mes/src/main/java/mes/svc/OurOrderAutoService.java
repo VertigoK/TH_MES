@@ -53,28 +53,5 @@ public class OurOrderAutoService {
 		return ourOrder;
 		
 	}
-
-	public boolean modifyItemStock(int plant_cd, int item_cd, int order_qty) {
-		
-		boolean isModifySuccess = false;
-		int updateCount = 0;
-		
-		Connection conn = getConnection();
-		MESDAO mesDAO = MESDAO.getInstance();
-		mesDAO.setConnection(conn);
-		
-		updateCount = mesDAO.updateItemStock(plant_cd, item_cd, order_qty);
-		
-		if(updateCount > 0) {
-			commit(conn);
-			isModifySuccess = true;
-		} else {
-			rollback(conn);
-		}
-		close(conn);
-		
-		return isModifySuccess;
-		
-	}
 	
 }

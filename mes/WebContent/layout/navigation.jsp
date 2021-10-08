@@ -61,7 +61,7 @@
 		<a href="/quality" class="btn shadow-none" id="quality"><i class="fas fa-award"></i></a> <!-- 품질 -->
 		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-tools"></i></a> <!-- 설비 -->
 		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-cubes"></i></a> <!-- 재고 -->
-		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-user-friends"></i></i></a> <!-- HR -->
+		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-user-friends"></i></a> <!-- HR -->
 		<a href="/order" class="btn shadow-none" id="order"><i class="fas fa-shopping-cart"></i></a> <!-- 주문 -->
 		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-undo-alt"></i></a> <!-- 뒤로가기 -->
 	</div>

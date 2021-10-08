@@ -19,7 +19,7 @@ $(document).ready(function() {
 	if (loc.indexOf(eq) != -1) {
 		$("#equipment").addClass("active");
 	};
-	if (loc.indexOf(st) != -1) {
+	if (loc.indexOf(it) != -1) {
 		$("#stock").addClass("active");
 	};
 	if (loc.indexOf(hr) != -1) {
