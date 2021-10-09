@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import mes.dao.MESDAO;
 import mes.dto.EquipmentBean;
 
-public class EquipmentService {
+public class EquipmentUpdateService {
 
 	public boolean modifyEquipmentRunTime(int line_cd, int run_time) {
 		
-		boolean isUpdateEquipmentSuccess = false;
+		boolean isUpdateSuccess = false;
 		int updateEquipmentRunTimeCount = 0;
 		
 		Connection conn = getConnection();
@@ -23,13 +23,13 @@ public class EquipmentService {
 		
 		if(updateEquipmentRunTimeCount > 0) {
 			commit(conn);
-			isUpdateEquipmentSuccess = true;
+			isUpdateSuccess = true;
 		} else {
 			rollback(conn);
 		}
 		close(conn);
 		
-		return isUpdateEquipmentSuccess;
+		return isUpdateSuccess;
 		
 	}
 
