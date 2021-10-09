@@ -55,7 +55,7 @@
 					<td><%=custOrder.getDelivery_date()%></td>
 					<td><%=custOrder.getFinished_date()%></td>
 					<td><%=custOrder.isOrder_status()%></td>
-					<td><%=custOrder.getDelayed_date()%></td>
+					<td><%=custOrder.getDelayed_days()%></td>
 				</tr>
 			</table>
 			<br /><br />

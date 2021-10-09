@@ -61,7 +61,7 @@
 					<td>${orderIn.getDelivery_date()}</td>
 					<td>${orderIn.getFinished_date()}</td>
 					<td>${orderIn.isOrder_status()}</td>
-					<td>${orderIn.getDelayed_date()}</td>
+					<td>${orderIn.getDelayed_days()}</td>
 					<td>${orderIn.isWo_status()}</td>
 					<c:choose>
 						<c:when test="${orderIn.isWo_status() == false }">
