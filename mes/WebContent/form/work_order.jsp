@@ -104,18 +104,20 @@
 					<th>작업상태</th>
 				</tr>
 				<c:forEach var="workOrderList" items="${workOrderList}">
-				<tr>
-					<td>${workOrderList.getOrder_no()}</td>
-					<td>${workOrderList.getWo_no()}</td>
-					<td>${workOrderList.getPlant_cd()}</td>
-					<td>${workOrderList.getLine_cd()}</td>
-					<td>${workOrderList.getStart_date()}</td>
-					<td>${workOrderList.getStart_shift()}</td>
-					<td>${workOrderList.getEnd_date()}</td>
-					<td>${workOrderList.getEnd_shift()}</td>
-					<td>${workOrderList.getPlan_qty()}</td>
-					<td>${workOrderList.isFlag_end()}</td>
-				</tr>
+					<c:if test="${workOrderList.isFlag_end() == false}">
+						<tr>
+							<td>${workOrderList.getOrder_no()}</td>
+							<td>${workOrderList.getWo_no()}</td>
+							<td>${workOrderList.getPlant_cd()}</td>
+							<td>${workOrderList.getLine_cd()}</td>
+							<td>${workOrderList.getStart_date()}</td>
+							<td>${workOrderList.getStart_shift()}</td>
+							<td>${workOrderList.getEnd_date()}</td>
+							<td>${workOrderList.getEnd_shift()}</td>
+							<td>${workOrderList.getPlan_qty()}</td>
+							<td>${workOrderList.isFlag_end()}</td>
+						</tr>
+					</c:if>
 				</c:forEach>
 			</table>
 			<br />

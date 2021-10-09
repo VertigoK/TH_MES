@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mes.dto.ActionForward;
+import mes.dto.CustomerOrderBean;
 import mes.dto.ProductionHistoryBean;
 import mes.dto.WorkOrderBean;
 import mes.svc.CustOrderService;
@@ -24,17 +25,21 @@ public class CustOrderUpdateAction implements Action {
 		ProductionHistoryBean productionHistoryNew = (ProductionHistoryBean) session.getAttribute("productionHistoryNewInfo");
 		WorkOrderBean workOrderNew = (WorkOrderBean) session.getAttribute("workOrderNewInfo");
 		
+		// 납기 지연일(delayed_days) 구하기 (단위: 일)
 		int order_no = workOrderNew.getOrder_no();
+		CustOrderService custOrderService = new CustOrderService();
+		CustomerOrderBean custOrder = custOrderService.getCustOrder(order_no);
+		Date delivery_date = custOrder.getDelivery_date();
+		
 		Timestamp end_dt = productionHistoryNew.getEnd_dt();
 		Date finished_date = new Date(end_dt.getTime());
 		
-		// 납기 지연일(delayed_days) 구하기 (단위: 일)
-		long differenceInTime = end_dt.getTime() - finished_date.getTime();
-		int delayed_days = (int) (differenceInTime / 1000 / 60 / 60 / 24);
+		long differenceInTime = finished_date.getTime() - delivery_date.getTime();
+		int delayed_days = (int) (differenceInTime / 1000 / 60 / 60 / 24) - 1;
 		
 		// 1. 고객 제품주문(cust_order) 테이블 업데이트: finished_date, order_status, delayed_days
 		boolean isUpdateSuccess = false;
-		CustOrderService custOrderService = new CustOrderService();
+		
 		isUpdateSuccess = custOrderService.modifyCustOrder(order_no, finished_date, delayed_days);
 		
 		if(!isUpdateSuccess) {

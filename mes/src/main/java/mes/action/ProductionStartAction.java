@@ -58,7 +58,6 @@ public class ProductionStartAction implements Action {
 		for(int i = 0; i < 3; i++) {
 			// 자재 종류: 자재1, 자재2, 자재3 (item_cd = 4, 5, 6) 
 			int item_cd = i + 4;
-			
 			// 자재 반출량
 			int item_cnt = k[i] * plan_qty;
 			
@@ -78,7 +77,7 @@ public class ProductionStartAction implements Action {
 				out.close();
 			} else {
 				// 2. item_stock 테이블에 반출된 자재 업데이트
-				// 외부 자재창고는 감소하고 라인의 자재임시창고는 같은 수량만큼 증가
+				// 외부 자재 창고는 감소하고 라인의 자재 임시창고는 같은 수량만큼 증가
 				boolean isModifySuccess = false;
 				ItemStockService itemStockService = new ItemStockService();
 				isModifySuccess = itemStockService.modifyItemStockMaterialInOut(workOrder, item_cd, item_cnt, start_dt);
@@ -126,7 +125,7 @@ public class ProductionStartAction implements Action {
 			// 4. 생산이력(production_hist) 테이블에 데이터 등록 위해 이동
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/production/history");
+			forward.setPath("/production/history");	
 		}
 	
 		return forward;
