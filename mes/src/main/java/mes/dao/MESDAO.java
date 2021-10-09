@@ -386,7 +386,7 @@ public class MESDAO {
 				custOrder.setDelivery_date(rs.getDate("delivery_date"));
 				custOrder.setFinished_date(rs.getDate("finished_date"));
 				custOrder.setOrder_status(rs.getBoolean("order_status"));
-				custOrder.setDelayed_date(rs.getInt("delayed_date"));
+				custOrder.setDelayed_days(rs.getInt("delayed_days"));
 			}
 		} catch (SQLException e) {
 			System.out.println("고객사 제품 주문 목록 조회 실패! " + e.getMessage());
@@ -459,7 +459,7 @@ public class MESDAO {
 				orderIn.setDelivery_date(rs.getDate("delivery_date"));
 				orderIn.setFinished_date(rs.getDate("finished_date"));
 				orderIn.setOrder_status(rs.getBoolean("order_status"));
-				orderIn.setDelayed_date(rs.getInt("delayed_date"));
+				orderIn.setDelayed_days(rs.getInt("delayed_days"));
 				orderIn.setWo_status(rs.getBoolean("wo_status"));
 				orderInList.add(orderIn);
 			}
@@ -1236,19 +1236,30 @@ public class MESDAO {
 		
 	}
 
-	
-	
-	
-	
-	// Production Status 보기
-	
-	// Quality Status 보기
-	
-	// Equipment Status 보기
-	
-	// Inventory Status 보기
-	
-	// HR Status 보기
-	
+	// 제품이 고객사로 출고시 cust_order 업데이트 
+	public int updateCustOrder(int order_no, Date finished_date, int delayed_days) {
+		
+		int updateCount = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = "update cust_order set finished_date = ?, order_status = ?, delayed_days = ? " +
+				" where order_no = " + order_no; 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setDate(1, finished_date);
+			pstmt.setBoolean(2, true);
+			pstmt.setInt(3, delayed_days);
+			updateCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("제품 주문 테이블 생산지시여부 업데이트 실패! " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateCount;
+	}
 
+	
+	
 }

@@ -13,7 +13,7 @@ public class CustomerOrderBean {
 	private Date delivery_date;
 	private Date finished_date;
 	private boolean order_status;
-	private int delayed_date;
+	private int delayed_days;
 	private boolean wo_status;
 	
 	public int getOrder_no() {
@@ -70,11 +70,11 @@ public class CustomerOrderBean {
 	public void setOrder_status(boolean order_status) {
 		this.order_status = order_status;
 	}
-	public int getDelayed_date() {
-		return delayed_date;
+	public int getDelayed_days() {
+		return delayed_days;
 	}
-	public void setDelayed_date(int delayed_date) {
-		this.delayed_date = delayed_date;
+	public void setDelayed_days(int delayed_days) {
+		this.delayed_days = delayed_days;
 	}
 	public boolean isWo_status() {
 		return wo_status;
