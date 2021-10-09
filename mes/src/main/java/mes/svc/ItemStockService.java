@@ -142,4 +142,27 @@ public class ItemStockService {
 		
 	}
 
+	public boolean modifyItemStockTempInOut(int item_cd, int storage_cd, int item_qty, Timestamp end_dt) {
+		
+		boolean isModifySuccess = false;
+		int updateCount = 0;
+		
+		Connection conn = getConnection();
+		MESDAO mesDAO = MESDAO.getInstance();
+		mesDAO.setConnection(conn);
+		
+		updateCount = mesDAO.updateItemStock(item_cd, storage_cd, item_qty, end_dt);
+		
+		if(updateCount > 0) {
+			commit(conn);
+			isModifySuccess = true;
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return isModifySuccess;
+		
+	}
+
 }

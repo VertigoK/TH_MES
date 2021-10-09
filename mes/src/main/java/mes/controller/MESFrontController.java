@@ -20,6 +20,7 @@ import mes.action.EquipmentUpdateRunTimeAction;
 import mes.action.HRAction;
 import mes.action.ItemProductionInAction;
 import mes.action.ItemProductionOutAction;
+import mes.action.ItemProductionTempAction;
 import mes.action.LogInAction;
 import mes.action.LogOutAction;
 import mes.action.OrderAction;
@@ -324,6 +325,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/equipment/updateRunTime")) {
 			action = new EquipmentUpdateRunTimeAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/item/production/temp")) {
+			action = new ItemProductionTempAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

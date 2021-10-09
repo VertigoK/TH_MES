@@ -62,7 +62,14 @@
 					<td>${workOrder.getEnd_shift()}</td>
 					<td>${workOrder.getPlan_qty()}</td>
 					<td>${workOrder.isFlag_end()}</td>
-					<td><a href="/production/start?wo_no=${workOrder.getWo_no()}" class="btn btn-danger">생산</a></td>
+					<c:choose>
+						<c:when test="${workOrder.isFlag_end() == false}">
+							<td><a href="/production/start?wo_no=${workOrder.getWo_no()}" class="btn btn-danger">생산</a></td>
+						</c:when>
+						<c:otherwise>
+							<td></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				</c:forEach>
 			</table>

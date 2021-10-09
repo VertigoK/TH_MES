@@ -70,7 +70,6 @@ public class ProductionHistoryAction implements Action {
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
 			forward.setPath("/production/workOrder/update");
-			
 		}
 		
 		return forward;

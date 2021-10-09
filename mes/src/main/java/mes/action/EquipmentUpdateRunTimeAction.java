@@ -54,7 +54,7 @@ public class EquipmentUpdateRunTimeAction implements Action {
 			// 2. 품목입출고(item_io) 테이블에 제품 입고(in) 등록을 위해 이동
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/item/production/in");
+			forward.setPath("/item/production/temp");
 		}
 		
 		return forward;
