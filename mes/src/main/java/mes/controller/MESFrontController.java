@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mes.action.Action;
 import mes.action.CustOrderAction;
+import mes.action.CustOrderUpdateAction;
 import mes.action.EquipmentAction;
 import mes.action.EquipmentLineAction;
 import mes.action.EquipmentPlantAction;
@@ -337,6 +338,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/item/production/out")) {
 			action = new ItemProductionOutAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/custOrder/update")) {
+			action = new CustOrderUpdateAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

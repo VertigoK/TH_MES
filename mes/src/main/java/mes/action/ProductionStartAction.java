@@ -100,7 +100,7 @@ public class ProductionStartAction implements Action {
 		productionStartService.registerProductionQualityData(workOrder, start_dt, worker_no);
 		
 		// time delay: 외부 파일을 실행시켜 CSV 저장과 DB 등록까지 해야 하므로 실행 종료까지 약간의 시간이 필요함
-		TimeUnit.SECONDS.sleep(2); // 1초
+		TimeUnit.SECONDS.sleep(3); // 3초
 		
 		// 생산정보(production)와 품질검사정보(quality) 테이블 조회 (w/ wo_no)
 		ArrayList<ProductionBean> productionDataList = null;
