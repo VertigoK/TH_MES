@@ -15,7 +15,10 @@ import mes.action.EquipmentAction;
 import mes.action.EquipmentLineAction;
 import mes.action.EquipmentPlantAction;
 import mes.action.EquipmentProcessAction;
+import mes.action.EquipmentUpdateRunTimeAction;
 import mes.action.HRAction;
+import mes.action.ItemProductionInAction;
+import mes.action.ItemProductionOutAction;
 import mes.action.LogInAction;
 import mes.action.LogOutAction;
 import mes.action.OrderAction;
@@ -27,6 +30,7 @@ import mes.action.ProductionLineAction;
 import mes.action.ProductionPlantAction;
 import mes.action.ProductionProcessAction;
 import mes.action.ProductionStartAction;
+import mes.action.WorkOrderUpdateAction;
 import mes.action.ProductionAction;
 import mes.action.ProductionHistoryAction;
 import mes.action.QualityAction;
@@ -35,7 +39,6 @@ import mes.action.QualityPlantAction;
 import mes.action.QualityProcessAction;
 import mes.action.SignUpAction;
 import mes.action.StockAction;
-import mes.action.StockInOutAction;
 import mes.action.StockItemAction;
 import mes.action.StockPlantAction;
 import mes.action.WorkOrderAction;
@@ -226,13 +229,6 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/stock/inout")) {
-			action = new StockInOutAction();
-			try {
-				forward = action.execute(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		} else if(command.equals("/order/inList")) {
 			action = new OrderInListAction();
 			try {
@@ -313,6 +309,34 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/production/history")) {
 			action = new ProductionHistoryAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/production/workOrder/update")) {
+			action = new WorkOrderUpdateAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/equipment/updateRunTime")) {
+			action = new EquipmentUpdateRunTimeAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/item/production/in")) {
+			action = new ItemProductionInAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/item/production/out")) {
+			action = new ItemProductionOutAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mes.dto.ActionForward;
-import mes.svc.EquipmentService;
+import mes.svc.EquipmentUpdateService;
 
 public class EquipmentAction implements Action {
 
@@ -13,7 +13,7 @@ public class EquipmentAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-		EquipmentService equipmentService = new EquipmentService();
+		EquipmentUpdateService equipmentService = new EquipmentUpdateService();
 		
 		
 		// isRedirect = false (기본값) -> forward() 사용

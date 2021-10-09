@@ -28,21 +28,18 @@ public class ProductionStartAction implements Action {
 		int wo_no = Integer.parseInt(req.getParameter("wo_no"));
 		ProductionStartService productionStartService = new ProductionStartService();
 		
-		// 1. work_order 테이블 조회 (w/ wo_no)
+		// work_order 테이블 조회 (w/ wo_no)
 		WorkOrderBean workOrder = productionStartService.getWorkOrder(wo_no);
 		
-		// 2. 생산시작시간(start_dt) 계산 (w/ start_date, start_shift)
+		// 생산시작시간(start_dt) 계산 (w/ start_date, start_shift)
 		Date start_date = workOrder.getStart_date();
 		String start_shift = workOrder.getStart_shift();
 		Timestamp start_dt = productionStartService.computeStartDT(start_date, start_shift);
 				
-		// 3. 근무자번호(worker_no) 조회 (w/ line_cd, start_shift)
+		// 근무자번호(worker_no) 조회 (w/ line_cd, start_shift)
 		int line_cd = workOrder.getLine_cd();
 		int worker_no = productionStartService.getWorkerNo(line_cd, start_shift);
-		
-		
-		// 4. 자재 반출로 인한 item_io 테이블 등록 및 item_stock 테이블 업데이트
-		
+			
 		// 제품 종류: 제품1, 제품2, 제품3
 		int production_item_cd = workOrder.getItem_cd();
 		
@@ -65,7 +62,7 @@ public class ProductionStartAction implements Action {
 			// 자재 반출량
 			int item_cnt = k[i] * plan_qty;
 			
-			// (1) item_io 테이블에 생산을 위해 반출된 자재 등록 (자재 창고에서 라인의 자재 임시창고로 이동)
+			// 1. item_io 테이블에 생산을 위해 반출된 자재 등록 (외부 자재 창고에서 라인의 자재 임시창고로 이동)
 			boolean isRegisterSuccess = false;
 			ItemInOutService itemInOutService = new ItemInOutService();
 			isRegisterSuccess = itemInOutService.registerMaterialOut(workOrder, item_cd, item_cnt, start_dt);
@@ -80,10 +77,10 @@ public class ProductionStartAction implements Action {
 				out.flush();
 				out.close();
 			} else {
-				// (2) item_stock 테이블에 반출된 자재 업데이트
+				// 2. item_stock 테이블에 반출된 자재 업데이트
 				// 외부 자재창고는 감소하고 라인의 자재임시창고는 같은 수량만큼 증가
 				boolean isModifySuccess = false;
-				ItemStockService itemStockService = new ItemStockService();		
+				ItemStockService itemStockService = new ItemStockService();
 				isModifySuccess = itemStockService.modifyItemStockMaterialInOut(workOrder, item_cd, item_cnt, start_dt);
 				
 				if(!isModifySuccess) {
@@ -99,13 +96,13 @@ public class ProductionStartAction implements Action {
 			}
 		}
 		
-		// 5. 외부 Python 파일을 호출해 생산 및 품질검사 데이터 생성 / CSV 저장 / DB 등록
+		// 3. 외부 Python 파일을 호출해 생산 및 품질검사 데이터 생성 / CSV 저장 / DB 등록
 		productionStartService.registerProductionQualityData(workOrder, start_dt, worker_no);
 		
-		// time delay: 외부 파일을 실행시켜 CSV 저장과 DB 등록까지 해야 하므로 실행에 약간의 시간을 줘야 함
-		TimeUnit.SECONDS.sleep(1); // 1초
+		// time delay: 외부 파일을 실행시켜 CSV 저장과 DB 등록까지 해야 하므로 실행 종료까지 약간의 시간이 필요함
+		TimeUnit.SECONDS.sleep(2); // 1초
 		
-		// 6. 생산정보(production)와 품질검사정보(quality) 테이블 조회 (w/ wo_no)
+		// 생산정보(production)와 품질검사정보(quality) 테이블 조회 (w/ wo_no)
 		ArrayList<ProductionBean> productionDataList = null;
 		ArrayList<QualityBean> qualityDataList = null;
 		productionDataList = ProductionStartService.getProductionDataList(wo_no);
@@ -121,12 +118,12 @@ public class ProductionStartAction implements Action {
 			out.flush();
 			out.close();
 		} else {
-			// 7. production과 quality 테이블 조회 결과(w/ wo_no)를 session 객체에 저장
+			// 신규 생성된 production과 quality 데이터를 session 객체에 저장
 			HttpSession session = req.getSession();
 			session.setAttribute("productionDataListInfo", productionDataList);
 			session.setAttribute("qualityDataListInfo", qualityDataList);
 			
-			// 8. 생산이력 테이블에 데이터를 등록하기 위해 이동
+			// 4. 생산이력(production_hist) 테이블에 데이터 등록 위해 이동
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
 			forward.setPath("/production/history");

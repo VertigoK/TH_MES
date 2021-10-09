@@ -884,11 +884,10 @@ public class MESDAO {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from production where wo_no = ?";
+		String sql = "select * from production where wo_no = " + wo_no;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, wo_no);
 			rs = pstmt.executeQuery();
 					
 			int i = 0;
@@ -1048,12 +1047,11 @@ public class MESDAO {
 		int updateEquipmentRunTimeCount = 0;
 		
 		PreparedStatement pstmt = null;
-		String sql = "update equipment set run_time = run_time + ? where line_cd = ?";
+		String sql = "update equipment set run_time = run_time + ? where line_cd = " + line_cd;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, run_time);
-			pstmt.setInt(2, line_cd);
 			updateEquipmentRunTimeCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("설비 가동시간 업데이트 실패!"+ e.getMessage());
@@ -1145,7 +1143,7 @@ public class MESDAO {
 		
 	}
 
-	// '품목 입출고(item_io)' 테이블에 자재 입고 등록
+	// '품목 입출고(item_io)' 테이블에 제품/자재 입출고 등록
 	public int insertItemInOut(int plant_cd, int item_cd, String item_type, Timestamp inout_dt, String inout_type,
 			int storage_from, String storage_from_nm, int storage_to, String storage_to_nm, int cust_cd, int item_cnt) {
 		
@@ -1181,7 +1179,7 @@ public class MESDAO {
 			pstmt.setInt(12, item_cnt);
 			insertItemInOutCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("품목 입출고 테이블에 자재 입고 등록 실패!" + e.getMessage());
+			System.out.println("품목 입출고에 제품/자재 입출고 등록 실패!" + e.getMessage());
 		} finally {
 			close(pstmt, rs);
 		}
@@ -1190,8 +1188,8 @@ public class MESDAO {
 		
 	}
 
-	// item_stock 테이블 업데이트
-	public int updateItemStock(int item_cd, int storage_cd, int item_cnt, Timestamp start_dt) {
+	// 품목 재고 현황(item_stock) 테이블 업데이트
+	public int updateItemStock(int item_cd, int storage_cd, int item_cnt, Timestamp update_dt) {
 		
 		int updateCount = 0;
 		
@@ -1202,17 +1200,39 @@ public class MESDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, item_cnt);
-			pstmt.setTimestamp(2, start_dt);
+			pstmt.setTimestamp(2, update_dt);
 			pstmt.setInt(3, item_cd);
 			pstmt.setInt(4, storage_cd);
 			updateCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("품목 재고 현황 테이블 업데이트 실패! " + e.getMessage());
+			System.out.println("품목 재고 현황 업데이트 실패! " + e.getMessage());
 		} finally {
 			close(pstmt);
 		}
 	
 		return updateCount;
+		
+	}
+
+	// 생산지시(work_order) 테이블 업데이트
+	public int updateWorkOrder(int wo_no) {
+		
+		int updateWorkOrderCount = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = "update work_order set flag_end = ? where wo_no = " + wo_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setBoolean(1, true);
+			updateWorkOrderCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("생산 지시 업데이트 실패! " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateWorkOrderCount;
 		
 	}
 

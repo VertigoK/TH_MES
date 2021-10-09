@@ -28,7 +28,7 @@ public class ProductionHistoryService {
 	public boolean registerProductionHistory(int wo_no, int plant_cd, int line_cd, int item_cd,
 			Timestamp start_dt, Timestamp end_dt, int in_qty, int out_qty, int ng_qty) {
 		
-		boolean isProductionHistorySuccess = false;
+		boolean isRegisterSuccess = false;
 		int insertProductionHistoryCount = 0;
 		
 		Connection conn = getConnection();
@@ -40,12 +40,12 @@ public class ProductionHistoryService {
 		
 		if(insertProductionHistoryCount > 0) {
 			commit(conn);
-			isProductionHistorySuccess = true;
+			isRegisterSuccess = true;
 		} else {
 			rollback(conn);
 		}
 		
-		return isProductionHistorySuccess;
+		return isRegisterSuccess;
 		
 	}
 
