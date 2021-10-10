@@ -4,9 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src= "/js/navCssControll.js"></script>
     <style>
     	html, body {
@@ -19,9 +21,7 @@
     		float: left;
     		width: 50px;
     		height: 100%;
-    		background-color: #0F0121;
-/*     		background-color: #022945; */
-/*     		background-color: #0D0D0D; */
+    		background-color: #26262e;
     	}
     	#tab a {
 			display: block;
@@ -38,13 +38,11 @@
 			font-size: 17px;
 		}
 		#tab a:hover, #tab a.active {
-			background-color: white;
+			background-color: #E9F5FA;
 			border-radius: 0;
 			border-left-style: solid;
-			border-left-color: #0F0121;
-/* 			border-left-color: #022945; */
-/* 			border-left-color: #0D0D0D; */
-			color: black;
+			border-left-color: #26262e;
+			color: #26262e;
 			font-weight: bold;
 			overflow: hidden;
 		}
@@ -53,17 +51,22 @@
 			width: 100%;
 		}
     </style>
+     <script>
+    $(function() {
+    	$('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
 </head>
 <body>
 	<div id="tab">
-		<a href="/" class="btn shadow-none" id="home"><i class="fas fa-home"></i></a>
-		<a href="/production" class="btn shadow-none" id="product"><i class="fas fa-industry"></i></a> <!-- 생산 -->
-		<a href="/quality" class="btn shadow-none" id="quality"><i class="fas fa-award"></i></a> <!-- 품질 -->
-		<a href="/equipment" class="btn shadow-none" id="equipment"><i class="fas fa-tools"></i></a> <!-- 설비 -->
-		<a href="/stock" class="btn shadow-none" id="stock"><i class="fas fa-cubes"></i></a> <!-- 재고 -->
-		<a href="/hr" class="btn shadow-none" id="hr"><i class="fas fa-user-friends"></i></a> <!-- HR -->
-		<a href="/order" class="btn shadow-none" id="order"><i class="fas fa-shopping-cart"></i></a> <!-- 주문 -->
-		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden"><i class="fas fa-undo-alt"></i></a> <!-- 뒤로가기 -->
+		<a href="/" class="btn shadow-none" id="home" data-toggle="tooltip" data-placement="right" title="Home"><i class="fas fa-home"></i></a>
+		<a href="/production" class="btn shadow-none" id="product" data-toggle="tooltip" data-placement="right" title="생산"><i class="fas fa-industry"></i></a> <!-- 생산 -->
+		<a href="/quality" class="btn shadow-none" id="quality" data-toggle="tooltip" data-placement="right" title="품질"><i class="fas fa-award"></i></a> <!-- 품질 -->
+		<a href="/equipment" class="btn shadow-none" id="equipment" data-toggle="tooltip" data-placement="right" title="설비"><i class="fas fa-tools"></i></a> <!-- 설비 -->
+		<a href="/stock" class="btn shadow-none" id="stock" data-toggle="tooltip" data-placement="right" title="재고"><i class="fas fa-cubes"></i></a> <!-- 재고 -->
+		<a href="/hr" class="btn shadow-none" id="hr" data-toggle="tooltip" data-placement="right" title="HR"><i class="fas fa-user-friends"></i></a> <!-- HR -->
+		<a href="/order" class="btn shadow-none" id="order" data-toggle="tooltip" data-placement="right" title="주문"><i class="fas fa-shopping-cart"></i></a> <!-- 주문 -->
+		<a href="javascript:window.history.back();" class="btn shadow-none" id="hidden" data-toggle="tooltip" data-placement="right" title="뒤로가기"><i class="fas fa-undo-alt"></i></a> <!-- 뒤로가기 -->
 	</div>
 </body>
 </html>

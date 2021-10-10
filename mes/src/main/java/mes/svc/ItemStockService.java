@@ -112,7 +112,7 @@ public class ItemStockService {
 		
 	}
 
-	public boolean modifyItemStockProductionOut(ProductionHistoryBean productionHistoryNew) {
+	public boolean modifyItemStockProductionOut(ProductionHistoryBean productionHistoryNew, int order_qty) {
 		
 		boolean isModifySuccess = false;
 		int updateCount = 0;
@@ -125,10 +125,9 @@ public class ItemStockService {
 		int plant_cd = productionHistoryNew.getPlant_cd();
 		int storage_cd = 2;
 		if(plant_cd == 2) storage_cd = 10;
-		int item_cnt = productionHistoryNew.getOut_qty();
 		Timestamp end_dt = productionHistoryNew.getEnd_dt();
 		
-		updateCount = mesDAO.updateItemStock(item_cd, storage_cd, -item_cnt, end_dt);
+		updateCount = mesDAO.updateItemStock(item_cd, storage_cd, -order_qty, end_dt);
 		
 		if(updateCount > 0) {
 			commit(conn);

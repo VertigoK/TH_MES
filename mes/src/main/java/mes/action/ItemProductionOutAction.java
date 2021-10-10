@@ -30,11 +30,12 @@ public class ItemProductionOutAction implements Action {
 		CustOrderService custOrderService = new CustOrderService();
 		CustomerOrderBean custOrder = custOrderService.getCustOrder(order_no);
 		int cust_cd = custOrder.getCust_cd();
+		int order_qty = custOrder.getOrder_qty();
 		
 		// 1. 품목 입출고(item_io) 테이블에 출고된 제품 등록 (외부 제품 창고에서 고객사로 이동)
 		boolean isRegisterSuccess = false;
 		ItemInOutService itemInOutService = new ItemInOutService();
-		isRegisterSuccess = itemInOutService.registerProductionOut(productionHistoryNew, cust_cd);
+		isRegisterSuccess = itemInOutService.registerProductionOut(productionHistoryNew, cust_cd, order_qty);
 		
 		if(!isRegisterSuccess) {
 			res.setContentType("text/html; charset=utf-8");
@@ -49,7 +50,7 @@ public class ItemProductionOutAction implements Action {
 			// 2. 품목 재고현황(item_stock) 테이블에 출고된 제품 업데이트
 			boolean isModifySuccess = false;
 			ItemStockService itemStockService = new ItemStockService();
-			isModifySuccess = itemStockService.modifyItemStockProductionOut(productionHistoryNew);
+			isModifySuccess = itemStockService.modifyItemStockProductionOut(productionHistoryNew, order_qty);
 			
 			if(!isModifySuccess) {
 				res.setContentType("text/html; charset=utf-8");

@@ -90,27 +90,4 @@ public class WorkOrderService {
 		
 	}
 
-	public boolean modifyCustOrder(int order_no) {
-		
-		boolean isModifySuccess = false;
-		int updateCount = 0;
-		
-		Connection conn = getConnection();
-		MESDAO mesDAO = MESDAO.getInstance();
-		mesDAO.setConnection(conn);
-		
-		updateCount = mesDAO.updateCustOrder(order_no);
-		
-		if(updateCount > 0) {
-			commit(conn);
-			isModifySuccess = true;
-		} else {
-			rollback(conn);
-		}
-		close(conn);
-		
-		return isModifySuccess;
-		
-	}
-
 }

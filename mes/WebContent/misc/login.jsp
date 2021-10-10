@@ -17,13 +17,7 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
    	<title>Telstar-Hommel</title>
     <style>
-       	{
-		  margin: 0px;
-		  padding: 0px;
-		  text-decoration: none;
-		  font-family:sans-serif;
-		
-		}
+       	.content { width: 100%; }
 		body {
 		  background-image: #34495e;
 		}
@@ -71,7 +65,7 @@
 		  height:25px;
 		  background: none;
 		}
-		.btn {
+		.content .btn {
 		  position:relative;
 		  left:40%;
 		  transform: translateX(-50%);
@@ -88,7 +82,7 @@
 		  transition: 0.4s;
 		  display:inline;
 		}
-		.btn:hover {
+		content .btn:hover {
 		  background-position: right;
 		}
 		.bottomText {
@@ -99,9 +93,6 @@
 <body>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
-	</div>
-	<div id="navigation">
-		<jsp:include page="/layout/navigation.jsp" />
 	</div>
 	<div class="content" align="center">
 		<br>

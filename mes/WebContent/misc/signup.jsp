@@ -15,13 +15,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
+	<style>
+		.content { width: 100%; }
+	</style>
 </head>
 <body>
    <div id="header">
       <jsp:include page="/layout/header.jsp" />
-   </div>
-   <div id="navigation">
-      <jsp:include page="/layout/navigation.jsp" />
    </div>
    <div class="content" align="center">
       <c:choose>

@@ -10,31 +10,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mes.action.Action;
+import mes.action.CheckOrderStockAction;
 import mes.action.CustOrderAction;
 import mes.action.CustOrderUpdateAction;
+import mes.action.CustOrderUpdateOurOrderAction;
 import mes.action.EquipmentAction;
 import mes.action.EquipmentLineAction;
 import mes.action.EquipmentPlantAction;
 import mes.action.EquipmentProcessAction;
 import mes.action.EquipmentUpdateRunTimeAction;
 import mes.action.HRAction;
+import mes.action.HRLineAction;
+import mes.action.HRLocAction;
+import mes.action.HRPlantAction;
 import mes.action.ItemProductionInAction;
 import mes.action.ItemProductionOutAction;
 import mes.action.ItemProductionTempAction;
+import mes.action.ItemReservedAction;
+import mes.action.ItemReservedUpdateAction;
 import mes.action.LogInAction;
 import mes.action.LogOutAction;
+import mes.action.NoticeAction;
+import mes.action.NoticeDetailAction;
+import mes.action.NoticeWriteAction;
 import mes.action.OrderAction;
 import mes.action.OrderInListAction;
 import mes.action.OrderOutListAction;
 import mes.action.OurOrderAction;
 import mes.action.OurOrderAutoAction;
+import mes.action.ProductionAction;
+import mes.action.ProductionHistoryAction;
 import mes.action.ProductionLineAction;
 import mes.action.ProductionPlantAction;
 import mes.action.ProductionProcessAction;
 import mes.action.ProductionStartAction;
-import mes.action.WorkOrderUpdateAction;
-import mes.action.ProductionAction;
-import mes.action.ProductionHistoryAction;
 import mes.action.QualityAction;
 import mes.action.QualityLineAction;
 import mes.action.QualityPlantAction;
@@ -46,7 +55,7 @@ import mes.action.StockPlantAction;
 import mes.action.WorkOrderAction;
 import mes.action.WorkOrderFormAction;
 import mes.action.WorkOrderListAction;
-import mes.action.CheckOrderStockAction;
+import mes.action.WorkOrderUpdateAction;
 import mes.dto.ActionForward;
 
 @WebServlet(urlPatterns = {"/logInForm", "/logIn", "/logOut", "/signUpForm", "/signUp",
@@ -108,10 +117,6 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if(command.equals("/notice")) {
-			forward = new ActionForward();
-			forward.setRedirect(true);
-			forward.setPath("/misc/notice.jsp");
 		} else if(command.equals("/production")) {
 			action = new ProductionAction();
 			try {
@@ -149,6 +154,52 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/hr")) {
 			action = new HRAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/hr/plant")) {
+			action = new HRPlantAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/hr/line")) {
+			action = new HRLineAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/hr/loc")) {
+			action = new HRLocAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/notice")) {
+			action = new NoticeAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/notice/detail")) {
+			action = new NoticeDetailAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/notice/writeForm")) {
+			forward = new ActionForward();
+			forward.setRedirect(true);
+			forward.setPath("/lv2/notice_write.jsp");
+		} else if(command.equals("/notice/write")) {
+			action = new NoticeWriteAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {
@@ -302,6 +353,20 @@ public class MESFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if(command.equals("/item/reserved")) {
+			action = new ItemReservedAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/order/custOrder/update/ourOrder")) {
+			action = new CustOrderUpdateOurOrderAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if(command.equals("/production/start")) {
 			action = new ProductionStartAction();
 			try {
@@ -318,6 +383,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/production/workOrder/update")) {
 			action = new WorkOrderUpdateAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/item/reserved/update")) {
+			action = new ItemReservedUpdateAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

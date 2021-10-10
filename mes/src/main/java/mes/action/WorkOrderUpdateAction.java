@@ -46,7 +46,7 @@ public class WorkOrderUpdateAction implements Action {
 			// 2. 설비(equipment) 테이블의 가동시간(run_time) 업데이트 위해 이동
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/equipment/updateRunTime");
+			forward.setPath("/item/reserved/update");
 		}
 		
 		return forward;

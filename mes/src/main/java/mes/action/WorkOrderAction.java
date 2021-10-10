@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import mes.dto.ActionForward;
 import mes.dto.CustomerOrderBean;
 import mes.dto.WorkOrderBean;
+import mes.svc.CustOrderService;
 import mes.svc.WorkOrderService;
 
 public class WorkOrderAction implements Action {
@@ -34,13 +35,13 @@ public class WorkOrderAction implements Action {
 		boolean isWorkOrderSuccess = false;
 		int wo_no = 0;
 		
-		// 1. end_date과 end_shift 계산
+		// end_date과 end_shift 계산
 		WorkOrderService workOrderService = new WorkOrderService();
 		List<Object> endDateShift = workOrderService.computeEndDateShift(start_date, start_shift, plan_qty);
 		Date end_date = (Date) endDateShift.get(0);
 		String end_shift = (String) endDateShift.get(1);
 		
-		// 2. 생산지시 정보 DB에 등록
+		// 1. 생산지시 정보 DB에 등록
 		List<Object> workOrderResult = workOrderService.registerWorkOrder(plant_cd, line_cd, order_no, item_cd,
 				start_date, start_shift, end_date, end_shift, plan_qty);
 		isWorkOrderSuccess = (boolean) workOrderResult.get(0);
@@ -56,13 +57,14 @@ public class WorkOrderAction implements Action {
 			out.flush();
 			out.close();
 		} else {
-			// 3. DB에 등록된 생산지시 정보를 session 객체에 저장
+			// DB에 등록된 생산지시 정보를 session 객체에 저장
 			WorkOrderBean workOrder = workOrderService.getWorkOrder(wo_no);
 			session.setAttribute("workOrderInfo", workOrder);
 			
-			// 4. cust_order 테이블에 생산지시 여부 업데이트
+			// 3. cust_order 테이블의 생산지시 여부 업데이트
 			boolean isModifySuccess = false;
-			isModifySuccess = workOrderService.modifyCustOrder(order_no);
+			CustOrderService custOrderService = new CustOrderService();
+			isModifySuccess = custOrderService.modifyCustOrder(order_no, "wo_status");
 			
 			if(!isModifySuccess) {
 				res.setContentType("text/html; charset=utf-8");

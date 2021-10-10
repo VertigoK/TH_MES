@@ -1,6 +1,6 @@
 package mes.dao;
 
-import static db.JDBCUtility.*;
+import static db.JDBCUtility.close;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import mes.dto.CustomerOrderBean;
@@ -15,11 +16,13 @@ import mes.dto.EquipmentBean;
 import mes.dto.ItemStockBean;
 import mes.dto.LineBean;
 import mes.dto.MemberBean;
+import mes.dto.NoticeBean;
 import mes.dto.OurOrderBean;
 import mes.dto.ProductionBean;
 import mes.dto.ProductionHistoryBean;
 import mes.dto.QualityBean;
 import mes.dto.WorkOrderBean;
+import mes.dto.WorkerBean;
 
 public class MESDAO {
 	
@@ -387,6 +390,8 @@ public class MESDAO {
 				custOrder.setFinished_date(rs.getDate("finished_date"));
 				custOrder.setOrder_status(rs.getBoolean("order_status"));
 				custOrder.setDelayed_days(rs.getInt("delayed_days"));
+				custOrder.setWo_status(rs.getBoolean("wo_status"));
+				custOrder.setOurorder_status(rs.getBoolean("ourorder_status"));
 			}
 		} catch (SQLException e) {
 			System.out.println("고객사 제품 주문 목록 조회 실패! " + e.getMessage());
@@ -461,6 +466,7 @@ public class MESDAO {
 				orderIn.setOrder_status(rs.getBoolean("order_status"));
 				orderIn.setDelayed_days(rs.getInt("delayed_days"));
 				orderIn.setWo_status(rs.getBoolean("wo_status"));
+				orderIn.setOurorder_status(rs.getBoolean("ourorder_status"));
 				orderInList.add(orderIn);
 			}
 		} catch (SQLException e) {
@@ -709,19 +715,19 @@ public class MESDAO {
 		
 	}
 
-	// 생산지시 생성시 cust_order 테이블 생산지시여부 업데이트
-	public int updateCustOrder(int order_no) {
+	// cust_order 테이블 생산지시여부 or 자재발주여부 업데이트
+	public int updateCustOrder(int order_no, String status) {
 		
 		int updateCount = 0;
 		
 		PreparedStatement pstmt = null;
-		String sql = "update cust_order set wo_status = 1 where order_no = " + order_no; 
+		String sql = "update cust_order set " + status +  " = 1 where order_no = " + order_no; 
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			updateCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("제품 주문 테이블 생산지시여부 업데이트 실패! " + e.getMessage());
+			System.out.println("제품 주문 테이블 " + status + " 업데이트 실패! " + e.getMessage());
 		} finally {
 			close(pstmt);
 		}
@@ -1258,8 +1264,262 @@ public class MESDAO {
 		}
 		
 		return updateCount;
+		
+	}
+	
+	// HR Status 보기
+	public ArrayList<WorkerBean> selectWorkerList() {
+		ArrayList<WorkerBean> workerList = new ArrayList<WorkerBean>();
+		WorkerBean worker = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from worker";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				worker = new WorkerBean();
+				worker.setWorker_no(rs.getInt("worker_no"));
+				worker.setPlant_cd(rs.getInt("plant_cd"));
+				worker.setLine_cd(rs.getInt("line_cd"));
+				worker.setWorker_loc(rs.getString("worker_loc"));
+				worker.setWorker_time(rs.getString("worker_time"));
+				worker.setWorker_nm(rs.getString("worker_nm"));
+				workerList.add(worker);
+			}
+		} catch (Exception e) {
+			System.out.println("근무자 조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return workerList;
+		
 	}
 
-	
+	public ArrayList<WorkerBean> selectHRList(String id, int no) {
+		
+		ArrayList<WorkerBean> hrPlantList = new ArrayList<WorkerBean>();
+		WorkerBean workerBean = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = null;
+		if (!id.equals("worker_loc")) {
+			sql = "select * from worker where " + id + " = " + no;
+		} else {
+			switch (no) {
+				case 1: sql = "select * from worker where worker_loc = '생산'"; break;
+				case 2: sql = "select * from worker where worker_loc = '품질검사'"; break;
+			}
+		}
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				workerBean = new WorkerBean();
+				workerBean.setWorker_no(rs.getInt("worker_no"));
+				workerBean.setPlant_cd(rs.getInt("plant_cd"));
+				workerBean.setLine_cd(rs.getInt("line_cd"));
+				workerBean.setWorker_loc(rs.getString("worker_loc"));
+				workerBean.setWorker_time(rs.getString("worker_time"));
+				workerBean.setWorker_nm(rs.getString("worker_nm"));
+				hrPlantList.add(workerBean);
+			}
+		} catch (Exception e) {
+			System.out.println("근무자 조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return hrPlantList;
+		
+	}
+
+	// 공지사항 보기
+	public int selectListCount() {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select COUNT(*) from notice";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) listCount = rs.getInt(1);
+		} catch (Exception e) {
+			System.out.println("공자사항 개수 가져오기 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return listCount;
+		
+	}
+
+	public ArrayList<NoticeBean> selectNoticeList(int page, int limit) {
+		
+		ArrayList<NoticeBean> noticeList = new ArrayList<NoticeBean>();
+		NoticeBean notice = null;
+		SimpleDateFormat df = new SimpleDateFormat("YYYY.MM.dd HH:mm:ss");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from notice order by notice_no desc limit ?," + limit;
+		
+		int startRow = (page - 1) * limit;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				notice = new NoticeBean();
+				notice.setNotice_no(rs.getInt("notice_no"));
+				notice.setTitle(rs.getString("title"));
+				notice.setContent(rs.getString("content"));
+				notice.setDate(df.format(rs.getTimestamp("date")));
+				noticeList.add(notice);
+			}
+		} catch (Exception e) {
+			System.out.println("공자사항 조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return noticeList;
+		
+	}
+
+	public NoticeBean detailNotice(int notice_no) {
+		
+		NoticeBean notice = null;
+		SimpleDateFormat df = new SimpleDateFormat("YYYY.MM.dd HH:mm:ss");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from notice where notice_no = " + notice_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				notice = new NoticeBean();
+				notice.setNotice_no(rs.getInt("notice_no"));
+				notice.setTitle(rs.getString("title"));
+				notice.setContent(rs.getString("content"));
+				notice.setDate(df.format(rs.getTimestamp("date")));
+			}
+		} catch (Exception e) {
+			System.out.println("공자사항 내용조회 실패: "+ e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return notice;
+		
+	}
+
+	public int writeNotice(NoticeBean notice) {
+		
+		int writeCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = "insert into notice(title, content) values(?,?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, notice.getTitle());
+			pstmt.setString(2, notice.getContent());
+			writeCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("공지사항 등록 실패!" + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return writeCount;
+		
+	}
+
+	// 생산 예약자재(reserved_item) 테이블에서 생산 예약된 자재별 수량 조회 (w/ plant_cd)
+	public int[] selectReservedQuantity(int plant_cd) {
+		
+		int[] reservedQtys = {0, 0, 0};
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select sum(item4_qty), sum(item5_qty), sum(item6_qty) from reserved_item where used_yn = 0 and plant_cd = " + plant_cd; 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				reservedQtys[0] = rs.getInt(1);
+				reservedQtys[1] = rs.getInt(2);
+				reservedQtys[2] = rs.getInt(3);
+			}
+			close(pstmt, rs);
+		} catch (SQLException e) {
+			System.out.println("생산 예약된 자재별 수량 조회 실패!" + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return reservedQtys;
+
+	}
+
+	// 자재 발주 후 입고시 생산 예약 자재(reserved_item) 테이블에 등록
+	public int insertReservedItem(int order_no, int plant_cd, int item_cd, int plan_qty, int qty1, int qty2, int qty3) {
+		
+		int insertReservedItemCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = "insert into reserved_item values(?,?,?,?,?,?,?,?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, order_no);
+			pstmt.setInt(2, plant_cd);
+			pstmt.setInt(3, item_cd);
+			pstmt.setInt(4, plan_qty);
+			pstmt.setInt(5, qty1);
+			pstmt.setInt(6, qty2);
+			pstmt.setInt(7, qty3);
+			pstmt.setBoolean(8, false);
+			insertReservedItemCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("생산 예약된 자재의 등록 실패!" + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return insertReservedItemCount;
+		
+	}
+
+	// 예약 자재가 생산에 사용시 생산 예약 자재(reserved_item) 테이블의 사용여부 업데이트
+	public int updateReservedItem(int order_no) {
+		
+		int updateReservedItemCount = 0;
+		PreparedStatement pstmt = null;
+		String sql = "update reserved_item set used_yn = ? where order_no = " + order_no;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setBoolean(1, true);
+			updateReservedItemCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("생산 예약 자재 업데이트 실패! " + e.getMessage());
+		} finally {
+			close(pstmt);
+		}
+		
+		return updateReservedItemCount;
+
+	}
 	
 }

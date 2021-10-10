@@ -7,17 +7,17 @@ import mes.dao.MESDAO;
 import mes.dto.WorkerBean;
 import static db.JDBCUtility.*;
 
-public class HRService {
+public class HRLocService {
 
-	public ArrayList<WorkerBean> getWorkerList() {
+	public ArrayList<WorkerBean> getHRLocList(String id, int no) {
 		
-		ArrayList<WorkerBean> workerList = null;
+		ArrayList<WorkerBean> hrLocList = null;
 		Connection conn = getConnection();
 		MESDAO mesDAO = MESDAO.getInstance();
 		mesDAO.setConnection(conn);
-		workerList = mesDAO.selectWorkerList();
+		hrLocList = mesDAO.selectHRList(id, no);
 		close(conn);
-		return workerList;
+		return hrLocList;
 	}
 
 }

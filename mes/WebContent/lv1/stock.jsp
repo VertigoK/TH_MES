@@ -1,7 +1,7 @@
 <%@page import="mes.dto.ItemStockBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	ArrayList<Integer> totalStockList = (ArrayList<Integer>) request.getAttribute("totalStockList");	
 %>
@@ -15,7 +15,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css" />
-	<title>Telstar-Hommel</title>
+	<title>재고현황</title>
 	<style>
 		.line {
 			width: 140px;
@@ -43,11 +43,24 @@
 			top: 1px;
 			right: 1px;
 		}
-		.title { display: table; }
-		.title-left { display: table-cell; }
-		.title-right { display: table-cell; }
-		.flex { display: inline-flex; }
-		.flex a p { display: inline-block; }
+		.title {
+			display: flex;
+			width: 100%;
+			height: 33.5px;
+			align-items: stretch;
+			margin: 0 0 10px 0;
+		 }
+		.title-left { width: calc(100% - 60px); }
+		.title-right {
+			width: 60px;
+			padding: 5px;
+			text-align: right;
+			font-wight: blod;
+			background-color: #3F5060;
+		}
+		.title-right a { color: white; }
+		.dropdown { margin-bottom: 10px; }
+		.dropdown-content a { background-color: white; }
 	</style>
 </head>
 <body>
@@ -57,9 +70,9 @@
 	<div id="navigation">
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
-	<div class="content">
-		<div class="item" style="text-align: center">
-			<div class="dropdown" style="display:inline-block;">
+	<div class="content" align="center">
+		<div class="item">
+			<div class="dropdown">
 	  			<button>공장별 현황</button>
 	  			<div class="dropdown-content">
 					<a href="/stock/plant?id=plant_cd&no=1">공장 1</a>
@@ -73,8 +86,6 @@
 					<a href="/stock/item?id=item_type&no=2">자재</a>
 				</div>
 			</div>
-		</div>
-		<div class="item">
 				<h5>재고 현황</h5>
 			<table>
 				<tr>
@@ -114,9 +125,7 @@
 			<div class="title">
 				<div class="title-left"><h5>재고 입출고 내역</h5></div>
 				<div class="title-right">
-					<div class="flex">
-						<a href="/stock/inout">상세보기</a>
-					</div>
+						<a href=""><p>더보기</p></a>
 				</div>
 			</div>
 			<table>

@@ -1,23 +1,24 @@
 package mes.svc;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import mes.dao.MESDAO;
-import mes.dto.WorkerBean;
+import mes.dto.NoticeBean;
 import static db.JDBCUtility.*;
 
-public class HRService {
+public class NoticeDetailService {
 
-	public ArrayList<WorkerBean> getWorkerList() {
+	public NoticeBean getNotice(int notice_no) {
 		
-		ArrayList<WorkerBean> workerList = null;
+		NoticeBean notice = null;
 		Connection conn = getConnection();
 		MESDAO mesDAO = MESDAO.getInstance();
 		mesDAO.setConnection(conn);
-		workerList = mesDAO.selectWorkerList();
+		notice = mesDAO.detailNotice(notice_no);
 		close(conn);
-		return workerList;
+		
+		return notice;
 	}
 
+	
 }

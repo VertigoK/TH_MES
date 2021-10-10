@@ -1,4 +1,9 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,17 +35,15 @@
 		.right .btn {
 			text-decoration: none;
 			color: #0D0D0D;
-			border: 1px solid #0F0121;
-/* 			border: 1px solid #022945; */
-/* 			border: 1px solid #0D0D0D; */
+			border: 1px solid #0D0D0D;
 			padding: 0 8px;
 			border-radius: 5px;
 			background-color: white;
 		}
 		.btn:hover, .btn:active {
-			border: 1px solid white;
+			border: 1px solid #a7a4a4;
 			color: white;
-			background-color: gray;
+			background-color: #a7a4a4;
 		}
 		.logout:hover span { display:none; }
 		.logout:hover:after { content:'Log out'; }
@@ -49,11 +52,15 @@
 <body>
 	<div class="container-fluid">
 		<div class="left">
-			<p><strong>Telstar-Hommel</strong></p>
+			<p>Company Name</p>
 		</div>
 		<div class="right">
-			<!-- <a href="/logInForm" class="btn shadow-none">Log In</a> -->
-			<a href="/logOut" class="btn shadow-none logout"><span>이름</span></a>	
+			<c:if test="<%= member == null %>">
+				<a href="/logInForm" class="btn shadow-none">Log In</a>			
+			</c:if>
+			<c:if test="<%= member != null %>">
+				<a href="/logOut" class="btn shadow-none logout"><span><%= member.getMem_nm() %></span></a>	
+			</c:if>
 		</div>
 	</div>
 </body>
