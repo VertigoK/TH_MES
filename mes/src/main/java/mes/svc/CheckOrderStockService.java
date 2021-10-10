@@ -22,7 +22,20 @@ public class CheckOrderStockService {
 		
 	}
 
-	public ArrayList<Integer> computeRequiredQuantity(int item_cd, int order_qty, ArrayList<Integer> stockQtys) {
+	public int[] getReservedQuantity(int plant_cd) {
+		
+		int[] reservedQtys = new int[3];
+		Connection conn = getConnection();
+		MESDAO mesDAO = MESDAO.getInstance();
+		mesDAO.setConnection(conn);
+		reservedQtys = mesDAO.selectReservedQuantity(plant_cd);
+		close(conn);
+		
+		return reservedQtys;
+		
+	}
+	
+	public ArrayList<Integer> computeRequiredQuantity(int item_cd, int plan_qty, ArrayList<Integer> stockQtys) {
 		
 		int[] k = {0, 0, 0, 0};
 		switch(item_cd) {
@@ -32,9 +45,7 @@ public class CheckOrderStockService {
 		}
 		
 		ArrayList<Integer> requiredQtys = new ArrayList<Integer>();
-		int temp = (int) Math.ceil((order_qty - stockQtys.get(0)) * 1.1);
-		if(temp < 0) requiredQtys.add(0);
-		else requiredQtys.add(temp);	// 제품 계획수량
+		requiredQtys.add(plan_qty);			// 제품 생산 계획수량
 		
 		for(int i = 1; i < 4; i++) {
 			int temp1 = (int) Math.ceil(k[i] * requiredQtys.get(0) * 1.1);

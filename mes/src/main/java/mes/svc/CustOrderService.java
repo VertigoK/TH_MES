@@ -79,6 +79,30 @@ public class CustOrderService {
 		
 	}
 
+	// cust_order 업데이트: wo_status or ourorder_status
+	public boolean modifyCustOrder(int order_no, String status) {
+		
+		boolean isModifySuccess = false;
+		int updateCount = 0;
+		
+		Connection conn = getConnection();
+		MESDAO mesDAO = MESDAO.getInstance();
+		mesDAO.setConnection(conn);
+		
+		updateCount = mesDAO.updateCustOrder(order_no, status);
+		
+		if(updateCount > 0) {
+			commit(conn);
+			isModifySuccess = true;
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return isModifySuccess;
+		
+	}
+
 	
 
 }

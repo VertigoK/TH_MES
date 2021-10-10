@@ -15,6 +15,7 @@ public class CustomerOrderBean {
 	private boolean order_status;
 	private int delayed_days;
 	private boolean wo_status;
+	private boolean ourorder_status;
 	
 	public int getOrder_no() {
 		return order_no;
@@ -81,6 +82,12 @@ public class CustomerOrderBean {
 	}
 	public void setWo_status(boolean wo_status) {
 		this.wo_status = wo_status;
+	}
+	public boolean isOurorder_status() {
+		return ourorder_status;
+	}
+	public void setOurorder_status(boolean ourorder_status) {
+		this.ourorder_status = ourorder_status;
 	}
 	
 }

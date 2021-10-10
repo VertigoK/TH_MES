@@ -15,6 +15,7 @@ import mes.dto.OurOrderBean;
 import mes.svc.ItemInOutService;
 import mes.svc.ItemStockService;
 import mes.svc.OurOrderAutoService;
+import mes.svc.ItemReservedService;
 
 public class OurOrderAutoAction implements Action {
 
@@ -39,12 +40,12 @@ public class OurOrderAutoAction implements Action {
 			if(order_qty != 0) {
 				// 1. our_order 테이블에 자재별 순서대로 하나씩 등록
 				boolean isOurOrderSuccess = false;
-				int order_no = 0;
+				int order_no = 0;	//
 				
 				OurOrderAutoService ourOrderAutoService = new OurOrderAutoService();
 				List<Object> ourOrderResult = ourOrderAutoService.registerOurOrder(cust_cd, plant_cd, item_cd, order_qty);
 				isOurOrderSuccess = (boolean) ourOrderResult.get(0);
-				order_no = (int) ourOrderResult.get(1);
+				order_no = (int) ourOrderResult.get(1);		// our_order 테이블의 order_no로 cust_order의 order_no와 다름
 				
 				if(!isOurOrderSuccess) {
 					res.setContentType("text/html; charset=utf-8");
@@ -56,10 +57,10 @@ public class OurOrderAutoAction implements Action {
 					out.flush();
 					out.close();
 				} else {
-					// 2. 신규 발주된 our_order 데이터 조회
+					// 신규 발주된 our_order 데이터 조회
 					OurOrderBean ourOrder =  ourOrderAutoService.getOurOrder(order_no);					
 					
-					// 3. item_io 테이블에 신규 발주(=입고)된 자재 등록
+					// 2. item_io 테이블에 신규 발주(=입고)된 자재 등록
 					boolean isRegisterSuccess = false;
 					ItemInOutService itemInOutService = new ItemInOutService();
 					isRegisterSuccess = itemInOutService.registerMaterialIn(ourOrder);
@@ -74,13 +75,13 @@ public class OurOrderAutoAction implements Action {
 						out.flush();
 						out.close();
 					} else {
-						// 4. item_stock 테이블에 발주(=입고)된 자재 업데이트
-						boolean isModifySuccess = false;
+						// 3. item_stock 테이블에 발주(=입고)된 자재 업데이트
+						boolean isItemStockModifySuccess = false;
 						Timestamp order_dt = ourOrder.getOrder_dt();
 						ItemStockService itemStockService = new ItemStockService();	
-						isModifySuccess = itemStockService.modifyItemStockMaterialIn(plant_cd, item_cd, order_qty, order_dt);
+						isItemStockModifySuccess = itemStockService.modifyItemStockMaterialIn(plant_cd, item_cd, order_qty, order_dt);
 						
-						if(!isModifySuccess) {
+						if(!isItemStockModifySuccess) {
 							res.setContentType("text/html; charset=utf-8");
 							PrintWriter out = res.getWriter();
 							out.println("<script>");
@@ -92,7 +93,7 @@ public class OurOrderAutoAction implements Action {
 						} else {
 							forward = new ActionForward();
 							forward.setRedirect(true);	// sendRedirect() 사용
-							forward.setPath("/order/outList");
+							forward.setPath("/item/reserved");
 						}
 					}	
 				}

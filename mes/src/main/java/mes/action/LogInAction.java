@@ -1,6 +1,7 @@
 package mes.action;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpSession;
 
 import mes.dto.ActionForward;
 import mes.dto.MemberBean;
+import mes.dto.NoticeBean;
 import mes.svc.LogInService;
+import mes.svc.NoticeService;
 
 public class LogInAction implements Action {
 
@@ -58,9 +61,13 @@ public class LogInAction implements Action {
 					MemberBean member = logInService.getMember(id);
 					session.setAttribute("logInInfo", member);
 					
+					NoticeService noticeService = new NoticeService();
+					ArrayList<NoticeBean> recentNotice = noticeService.recentNotice();
+					session.setAttribute("recentNotice", recentNotice);
+					
 					forward = new ActionForward();
 					forward.setRedirect(true);
-					forward.setPath("/misc/login_success.jsp");
+					forward.setPath("/");
 				}
 			}
 		}

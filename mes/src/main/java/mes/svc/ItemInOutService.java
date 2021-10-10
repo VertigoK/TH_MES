@@ -143,7 +143,7 @@ public class ItemInOutService {
 		
 	}
 
-	public boolean registerProductionOut(ProductionHistoryBean productionHistoryNew, int cust_cd) {
+	public boolean registerProductionOut(ProductionHistoryBean productionHistoryNew, int cust_cd, int order_qty) {
 		
 		boolean isRegisterSuccess = false;
 		int insertItemInOutCount = 0;
@@ -170,10 +170,8 @@ public class ItemInOutService {
 			storage_to_nm = "제품창고2";
 		}
 		
-		int item_cnt =  productionHistoryNew.getOut_qty();
-		
 		insertItemInOutCount = mesDAO.insertItemInOut(plant_cd, item_cd, item_type, inout_dt, inout_type,
-				storage_from, storage_from_nm, storage_to, storage_to_nm, cust_cd, item_cnt);
+				storage_from, storage_from_nm, storage_to, storage_to_nm, cust_cd, order_qty);
 		
 		if(insertItemInOutCount > 0) {
 			commit(conn);
