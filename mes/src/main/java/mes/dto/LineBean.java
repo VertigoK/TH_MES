@@ -1,9 +1,12 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class LineBean {
+public class LineBean implements Serializable {
 
+	private static final long serialVersionUID = 5688194287595307965L;
+	
 	private int line_cd;
 	private int plant_cd;
 	private String line_nm;

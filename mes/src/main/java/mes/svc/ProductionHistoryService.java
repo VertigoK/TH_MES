@@ -4,6 +4,7 @@ import static db.JDBCUtility.*;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import mes.dao.MESDAO;
 import mes.dto.ProductionHistoryBean;
@@ -61,6 +62,21 @@ public class ProductionHistoryService {
 		close(conn);
 		
 		return productionHistory;
+		
+	}
+
+	public ArrayList<ProductionHistoryBean> getProductionHistoryList() {
+		
+		ArrayList<ProductionHistoryBean> productionHistoryList = null;
+		
+		Connection conn = getConnection();
+		MESDAO mesDAO = MESDAO.getInstance();
+		mesDAO.setConnection(conn);
+		
+		productionHistoryList = mesDAO.selectProductionHistoryList();
+		close(conn);
+		
+		return productionHistoryList;
 		
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import mes.dao.MESDAO;
+import mes.dto.ItemInOutBean;
 import mes.dto.ItemStockBean;
 import static db.JDBCUtility.*;
 
@@ -69,6 +70,21 @@ public class StockService {
 		
 		close(conn);
 		return stockTotalList;
+		
+	}
+
+	public ArrayList<ItemInOutBean> getItemInOutList() {
+		
+		ArrayList<ItemInOutBean> itemInOutList = new ArrayList<ItemInOutBean>();
+		
+		Connection conn = getConnection();
+		MESDAO mesDAO = MESDAO.getInstance();
+		mesDAO.setConnection(conn);
+		
+		itemInOutList = mesDAO.selectItemInOutList();
+		close(conn);
+		
+		return itemInOutList;
 		
 	}
 }

@@ -52,7 +52,7 @@
                   </div>
                   <div class="form-group mt-md-3">
                      <a href="/" class="text-white btn btn-primary float-right login-btn"><i class="fas fa-home fa-lg"></i></a>
-                     <input type="reset" value="Reset" class="text-white btn btn-primary float-right login-btn mr-sm-3"/>
+                     <input type="reset" value="Reset" class="text-white btn btn-success float-right login-btn mr-sm-3"/>
                      <input type="submit" value="Sign up" class="text-white btn btn-warning float-right login-btn mr-sm-3"/>
                   </div>
                </form>

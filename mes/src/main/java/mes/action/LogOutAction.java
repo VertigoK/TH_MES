@@ -29,6 +29,7 @@ public class LogOutAction implements Action {
 			out.close();
 		} else {
 			session.invalidate();
+//			session.removeAttribute("logInInfo");
 			forward = new ActionForward();
 			forward.setRedirect(true);
 			forward.setPath("/");

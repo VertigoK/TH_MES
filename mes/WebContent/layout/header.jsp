@@ -1,6 +1,6 @@
 <%@page import="mes.dto.MemberBean"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
@@ -52,7 +52,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="left">
-			<p>Company Name</p>
+			<p><strong>Telstar-Hommel</strong></p>
 		</div>
 		<div class="right">
 			<c:if test="<%= member == null %>">

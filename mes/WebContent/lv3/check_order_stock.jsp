@@ -106,19 +106,14 @@
 			</table>
 			<br /><br /><br />
 			<c:choose>
-			
-			
 				<c:when test="<%=requiredQtys.get(0) == 0%>">
 					<h5>제품 재고가 충분하므로 제품을 생산할 필요 없습니다. 제품을 출고하시겠습니까?</h5>
 					<a href="#" class="btn btn-warning">확인</a>
 				</c:when>
-			
-			
-			
 				<c:when test="<%=requiredQtys.get(1) == 0 && requiredQtys.get(2) == 0 && requiredQtys.get(3) == 0%>">
 					<h5>자재 재고가 충분하므로 자재를 발주할 필요 없습니다. 생산지시 페이지로 이동하시겠습니까?</h5>
-					<a href="/production/workOrderForm" class="btn btn-warning">확인</a>
-				</c:when>	
+					<a href="/production/workOrderForm?order_no=${custOrder.getOrder_no()}" class="btn btn-warning">확인</a>
+				</c:when>
 				<c:otherwise>
 					<h5>자재 재고가 부족하므로 발주가 필요합니다. 자재를 자동 발주하시겠습니까?</h5>
 					<a href="/order/ourOrderAuto" class="btn btn-warning">확인</a>

@@ -13,9 +13,11 @@ public class ProductionPlantService {
 	public ArrayList<ProductionBean> getProductionList(String id, int no) {
 		
 		ArrayList<ProductionBean> productionList = null;
+		
 		Connection conn = getConnection();
 		MESDAO mesDAO = MESDAO.getInstance();
 		mesDAO.setConnection(conn);
+		
 		productionList = mesDAO.selectProductionList(id, no);
 		close(conn);
 		

@@ -1,6 +1,10 @@
 package mes.dto;
 
-public class EquipmentBean {
+import java.io.Serializable;
+
+public class EquipmentBean implements Serializable {
+	
+	private static final long serialVersionUID = 5644907475213859079L;
 	
 	private int equip_id;
 	private int plant_cd;

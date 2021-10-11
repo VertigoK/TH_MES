@@ -1,6 +1,10 @@
 package mes.dto;
 
-public class WorkerBean {
+import java.io.Serializable;
+
+public class WorkerBean implements Serializable {
+	
+	private static final long serialVersionUID = -8220410005358451425L;
 	
 	private int worker_no;
 	private int plant_cd;

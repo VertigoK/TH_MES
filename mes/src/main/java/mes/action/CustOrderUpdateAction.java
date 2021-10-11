@@ -34,8 +34,8 @@ public class CustOrderUpdateAction implements Action {
 		Timestamp end_dt = productionHistoryNew.getEnd_dt();
 		Date finished_date = new Date(end_dt.getTime());
 		
-		long differenceInTime = finished_date.getTime() - delivery_date.getTime();
-		int delayed_days = (int) (differenceInTime / 1000 / 60 / 60 / 24) - 1;
+		long differenceInTime = end_dt.getTime() - delivery_date.getTime();
+		int delayed_days = (int) Math.floor(differenceInTime / 1000 / 60 / 60 / 24);
 		
 		// 1. 고객 제품주문(cust_order) 테이블 업데이트: finished_date, order_status, delayed_days
 		boolean isUpdateSuccess = false;
@@ -53,7 +53,7 @@ public class CustOrderUpdateAction implements Action {
 		} else {
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/");
+			forward.setPath("/production");
 		}
 		
 		return forward;

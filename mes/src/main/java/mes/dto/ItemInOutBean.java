@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ItemInOutBean {
+public class ItemInOutBean implements Serializable {
+	
+	private static final long serialVersionUID = -4407784402718573530L;
 	
 	private int inout_cd;
 	private int plant_cd;
@@ -15,7 +18,7 @@ public class ItemInOutBean {
 	private int storage_to;
 	private String storage_to_nm;
 	private int cust_cd;
-	private int inout_cnt;
+	private int item_cnt;
 	
 	public int getInout_cd() {
 		return inout_cd;
@@ -83,11 +86,11 @@ public class ItemInOutBean {
 	public void setCust_cd(int cust_cd) {
 		this.cust_cd = cust_cd;
 	}
-	public int getInout_cnt() {
-		return inout_cnt;
+	public int getItem_cnt() {
+		return item_cnt;
 	}
-	public void setInout_cnt(int inout_cnt) {
-		this.inout_cnt = inout_cnt;
+	public void setItem_cnt(int item_cnt) {
+		this.item_cnt = item_cnt;
 	}
 	
 }

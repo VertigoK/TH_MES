@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ItemBean {
+public class ItemBean implements Serializable {
+	
+	private static final long serialVersionUID = 2958570899093731224L;
 	
 	private int item_cd;
 	private int cust_cd;

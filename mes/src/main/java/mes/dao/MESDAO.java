@@ -13,11 +13,13 @@ import java.util.ArrayList;
 
 import mes.dto.CustomerOrderBean;
 import mes.dto.EquipmentBean;
+import mes.dto.ItemInOutBean;
 import mes.dto.ItemStockBean;
 import mes.dto.LineBean;
 import mes.dto.MemberBean;
 import mes.dto.NoticeBean;
 import mes.dto.OurOrderBean;
+import mes.dto.ProcessBean;
 import mes.dto.ProductionBean;
 import mes.dto.ProductionHistoryBean;
 import mes.dto.QualityBean;
@@ -198,8 +200,8 @@ public class MESDAO {
 		ProductionBean production = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 테스트 용도로 30개만 조회하기 
-		String sql = "select * from production where " + id +  " = " + no + " limit 30";
+		// 200개 조회하기 
+		String sql = "select * from production where " + id +  " = " + no + " limit 200";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -246,8 +248,8 @@ public class MESDAO {
 		QualityBean quality = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 테스트 용도로 30개만 조회하기 
-		String sql = "select * from quality where " + id +  " = " + no + " limit 30";
+		// 200개 조회하기 
+		String sql = "select * from quality where " + id +  " = " + no + " limit 200";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -442,7 +444,7 @@ public class MESDAO {
 		CustomerOrderBean orderIn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from cust_order";
+		String sql = "select * from cust_order order by order_no desc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -486,7 +488,7 @@ public class MESDAO {
 		OurOrderBean orderOut = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from our_order";
+		String sql = "select * from our_order order by order_no desc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -744,7 +746,7 @@ public class MESDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "select * from work_order";;
+		String sql = "select * from work_order order by wo_no desc";;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -989,8 +991,8 @@ public class MESDAO {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql1 = "select count(*) from quality";
-		String sql2 = "select count(*) from quality where check_result = 0";
+		String sql1 = "select count(*) from quality where wo_no = " + wo_no;
+		String sql2 = "select count(*) from quality where check_result = 0 and wo_no = " + wo_no;
 		
 		try {
 			pstmt = conn.prepareStatement(sql1);
@@ -1428,13 +1430,25 @@ public class MESDAO {
 	public int writeNotice(NoticeBean notice) {
 		
 		int writeCount = 0;
+		int notice_no = 0;
 		PreparedStatement pstmt = null;
-		String sql = "insert into notice(title, content) values(?,?)";
+		ResultSet rs = null;
+		
+		String sql1 = "select max(notice_no) from notice";
+		String sql2 = "insert into notice(notice_no, title, content) values(?,?,?)";
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, notice.getTitle());
-			pstmt.setString(2, notice.getContent());
+			// 자동 생성된 공지작성번호 가져오기 (1번부터 생성)
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) notice_no = rs.getInt(1) + 1;
+			else notice_no = 1;
+			close(pstmt, rs);
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, notice_no);
+			pstmt.setString(2, notice.getTitle());
+			pstmt.setString(3, notice.getContent());
 			writeCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("공지사항 등록 실패!" + e.getMessage());
@@ -1521,5 +1535,215 @@ public class MESDAO {
 		return updateReservedItemCount;
 
 	}
+
+	// 품목 입출고(item_io) 전체 조회
+	public ArrayList<ItemInOutBean> selectItemInOutList() {
+		
+		ArrayList<ItemInOutBean> itemInOutList = null;
+		ItemInOutBean itemInOut = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from item_io order by inout_cd desc";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			int i = 0;
+			while(rs.next()) {
+				if(i == 0) {
+					itemInOutList = new ArrayList<ItemInOutBean>();	// 품목 입출고 내역이 없으면 null 리턴
+					i++;
+				}
+				itemInOut = new ItemInOutBean();
+				itemInOut.setInout_cd(rs.getInt("inout_cd"));
+				itemInOut.setPlant_cd(rs.getInt("plant_cd"));
+				itemInOut.setItem_cd(rs.getInt("item_cd"));
+				itemInOut.setItem_type(rs.getString("item_type"));
+				itemInOut.setInout_dt(rs.getTimestamp("inout_dt"));
+				itemInOut.setInout_type(rs.getString("inout_type"));
+				itemInOut.setStorage_from(rs.getInt("storage_from"));
+				itemInOut.setStorage_from_nm(rs.getString("storage_from_nm"));
+				itemInOut.setStorage_to(rs.getInt("storage_to"));
+				itemInOut.setStorage_to_nm(rs.getString("storage_to_nm"));
+				itemInOut.setCust_cd(rs.getInt("cust_cd"));
+				itemInOut.setItem_cnt(rs.getInt("item_cnt"));;
+				itemInOutList.add(itemInOut);
+			}
+		} catch (SQLException e) {
+			System.out.println("품목 입출고 목록 전체 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return itemInOutList;
+	}
+
+	// 현재일이 작업 시작일과 종료일 사이에 있는 생산 지시 목록 조회
+	public ArrayList<WorkOrderBean> selectWorkOrder(Date todayDate) {
+		
+		ArrayList<WorkOrderBean> workOrderTodayList = new ArrayList<WorkOrderBean>();
+		WorkOrderBean workOrderToday = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from work_order where start_date <= ? and end_date >= ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setDate(1, todayDate);
+			pstmt.setDate(2, todayDate);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				workOrderToday = new WorkOrderBean();
+				workOrderToday.setWo_no(rs.getInt("wo_no"));
+				workOrderToday.setPlant_cd(rs.getInt("plant_cd"));
+				workOrderToday.setLine_cd(rs.getInt("line_cd"));
+				workOrderToday.setOrder_no(rs.getInt("order_no"));
+				workOrderToday.setItem_cd(rs.getInt("item_cd"));
+				workOrderToday.setStart_date(rs.getDate("start_date"));
+				workOrderToday.setStart_shift(rs.getString("start_shift"));
+				workOrderToday.setEnd_date(rs.getDate("end_date"));
+				workOrderToday.setEnd_shift(rs.getString("end_shift"));
+				workOrderToday.setPlan_qty(rs.getInt("plan_qty"));
+				workOrderToday.setFlag_end(rs.getBoolean("flag_end"));
+				workOrderTodayList.add(workOrderToday);
+			}
+		} catch (SQLException e) {
+			System.out.println("금일 생산 지시 목록 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return workOrderTodayList;
+		
+	}
+
+	// 공정(process) 테이블에서 사용 불가 목록 조회
+	public ArrayList<ProcessBean> selectProcessList() {
+		
+		ArrayList<ProcessBean> processList = new ArrayList<ProcessBean>();
+		ProcessBean process = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from process where use_yn = 0";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				process = new ProcessBean();
+				process.setPlant_cd(rs.getInt("plant_cd"));
+				process.setLine_cd(rs.getInt("line_cd"));
+				process.setProcess_cd(rs.getString("process_cd"));
+				process.setProcess_nm(rs.getString("process_nm"));
+				process.setUse_type(rs.getString("use_type"));
+				process.setUse_yn(rs.getBoolean("use_yn"));
+				process.setRemark(rs.getString("remark"));
+				process.setUpdate_dt(rs.getTimestamp("update_dt"));
+				processList.add(process);
+			}
+		} catch (SQLException e) {
+			System.out.println("공정 테이블에서 사용 불가 목록 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return processList;
+		
+	}
+
+	// 생산 이력(production_hist) 목록 전체 조회
+	public ArrayList<ProductionHistoryBean> selectProductionHistoryList() {
+		
+		ArrayList<ProductionHistoryBean> productionHistoryList = new ArrayList<ProductionHistoryBean>();
+		ProductionHistoryBean productionHistory = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from production_hist order by wo_no desc";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next() ) {
+				productionHistory = new ProductionHistoryBean();
+				productionHistory.setWo_no(rs.getInt("wo_no"));
+				productionHistory.setPlant_cd(rs.getInt("plant_cd"));
+				productionHistory.setLine_cd(rs.getInt("line_cd"));
+				productionHistory.setItem_cd(rs.getInt("item_cd"));
+				productionHistory.setWo_seq(rs.getInt("wo_seq"));
+				productionHistory.setStart_dt(rs.getTimestamp("start_dt"));
+				productionHistory.setEnd_dt(rs.getTimestamp("end_dt"));
+				productionHistory.setIn_qty(rs.getInt("in_qty"));
+				productionHistory.setOut_qty(rs.getInt("out_qty"));
+				productionHistory.setNg_qty(rs.getInt("ng_qty"));
+				productionHistoryList.add(productionHistory);
+			}
+		} catch (SQLException e) {
+			System.out.println("생산 이력 목록 전체 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return productionHistoryList;
+		
+	}
+
+	// quality 테이블에서 라인별, 생산제품수별 양품률 구하기
+	public float[] selectYield(int per) {
+		
+		float[] yield = new float[6];
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select sum(t.check_result)/count(t.check_result)*100 from (select * from quality where line_cd = ? order by serial_no limit ?) t";
+		
+		for(int i = 1; i < 7; i++) {
+			try {	
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, i);
+				pstmt.setInt(2, per);				
+				rs = pstmt.executeQuery();
+				if(rs.next()) yield[i-1] = rs.getFloat(1);
+			} catch (SQLException e) {
+				System.out.println("품질검사정보 테이블에서 양품률 구하기 실패! " + e.getMessage());
+			} finally {
+				close(pstmt, rs);
+			}
+		}
+		
+		return yield;
+		
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,10 @@
 package mes.dto;
 
-public class ActionForward {
+import java.io.Serializable;
+
+public class ActionForward implements Serializable {
+	
+	private static final long serialVersionUID = -1034156968477997501L;
 	
 	private boolean isRedirect = false;
 	private String path = null;

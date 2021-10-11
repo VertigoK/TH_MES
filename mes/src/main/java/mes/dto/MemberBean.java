@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class MemberBean {
+public class MemberBean implements Serializable {
+	
+	private static final long serialVersionUID = -7915818711358881959L;
 	
 	private String mem_id;		// 사용자 ID
 	private String mem_pw;		// 시용자 Password
