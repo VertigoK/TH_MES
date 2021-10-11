@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
+    <title>Telstar-Hommel</title>
 	<style>
 		.table1 {
 			font-family: Helvectica;
@@ -23,7 +24,6 @@
 			text-align: center;
 		}
 	</style>
-	<title>Telstar-Hommel</title>
 </head>
 <body>
 	<div id="header">
@@ -47,10 +47,8 @@
 					<th>마감일</th>
 					<th>납품여부</th>
 					<th>납기지연일</th>
-					<th>자재발주여부</th>
 					<th>자재소요량 파악</th>
-					<th>생산지시여부</th>
-					<th>생산지시 생성</th>
+					<th>생산지시 작성</th>
 				</tr>
 				<c:forEach var="orderIn" items="${orderInList}">
 				<tr>
@@ -64,7 +62,6 @@
 					<td>${orderIn.getFinished_date()}</td>
 					<td>${orderIn.isOrder_status()}</td>
 					<td>${orderIn.getDelayed_days()}</td>
-					<td>${orderIn.isOurorder_status()}</td>
 					<c:choose>
 						<c:when test="${orderIn.isOurorder_status() == false}">
 							<td><a href="/order/inList/checkOrderStock?order_no=${orderIn.getOrder_no()}" class="btn btn-info">확인</a></td>	
@@ -73,10 +70,9 @@
 							<td></td>
 						</c:otherwise>
 					</c:choose>
-					<td>${orderIn.isWo_status()}</td>
 					<c:choose>
 						<c:when test="${orderIn.isOurorder_status() == true && orderIn.isWo_status() == false}">
-							<td><a href="/production/workOrderForm?order_no=${orderIn.getOrder_no()}" class="btn btn-info">확인</a></td>	
+							<td><a href="/production/workOrderForm?order_no=${orderIn.getOrder_no()}" class="btn btn-warning">확인</a></td>	
 						</c:when>
 						<c:otherwise>
 							<td></td>

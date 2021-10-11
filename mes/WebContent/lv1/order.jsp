@@ -1,4 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.sql.Date"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="mes.dto.CustomerOrderBean"%>
+<%@page import="mes.dto.OurOrderBean"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	ArrayList<CustomerOrderBean> orderInList = (ArrayList<CustomerOrderBean>) request.getAttribute("orderInList");
+	ArrayList<OurOrderBean> orderOutList = (ArrayList<OurOrderBean>) request.getAttribute("orderOutList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +17,53 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
-	<title>주문 현황</title>
+	<title>Telstar-Hommel</title>
+	<style>
+		.line {
+			width: 140px;
+			height: 49px;
+			border-bottom: 1px solid #383636;
+			transform: translateY(-23px) translateX(5px) rotate(20deg);
+			position: absolute;
+			/* z-index: -1; */
+		}
+		th>div {
+			position: relative;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+		.bottom {
+			position: absolute;
+			bottom: 1px;
+			left: 5px;
+		}
+		
+		.top {
+			position: absolute;
+			top: 1px;
+			right: 1px;
+		}
+		.title {
+			display: flex;
+			width: 100%;
+			height: 33.5px;
+			align-items: stretch;
+			margin: 0 0 10px 0;
+		 }
+		.title-left { width: calc(100% - 60px); }
+		.title-right {
+			width: 60px;
+			padding: 5px;
+			text-align: right;
+			font-wight: blod;
+			background-color: #3F5060;
+		}
+		.title-right a { color: white; }
+		.dropdown { margin-bottom: 10px; }
+		.dropdown-content a { background-color: white; }
+	</style>
 </head>
 <body>
 	<div id="header">
@@ -19,10 +74,84 @@
 	</div>
 	<div class="content" align="center">
 		<div class="item">
-			<a href="/order/outList" class="btn btn-info">자재 발주 현황</a>
-			<a href="/order/inList" class="btn btn-info">제품 주문 현황</a>
-			<a href="/order/custOrderForm" class="btn btn-danger">제품 주문</a>
+<!-- 			<a href="/order/outList" class="btn btn-outline-info"><strong>자재 발주 현황</strong></a> -->
+<!-- 			<a href="/order/inList" class="btn btn-outline-info"><strong>제품 주문 현황</strong></a> -->
+			<a href="/order/custOrderForm" class="btn btn-outline-danger"><strong>제품 주문</strong></a>
 		</div>
-	</div>		
+		<div class="item">
+			<h5>고객사 제품 주문 현황</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>주문번호</th>
+					<th>주문회사</th>
+					<th>생산공장</th>
+					<th>주문제품</th>
+					<th>주문수량</th>
+					<th>주문일</th>
+					<th>납기일</th>
+					<th>마감일</th>
+					<th>납품여부</th>
+					<th>납기지연일</th>
+					<th>자재소요량 파악</th>
+					<th>생산지시 작성</th>
+				</tr>
+				<c:forEach var="orderIn" items="${orderInList}">
+				<tr>
+					<td>${orderIn.getOrder_no()}</td>
+					<td>${orderIn.getCust_cd()}</td>
+					<td>${orderIn.getPlant_cd()}</td>
+					<td>${orderIn.getItem_cd()}</td>
+					<td>${orderIn.getOrder_qty()}</td>
+					<td>${orderIn.getOrder_date()}</td>
+					<td>${orderIn.getDelivery_date()}</td>
+					<td>${orderIn.getFinished_date()}</td>
+					<td>${orderIn.isOrder_status()}</td>
+					<td>${orderIn.getDelayed_days()}</td>
+					<c:choose>
+						<c:when test="${orderIn.isOurorder_status() == false}">
+							<td><a href="/order/inList/checkOrderStock?order_no=${orderIn.getOrder_no()}" class="btn btn-info">확인</a></td>	
+						</c:when>
+						<c:otherwise>
+							<td></td>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${orderIn.isOurorder_status() == true && orderIn.isWo_status() == false}">
+							<td><a href="/production/workOrderForm?order_no=${orderIn.getOrder_no()}" class="btn btn-warning">확인</a></td>	
+						</c:when>
+						<c:otherwise>
+							<td></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
+		<div class="item">
+			<h5>자재 발주 현황</h5>
+			<table class="table1 table-striped">
+				<tr>
+					<th>주문번호</th>
+					<th>공급회사</th>
+					<th>납품공장</th>
+					<th>납품자재</th>
+					<th>주문수량</th>
+					<th>주문일</th>
+					<th>납품상태</th>
+				</tr>
+				<c:forEach var="orderOut" items="${orderOutList}">
+				<tr>
+					<td>${orderOut.getOrder_no()}</td>
+					<td>${orderOut.getCust_cd()}</td>
+					<td>${orderOut.getPlant_cd()}</td>
+					<td>${orderOut.getItem_cd()}</td>
+					<td>${orderOut.getOrder_qty()}</td>
+					<td>${orderOut.getOrder_dt()}</td>
+					<td>${orderOut.isOrder_status()}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

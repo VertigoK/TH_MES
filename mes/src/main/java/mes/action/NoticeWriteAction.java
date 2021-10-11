@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import mes.dto.ActionForward;
 import mes.dto.NoticeBean;
+import mes.svc.NoticeService;
 import mes.svc.NoticeWriteService;
 
 public class NoticeWriteAction implements Action {
@@ -37,6 +38,11 @@ public class NoticeWriteAction implements Action {
 			out.flush();
 			out.close();
 		} else {
+			HttpSession session = req.getSession();
+			NoticeService noticeService = new NoticeService();
+			ArrayList<NoticeBean> recentNotice = noticeService.recentNotice();
+			session.setAttribute("recentNoticeInfo", recentNotice);
+			
 			forward.setRedirect(true);
 			forward.setPath("/misc/write_success.jsp");
 		}

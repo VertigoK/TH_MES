@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ProductionHistoryBean {
+public class ProductionHistoryBean implements Serializable {
+	
+	private static final long serialVersionUID = 2271371375872859805L;
 	
 	private int wo_no;
 	private int plant_cd;

@@ -4,6 +4,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<WorkerBean> workerList = (ArrayList<WorkerBean>) request.getAttribute("workerList");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
@@ -16,8 +17,51 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
-	<title>HR현황</title>
+	<title>Telstar-Hommel</title>
 	<style>
+		.line {
+			width: 140px;
+			height: 49px;
+			border-bottom: 1px solid #383636;
+			transform: translateY(-23px) translateX(5px) rotate(20deg);
+			position: absolute;
+			/* z-index: -1; */
+		}
+		th>div {
+			position: relative;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+		.bottom {
+			position: absolute;
+			bottom: 1px;
+			left: 5px;
+		}
+		
+		.top {
+			position: absolute;
+			top: 1px;
+			right: 1px;
+		}
+		.title {
+			display: flex;
+			width: 100%;
+			height: 33.5px;
+			align-items: stretch;
+			margin: 0 0 10px 0;
+		 }
+		.title-left { width: calc(100% - 60px); }
+		.title-right {
+			width: 60px;
+			padding: 5px;
+			text-align: right;
+			font-wight: blod;
+			background-color: #3F5060;
+		}
+		.title-right a { color: white; }
+		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }
 	</style>
 </head>
@@ -31,14 +75,14 @@
 	<div class="content" align="center">
 		<div class="item">
 			<div class="dropdown">
-	  			<button>공장별 근무자</button>
+	  			<button class="btn btn-outline-info"><strong>공장별 근무자</strong></button>
 	  			<div class="dropdown-content">
 					<a href="/hr/plant?id=plant_cd&no=1">공장 1</a>
 					<a href="/hr/plant?id=plant_cd&no=2">공장 2</a>
 				</div>
 			</div>
 			<div class="dropdown">
-	  			<button>라인별 근무자</button>
+	  			<button class="btn btn-outline-info"><strong>라인별 근무자</strong></button>
 	  			<div class="dropdown-content">
 					<a href="/hr/line?id=line_cd&no=1">라인 1</a>
 					<a href="/hr/line?id=line_cd&no=2">라인 2</a>
@@ -49,19 +93,19 @@
 				</div>
 			</div>
 			<div class="dropdown">
-	  			<button>공정별 근무자</button>
+	  			<button class="btn btn-outline-info"><strong>공정별 근무자</strong></button>
 	  			<div class="dropdown-content">
 					<a href="/hr/loc?id=worker_loc&no=1">생산</a>
 					<a href="/hr/loc?id=worker_loc&no=2">품질검사</a>
 				</div>
 			</div>
-			<h5>HR현황</h5>
+			<h5>HR 현황</h5>
 		</div>
 		<div class="item">
 			<table>
 				<tr>
-					<th>공장코드</th>
-					<th>라인코드</th>
+					<th>공장</th>
+					<th>라인</th>
 					<th>근무위치</th>
 					<th>근무시간</th>
 					<th>근무자명</th>

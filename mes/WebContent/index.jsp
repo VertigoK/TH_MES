@@ -1,12 +1,18 @@
-<%@page import="mes.dto.NoticeBean"%>
+<%@page import="mes.dto.ProcessBean"%>
+<%@page import="mes.dto.WorkOrderBean"%>
 <%@page import="mes.dto.MemberBean"%>
+<%@page import="mes.dto.NoticeBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-	ArrayList<NoticeBean> recentNotice = (ArrayList<NoticeBean>) request.getAttribute("recentNotice");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
+	@SuppressWarnings("unchecked")
+	ArrayList<NoticeBean> recentNotice = (ArrayList<NoticeBean>) session.getAttribute("recentNoticeInfo");
+	@SuppressWarnings("unchecked")
+	ArrayList<WorkOrderBean> workOrderTodayList = (ArrayList<WorkOrderBean>) session.getAttribute("workOrderTodayListInfo");
+	@SuppressWarnings("unchecked")
+	ArrayList<ProcessBean> processList = (ArrayList<ProcessBean>) session.getAttribute("processListInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,24 +27,25 @@
 	<style>
 		.content {
 			grid-template-columns: repeat(10, 1fr);
-    		grid-template-rows: repeat(7, 1fr);
+    		grid-template-rows: repeat(10, 1fr);
 		}
 		.null { width: 100%; }
 		.main {
-			grid-column: 1 / span 7;
-			grid-row: 1 / span 4;
+			grid-column: 1 / span 3;
+			grid-row: 1 / span 5;
+			overflow: hidden;
 		}
 		.notice {
-			grid-column: 8 / span 10;
-			grid-row: 1 / span 4;
+			grid-column: 1 / span 3;
+			grid-row: 6 / span 10;
 		}
 		.daily {
-			grid-column: 1 / span 5;
-			grid-row: 5 / span 7;
+			grid-column: 4 / span 10;
+			grid-row: 1 / span 5;
 		}
 		.line {
-			grid-column: 6 / span 12;
-			grid-row: 5 / span 7;
+			grid-column: 4 / span 10;
+			grid-row: 6 / span 10;
 		}
 		.inner-notice {
 			display: flex;
@@ -46,13 +53,13 @@
 			height: 33px;
 			align-items: stretch;
 			margin: 0 0 10px 0;
+			overflow: hidden;
 		}
 		.inner-left { width: calc(100% - 60px); }
 		.inner-right { 
 			text-align: right;
 			width: 60px;
 			padding: 5px;
-			font-weight: bold;
 			background-color: #3F5060;
 		}
 		.inner-right a { color: white; }
@@ -61,7 +68,14 @@
 		.nullMain {
 			grid-column: 1 / span 12;
 			grid-row: 1 / span 12;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
 		}
+		img { width: auto; max-height: 100%; }
+		.line td { border-bottom: black; }
+		
 	</style>
 </head>
 <body>
@@ -74,17 +88,13 @@
 		</div>
 		<div class="content">
 			<div class="item main">
-				<img src="/layout/telstar-logo.png" alt="telstar-logo" />
-				<h4 class="teslar">Telstar</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-				when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+				<img src="/layout/telstarMain.png" alt="telstarMain" />
 			</div>
 			<div class="item notice">
 				<div class="inner-notice">
 					<div class="inner-left"><h5>공지사항</h5></div>
 					<div class="inner-right">
-							<a href="/notice" class="more"><p>더보기</p></a>
+						<a href="/notice" class="more">더보기</a>
 					</div>
 				</div>
 				<table>
@@ -106,36 +116,69 @@
 				<h5>금일 생산일정</h5>
 				<table>
 					<tr>
-						<th>라인</th>
-						<th>시작시간</th>
-						<th>종료시간</th>
-						<th>qty</th>
-						<th>내용</th>
-					</tr>
-					<c:forEach var="test" begin="1" end="8">
+						<th>공장코드</th>
+						<th>라인코드</th>
+						<th>품목코드</th>
+						<th>작업시작일</th>
+						<th>작업종료일</th>
+						<th>계획수량</th>
+						<th>작업상태</th>
+					</tr>				
+				<%
+				if(workOrderTodayList != null) {
+					int woLength = workOrderTodayList.size();
+					for(int i=0; i < woLength; i++) {
+						WorkOrderBean workOrderToday = workOrderTodayList.get(i);
+				%>
 						<tr>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
-							<td>4</td>
-							<td>5</td>
+						<td><%= workOrderToday.getPlant_cd() %></td>
+						<td><%= workOrderToday.getLine_cd() %></td>
+						<td><%= workOrderToday.getItem_cd() %></td>
+						<td><%= workOrderToday.getStart_date() %></td>
+						<td><%= workOrderToday.getEnd_date() %></td>
+						<td><%= workOrderToday.getPlan_qty() %></td>
+						<c:choose>
+							<c:when test="<%=workOrderToday.isFlag_end() %>">
+								<td>완료</td>
+							</c:when>
+							<c:otherwise>
+								<td>미완료</td>
+							</c:otherwise>
+						</c:choose>
 						</tr>
-					</c:forEach>
+				<%		
+					}
+				}
+				%>
 				</table>
 			</div>
 			<div class="item line">
-				<h5>라인별 가동현황</h5>
-				<table class="line-table" border="1">
-				<c:forEach var="line" begin="1" end="6">
+				<h5>비가동 라인/공정 현황</h5>
+				<table class="line-table" border="2">
 					<tr>
-						<th>라인${ line }</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<th>공장</th>
+						<th>라인</th>
+						<th>공정명</th>
+						<th>공정타입</th>
+						<th>비고</th>
 					</tr>
-				</c:forEach>
+					<tr>
+				<%
+				if(processList != null) {
+					int prLength = processList.size();
+					for(int i=0; i < prLength; i++) {
+						ProcessBean pr = processList.get(i);
+				%>
+						<td><%= pr.getPlant_cd() %></td>
+						<td><%= pr.getLine_cd() %></td>
+						<td><%= pr.getProcess_nm() %></td>
+						<td><%= pr.getUse_type() %></td>
+						<td><%= pr.getRemark() %></td>
+				<%		
+					}
+				}
+				%>
+					</tr>					
 				</table>
 			</div>
 		</div>
@@ -143,11 +186,7 @@
 	<c:if test="<%= member == null %>">
 		<div class="content null">
 			<div class="item nullMain">
-				<img src="/layout/telstar-logo.png" alt="telstar-logo" />
-				<h4 class="teslar">Telstar</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-				Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-				when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+				<img src="/layout/telstarMain.png" alt="telstarMain" />
 			</div>
 		</div>
 	</c:if>

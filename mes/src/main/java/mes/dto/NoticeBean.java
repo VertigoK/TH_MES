@@ -1,7 +1,11 @@
 package mes.dto;
 
-public class NoticeBean {
+import java.io.Serializable;
 
+public class NoticeBean implements Serializable {
+	
+	private static final long serialVersionUID = 5203578852976673127L;
+	
 	private int notice_no;  // 공지사항 번호
 	private String title;   // 제목
 	private String content; // 내용

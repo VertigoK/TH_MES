@@ -51,7 +51,7 @@
 					<th>주문수량</th>
 					<th style="color:red">계획수량</th>
 					<th>주문일</th>
-					<th>납기일</th>
+					<th style="color:red">납기일</th>
 					<th>마감일</th>
 					<th>납품상태</th>
 					<th>납기지연일</th>
@@ -64,7 +64,7 @@
 					<td><%=custOrder.getOrder_qty()%></td>
 					<td style="color:red"><%=requiredQtys.get(0)%></td>
 					<td><%=custOrder.getOrder_date()%></td>
-					<td><%=custOrder.getDelivery_date()%></td>
+					<td style="color:red"><%=custOrder.getDelivery_date()%></td>
 					<td><%=custOrder.getFinished_date()%></td>
 					<td><%=custOrder.isOrder_status()%></td>
 					<td><%=custOrder.getDelayed_days()%></td>

@@ -4,7 +4,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-ArrayList<OurOrderBean> orderInList = (ArrayList<OurOrderBean>) request.getAttribute("orderOutList");
+	ArrayList<OurOrderBean> orderOutList = (ArrayList<OurOrderBean>) request.getAttribute("orderOutList");
 %>
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@ ArrayList<OurOrderBean> orderInList = (ArrayList<OurOrderBean>) request.getAttri
 	</div>
 	<div class="content" align="center">
 		<div class="item">
-			<h5>자사 자재 발주 현황</h5>
+			<h5>자재 발주 현황</h5>
 			<table class="table1 table-striped">
 				<tr>
 					<th>주문번호</th>

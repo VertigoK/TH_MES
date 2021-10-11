@@ -1,7 +1,11 @@
 package mes.dto;
 
-public class PageInfo {
+import java.io.Serializable;
 
+public class PageInfo implements Serializable {
+
+	private static final long serialVersionUID = 3138619189591932215L;
+	
 	private int page;
 	private int totalPage;
 	private int startPage;

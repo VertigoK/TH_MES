@@ -1,6 +1,10 @@
 package mes.dto;
 
-public class QualityBean {
+import java.io.Serializable;
+
+public class QualityBean implements Serializable {
+	
+	private static final long serialVersionUID = -5294264410216720121L;
 	
 	private String serial_no;
 	private int wo_no;

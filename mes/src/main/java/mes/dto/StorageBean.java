@@ -1,6 +1,10 @@
 package mes.dto;
 
-public class StorageBean {
+import java.io.Serializable;
+
+public class StorageBean implements Serializable {
+	
+	private static final long serialVersionUID = -2833507140629018811L;
 	
 	private int storage_cd;
 	private String storage_nm;

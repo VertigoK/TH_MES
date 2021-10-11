@@ -32,10 +32,10 @@
 	<div class="content">
 		<div class="item title">
 			<c:if test="${ param.no == 1 }">
-				<h5>공장1</h5>
+				<h5>공장1 재고</h5>
 			</c:if>
 			<c:if test="${ param.no == 2 }">
-				<h5>공장2</h5>
+				<h5>공장2 재고</h5>
 			</c:if>
 		</div>
 		<!-- 자재창고 -->

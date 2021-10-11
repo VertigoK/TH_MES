@@ -1,7 +1,11 @@
 package mes.dto;
 
-public class ReservedItemBean {
+import java.io.Serializable;
 
+public class ReservedItemBean implements Serializable {
+
+	private static final long serialVersionUID = 6217868792093069674L;
+	
 	private int order_no;
 	private int plant_cd;
 	private int item_cd;

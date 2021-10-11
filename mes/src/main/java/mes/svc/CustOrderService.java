@@ -40,7 +40,7 @@ public class CustOrderService {
 		
 	}
 	
-	// cust_order 조회 (w/ order_no)s
+	// cust_order 조회 (w/ order_no)
 	public CustomerOrderBean getCustOrder(int order_no) {
 		
 		CustomerOrderBean custOrder = null;

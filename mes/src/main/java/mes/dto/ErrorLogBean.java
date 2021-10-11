@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ErrorLogBean {
+public class ErrorLogBean implements Serializable {
+	
+	private static final long serialVersionUID = -7150645102052965394L;
 	
 	private int log_no;
 	private int plant_cd;

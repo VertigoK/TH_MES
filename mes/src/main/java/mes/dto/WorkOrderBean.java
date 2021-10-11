@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class WorkOrderBean {
+public class WorkOrderBean implements Serializable {
+	
+	private static final long serialVersionUID = -8053360587903897867L;
 	
 	private int wo_no;
 	private int plant_cd;

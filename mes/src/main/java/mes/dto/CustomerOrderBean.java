@@ -1,8 +1,11 @@
 package mes.dto;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class CustomerOrderBean {
+public class CustomerOrderBean implements Serializable {
+	
+	private static final long serialVersionUID = 4969920134567226578L;
 	
 	private int order_no;
 	private int cust_cd;

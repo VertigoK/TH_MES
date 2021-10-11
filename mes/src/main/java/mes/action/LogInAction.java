@@ -1,6 +1,8 @@
 package mes.action;
 
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +12,12 @@ import javax.servlet.http.HttpSession;
 import mes.dto.ActionForward;
 import mes.dto.MemberBean;
 import mes.dto.NoticeBean;
+import mes.dto.ProcessBean;
+import mes.dto.WorkOrderBean;
 import mes.svc.LogInService;
 import mes.svc.NoticeService;
+import mes.svc.ProcessService;
+import mes.svc.WorkOrderTodayService;
 
 public class LogInAction implements Action {
 
@@ -57,13 +63,26 @@ public class LogInAction implements Action {
 					out.flush();
 					out.close();
 				} else {
-					HttpSession session = req.getSession();
+					// 'logInInfo' session 객체에 등록
+					HttpSession session = req.getSession(true);
 					MemberBean member = logInService.getMember(id);
 					session.setAttribute("logInInfo", member);
 					
+					// 'recentNoticeInfo' session 객체에 등록
 					NoticeService noticeService = new NoticeService();
 					ArrayList<NoticeBean> recentNotice = noticeService.recentNotice();
-					session.setAttribute("recentNotice", recentNotice);
+					session.setAttribute("recentNoticeInfo", recentNotice);
+					
+					// 'workOrderTodayListInfo' session 객체에 등록
+					Date todayDate = Date.valueOf(LocalDate.now());
+					WorkOrderTodayService workOrderTodayService = new WorkOrderTodayService();
+					ArrayList<WorkOrderBean> workOrderTodayList = workOrderTodayService.getWorkOrderTodayList(todayDate);
+					session.setAttribute("workOrderTodayListInfo", workOrderTodayList);
+					
+					// 'processListInfo' session 객체에 등록
+					ProcessService processService = new ProcessService();
+					ArrayList<ProcessBean> processList = processService.getProcessList();
+					session.setAttribute("processListInfo", processList);
 					
 					forward = new ActionForward();
 					forward.setRedirect(true);

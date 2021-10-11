@@ -14,12 +14,13 @@ public class OrderOutListAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		ActionForward forward = new ActionForward();
+		
 		OrderOutListService orderOutListService = new OrderOutListService();
 		ArrayList<OurOrderBean> orderOutList = null;
 		orderOutList = orderOutListService.getOrderOutList();
 		req.setAttribute("orderOutList", orderOutList);
 		
-		ActionForward forward = new ActionForward();
 		// isRedirect = false (기본값) -> forward() 사용
 		forward.setPath("/lv2/order_out.jsp");
 				

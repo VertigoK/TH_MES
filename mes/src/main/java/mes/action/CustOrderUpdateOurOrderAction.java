@@ -38,7 +38,7 @@ public class CustOrderUpdateOurOrderAction implements Action {
 		} else {
 			forward = new ActionForward();
 			forward.setRedirect(true);	// sendRedirect() 사용
-			forward.setPath("/order/outList");
+			forward.setPath("/production/workOrderForm?order_no=" + order_no);
 		}
 
 		return forward;
