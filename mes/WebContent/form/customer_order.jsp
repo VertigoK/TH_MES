@@ -9,6 +9,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
     <title>Telstar-Hommel</title>
+    <style>
+    	select, .wid { width: 150px; }
+    </style>
 </head>
 <body>
 	<div id="header">
@@ -45,56 +48,19 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><strong>주문수량</strong></span>
 						</div>
-						<input type="text" name="order_qty" value="100" required/>
+						<input class="wid" type="text" name="order_qty" value="100" required/>
 					</div>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><strong>납기일자</strong></span>
 						</div>
-						<input type="date" name="delivery_date" required/>
+						<input class="wid" type="date" name="delivery_date" required/>
 					</div>
 					<input type="reset" value="Reset" class="btn btn-outline-success"/>
 					<input type="submit" value="Submit" class="btn btn-outline-danger"/>
 				</form>
 			</div>
 		</div>
-	</div>
-		
-		
-<!-- 		<form action="/order/custOrder" method="post"> -->
-<!-- 			<table class="table1"> -->
-<!-- 				<tr> -->
-<!-- 					<td>주문회사</td> -->
-<!-- 					<td> -->
-<!-- 						<select name="cust_cd"> -->
-<!-- 							<option value="1">고객사 1</option>					 -->
-<!-- 							<option value="2">고객사 2</option> -->
-<!-- 							<option value="3">고객사 3</option> -->
-<!-- 						</select> -->
-<!-- 					</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td>생산공장</td> -->
-<!-- 					<td> -->
-<!-- 						<select name="plant_cd"> -->
-<!-- 							<option value="1">공장 1</option>					 -->
-<!-- 							<option value="2">공장 2</option> -->
-<!-- 						</select> -->
-<!-- 					</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td>주문수량</td> -->
-<!-- 					<td><input type="text" name="order_qty" value="100" required/></td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td>납기일</td> -->
-<!-- 					<td><input type="date" name="delivery_date" required/></td> -->
-<!-- 				</tr> -->
-<!-- 			</table> -->
-<!-- 			<br /> -->
-			<input type="reset" value="Reset" class="text-white btn btn-success"/>
-			<input type="submit" value="Submit" class="text-white btn btn-danger"/>
-<!-- 		</form> -->
-	
+	</div>	
 </body>
 </html>
