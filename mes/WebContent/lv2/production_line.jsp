@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.ProductionBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -5,6 +6,7 @@
 <%
 	@SuppressWarnings("unchecked")
 	ArrayList<ProductionBean> productiontList = (ArrayList<ProductionBean>) request.getAttribute("productionList");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 	String no = request.getParameter("no");
 %>
 <!DOCTYPE html>
@@ -29,6 +31,9 @@
 	<title>Telstar-Hommel</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

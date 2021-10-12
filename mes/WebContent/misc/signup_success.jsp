@@ -28,6 +28,9 @@
     <title>Telstar-Hommel</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 	   <jsp:include page="/layout/header.jsp" />
 	</div>

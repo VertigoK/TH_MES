@@ -1,7 +1,9 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");	
 	float[] yield100 = (float[]) session.getAttribute("yield100");
 	float[] yield1000 = (float[]) session.getAttribute("yield1000");
 	DecimalFormat df = new DecimalFormat("#.##");
@@ -17,6 +19,9 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
+		.content {
+			grid-template-rows: 38px 1fr 1fr;
+		}
 		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }
 		.line {
@@ -32,6 +37,9 @@
 	</style>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

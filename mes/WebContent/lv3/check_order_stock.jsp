@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mes.dto.CustomerOrderBean"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -8,6 +9,7 @@
 	ArrayList<Integer> stockQtys = (ArrayList<Integer>) session.getAttribute("stockQtysInfo");
 	@SuppressWarnings("unchecked")
 	ArrayList<Integer> requiredQtys = (ArrayList<Integer>) session.getAttribute("requiredQtysInfo");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +31,9 @@
 	<title>Telstar-Hommel</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

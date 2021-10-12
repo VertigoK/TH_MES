@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.CustomerOrderBean"%>
 <%@page import="mes.dto.WorkOrderBean"%>
 <%@page import="mes.dto.LineBean"%>
@@ -12,6 +13,7 @@
 	ArrayList<LineBean> lineList = (ArrayList<LineBean>) request.getAttribute("lineList");
 	@SuppressWarnings("unchecked")
 	ArrayList<WorkOrderBean> workOrderList = (ArrayList<WorkOrderBean>) request.getAttribute("workOrderList");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -38,6 +40,9 @@
 	<title>Telstar-Hommel</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

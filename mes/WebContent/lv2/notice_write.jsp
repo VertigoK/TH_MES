@@ -73,9 +73,7 @@
 					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="write">
-						<h3>잘못된 접근입니다!</h3>
-					</div>
+					<c:redirect url="/" />
 				</c:otherwise>
 			</c:choose>
 

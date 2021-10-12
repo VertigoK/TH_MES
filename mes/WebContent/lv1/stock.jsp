@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.ItemInOutBean"%>
 <%@page import="mes.dto.ItemStockBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -8,6 +9,7 @@
 	ArrayList<Integer> totalStockList = (ArrayList<Integer>) request.getAttribute("totalStockList");
 	@SuppressWarnings("unchecked")
 	ArrayList<ItemInOutBean> itemInOutList = (ArrayList<ItemInOutBean>) request.getAttribute("itemInOutList");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -94,6 +96,9 @@
 	</style>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>
