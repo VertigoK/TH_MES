@@ -103,13 +103,21 @@
 						<th>제목</th>
 						<th style="width: 100px;">작성일</th>
 					</tr>
-					<c:forEach var="notice" items="${ recentNotice }" varStatus="status">
-						<tr>
-							<td style="width: 30px;">${ notice.getNotice_no() }</td>
-							<td><a href="/notice/detail?notice_no=${ notice.getNotice_no() }">${ notice.getTitle() }</a></td>
-							<td style="width: 100px;">${ notice.getDate() }</td>
-						</tr>
-					</c:forEach>
+					<%
+					if(recentNotice != null) {
+						int recentNoticeLength = recentNotice.size();
+						for(int i=0; i < recentNoticeLength; i++) {
+							NoticeBean notice = recentNotice.get(i);
+					%>
+					<tr>
+						<td style="width: 30px;"><%= notice.getNotice_no() %></td>
+						<td><a href="/notice/detail?notice_no=<%= notice.getNotice_no() %>"><%= notice.getTitle() %></a></td>
+						<td style="width: 100px;"><%= notice.getDate() %></td>
+					</tr>
+					<%
+						}
+					}
+					%>
 				</table>
 			</div>
 			<div class="item daily">
@@ -130,22 +138,22 @@
 					for(int i=0; i < woLength; i++) {
 						WorkOrderBean workOrderToday = workOrderTodayList.get(i);
 				%>
-						<tr>
+					<tr>
 						<td><%= workOrderToday.getPlant_cd() %></td>
 						<td><%= workOrderToday.getLine_cd() %></td>
 						<td><%= workOrderToday.getItem_cd() %></td>
 						<td><%= workOrderToday.getStart_date() %></td>
 						<td><%= workOrderToday.getEnd_date() %></td>
 						<td><%= workOrderToday.getPlan_qty() %></td>
-						<c:choose>
-							<c:when test="<%=workOrderToday.isFlag_end() %>">
-								<td>완료</td>
-							</c:when>
-							<c:otherwise>
-								<td>미완료</td>
-							</c:otherwise>
-						</c:choose>
-						</tr>
+					<c:choose>
+						<c:when test="<%=workOrderToday.isFlag_end() %>">
+							<td>완료</td>
+						</c:when>
+						<c:otherwise>
+							<td>미완료</td>
+						</c:otherwise>
+					</c:choose>
+					</tr>
 				<%		
 					}
 				}

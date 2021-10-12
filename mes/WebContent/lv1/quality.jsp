@@ -5,12 +5,6 @@
 	float[] yield100 = (float[]) session.getAttribute("yield100");
 	float[] yield1000 = (float[]) session.getAttribute("yield1000");
 	DecimalFormat df = new DecimalFormat("#.##");
-	System.out.println(yield1000[0]);
-	System.out.println(yield1000[1]);
-	System.out.println(yield1000[2]);
-	System.out.println(yield1000[3]);
-	System.out.println(yield1000[4]);
-	System.out.println(yield1000[5]);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,48 +17,6 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
-/*  		.line { */
-/*  			width: 140px; */
-/*  			height: 49px; */
-/*  			border-bottom: 1px solid #383636; */
-/*  			transform: translateY(-23px) translateX(5px) rotate(20deg); */
-/*  			position: absolute; */
-/*  			/* z-index: -1; */ */
-/*  		} */
-		th>div {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
-		}
-		.bottom {
-			position: absolute;
-			bottom: 1px;
-			left: 5px;
-		}
-		
-		.top {
-			position: absolute;
-			top: 1px;
-			right: 1px;
-		}
-		.title {
-			display: flex;
-			width: 100%;
-			height: 33.5px;
-			align-items: stretch;
-			margin: 0 0 10px 0;
-		 }
-		.title-left { width: calc(100% - 60px); }
-		.title-right {
-			width: 60px;
-			padding: 5px;
-			text-align: right;
-			font-wight: blod;
-			background-color: #3F5060;
-		}
-		.title-right a { color: white; }
 		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }
 		.line {
@@ -86,8 +38,8 @@
 	<div id="navigation">
 		<jsp:include page="/layout/navigation.jsp" />
 	</div>
-	<div class="content" align="center">
-		<div class="item">
+	<div class="content">
+		<div class="item" align="center">
 			<div class="dropdown">
 	  			<button class="btn btn-outline-info"><strong>공장별 품질 데이터</strong></button>
 	  			<div class="dropdown-content">
@@ -106,115 +58,119 @@
 					<a href="/quality/line?id=line_cd&no=6">라인 6</a>
 				</div>
 			</div>
+		</div>
+		<div class="item">
 			<h5>라인별 양품률(%) (최근 100개 생산 기준: 목표 97%)</h5>
-		</div>
-		<div class="line">
-			<div class="title">라인 1</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			<div class="line">
+				<div class="title">라인 1</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[0])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[0])%>%" />
-		</div>
+			
+			<div class="line">
+				<div class="title">라인 2</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[1])%>%" />
+			</div>
+			
+			<div class="line">
+				<div class="title">라인 3</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[2])%>%" />
+			</div>
 		
-		<div class="line">
-			<div class="title">라인 2</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
-			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[1])%>%" />
-		</div>
 		
-		<div class="line">
-			<div class="title">라인 3</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			<div class="line">
+				<div class="title">라인 4</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[3])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[2])%>%" />
+			
+			<div class="line">
+				<div class="title">라인 5</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[4])%>%" />
+			</div>
+			
+			<div class="line">
+				<div class="title">라인 6</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield100[5])%>%" />
+			</div>
 		</div>
-		
-		<div class="line">
-			<div class="title">라인 4</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+		<div class="item">
+		<h5>라인별 양품률(%) (최근 1000개 생산 기준: 목표 97%)</h5>
+			<div class="line">
+				<div class="title">라인 1</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[0])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[3])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 5</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			
+			<div class="line">
+				<div class="title">라인 2</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[1])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[4])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 6</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			
+			<div class="line">
+				<div class="title">라인 3</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[2])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield100[5])%>%" />
-		</div>
-		
-	<h5>라인별 양품률(%) (최근 1000개 생산 기준: 목표 97%)</h5>
-		<div class="line">
-			<div class="title">라인 1</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			
+			<div class="line">
+				<div class="title">라인 4</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[3])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[0])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 2</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			
+			<div class="line">
+				<div class="title">라인 5</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[4])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[1])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 3</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
+			
+			<div class="line">
+				<div class="title">라인 6</div>
+				<div class="myProgress">
+					<div class="myBar"></div>
+				</div>
+				<div class="percent">0%</div>
+				<input type="hidden" class="value" value="<%=df.format(yield1000[5])%>%" />
 			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[2])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 4</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
-			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[3])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 5</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
-			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[4])%>%" />
-		</div>
-		
-		<div class="line">
-			<div class="title">라인 6</div>
-			<div class="myProgress">
-				<div class="myBar"></div>
-			</div>
-			<div class="percent">0%</div>
-			<input type="hidden" class="value" value="<%=df.format(yield1000[5])%>%" />
 		</div>
 		<script>
 			// 양품률 데이터
@@ -231,7 +187,7 @@
 				// 양품률 퍼센트
 				pers[i].innerHTML=vals[i].value;
 				// 95% 기준 막대 색상 변화
-				if(vals[i].value>="97"){
+				if(vals[i].value>="97" || vals[i].value == "100%"){
 					myBars[i].style.backgroundColor="#7CCE76";
 				} else {
 					myBars[i].style.backgroundColor="#DF3C2F";				
