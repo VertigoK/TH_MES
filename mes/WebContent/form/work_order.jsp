@@ -29,6 +29,11 @@
 			width: 100%;
 			text-align: center;
 		}
+		form {
+			width: 310px;
+		}
+		.input-group-prepend { width: 100px; }
+		.wid {width: 150px; }
 	</style>
 	<title>Telstar-Hommel</title>
 </head>
@@ -123,48 +128,49 @@
 			<br />
 			<h5>생산지시서 작성</h5>
 			<form action="/production/workOrder" method="post">
-				<table class="table1">
-					<tr>
-						<td>생산라인</td>
-						<td>
-							<select name="line_cd">
-								<c:choose>
-									<c:when test="<%= custOrder.getPlant_cd() == 1 %>">
-										<option value="1">라인1</option>					
-										<option value="2">라인2</option>
-										<option value="3">라인3</option>	
-									</c:when>
-									<c:otherwise>
-										<option value="4">라인4</option>					
-										<option value="5">라인5</option>
-										<option value="6">라인6</option>
-									</c:otherwise>
-								</c:choose>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>작업시작일</td>
-						<td><input type="date" name="start_date" required/></td>
-					</tr>
-					<tr>
-						<td>시작작업조</td>
-						<td>
-							<select name="start_shift">
-								<option value="주간">주간</option>					
-								<option value="주야간">주야간</option>
-								<option value="야간">야간</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td style="color:red">계획수량</td>
-						<td><input type="text" name="plan_qty" value="<%=requiredQtys.get(0)%>" readonly/></td>
-					</tr>
-				</table>
-				<br />
-				<input type="reset" value="Reset" class="text-white btn btn-success"/>
-				<input type="submit" value="Submit" class="text-white btn btn-danger"/>
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:100px"><strong>생산라인</strong></span>
+					</div>
+					<select name="line_cd" class="wid">
+						<c:choose>
+							<c:when test="<%= custOrder.getPlant_cd() == 1 %>">
+								<option value="1">라인1</option>					
+								<option value="2">라인2</option>
+								<option value="3">라인3</option>	
+							</c:when>
+							<c:otherwise>
+								<option value="4">라인4</option>					
+								<option value="5">라인5</option>
+								<option value="6">라인6</option>
+							</c:otherwise>
+						</c:choose>
+					</select>
+				</div>
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><strong>작업시작일</strong></span>
+					</div>
+					<input class="wid" type="date" name="start_date" required/>
+				</div>
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><strong>시작작업조</strong></span>
+					</div>
+					<select name="start_shift" class="wid">
+						<option value="주간">주간</option>					
+						<option value="주야간">주야간</option>
+						<option value="야간">야간</option>
+					</select>
+				</div>
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:100px"><strong>계획수량</strong></span>
+					</div>
+					<input class="wid" type="text" name="plan_qty" value="<%=requiredQtys.get(0)%>" readonly/>
+				</div>
+				<input type="reset" value="Reset" class="btn btn-outline-success"/>
+				<input type="submit" value="Submit" class="btn btn-outline-danger"/>
 			</form>
 		</div>
 	</div>	
