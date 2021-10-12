@@ -2,6 +2,8 @@ package mes.action;
 
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import mes.dto.CustomerOrderBean;
 import mes.dto.WorkOrderBean;
 import mes.svc.CustOrderService;
 import mes.svc.WorkOrderService;
+import mes.svc.WorkOrderTodayService;
 
 public class WorkOrderAction implements Action {
 
@@ -60,6 +63,12 @@ public class WorkOrderAction implements Action {
 			// DB에 등록된 생산지시 정보를 session 객체에 저장
 			WorkOrderBean workOrder = workOrderService.getWorkOrder(wo_no);
 			session.setAttribute("workOrderInfo", workOrder);
+			
+			// 'workOrderTodayListInfo' session 객체에 등록
+			Date todayDate = Date.valueOf(LocalDate.now());
+			WorkOrderTodayService workOrderTodayService = new WorkOrderTodayService();
+			ArrayList<WorkOrderBean> workOrderTodayList = workOrderTodayService.getWorkOrderTodayList(todayDate);
+			session.setAttribute("workOrderTodayListInfo", workOrderTodayList);
 			
 			// 3. cust_order 테이블의 생산지시 여부 업데이트
 			boolean isModifySuccess = false;
