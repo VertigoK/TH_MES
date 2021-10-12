@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.QualityBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -5,6 +6,7 @@
 <%
 	ArrayList<QualityBean> qualitytList = (ArrayList<QualityBean>) request.getAttribute("qualityList");
 	String no = request.getParameter("no");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -27,6 +29,9 @@
 	<title>라인별 품질 현황</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

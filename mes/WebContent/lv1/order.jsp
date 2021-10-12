@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="mes.dto.CustomerOrderBean"%>
@@ -5,10 +6,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	@SuppressWarnings("unchecked")
 	ArrayList<CustomerOrderBean> orderInList = (ArrayList<CustomerOrderBean>) request.getAttribute("orderInList");
-	@SuppressWarnings("unchecked")	
 	ArrayList<OurOrderBean> orderOutList = (ArrayList<OurOrderBean>) request.getAttribute("orderOutList");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,53 +21,17 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
-		.line {
-			width: 140px;
-			height: 49px;
-			border-bottom: 1px solid #383636;
-			transform: translateY(-23px) translateX(5px) rotate(20deg);
-			position: absolute;
-			/* z-index: -1; */
+		.content {
+			grid-template-rows: 38px 1fr 1fr;
 		}
-		th>div {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
-		}
-		.bottom {
-			position: absolute;
-			bottom: 1px;
-			left: 5px;
-		}
-		
-		.top {
-			position: absolute;
-			top: 1px;
-			right: 1px;
-		}
-		.title {
-			display: flex;
-			width: 100%;
-			height: 33.5px;
-			align-items: stretch;
-			margin: 0 0 10px 0;
-		 }
-		.title-left { width: calc(100% - 60px); }
-		.title-right {
-			width: 60px;
-			padding: 5px;
-			text-align: right;
-			font-wight: blod;
-			background-color: #3F5060;
-		}
-		.title-right a { color: white; }
 		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }
 	</style>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

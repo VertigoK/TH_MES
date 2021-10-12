@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.EquipmentBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -5,6 +6,7 @@
 <%
 	ArrayList<EquipmentBean> equipmentList = (ArrayList<EquipmentBean>) request.getAttribute("equipmentList");
 	String no = request.getParameter("no");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>

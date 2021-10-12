@@ -1,3 +1,4 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.EquipmentBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -5,6 +6,7 @@
 <%
 	@SuppressWarnings("unchecked")
 	ArrayList<EquipmentBean> equipmentList = (ArrayList<EquipmentBean>) request.getAttribute("equipmentList");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,6 +19,9 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
+		.content {
+			grid-template-rows: 38px 1fr;
+		}
 		.line {
 			width: 140px;
 			height: 49px;
@@ -63,6 +68,9 @@
 	</style>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

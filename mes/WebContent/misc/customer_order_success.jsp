@@ -1,7 +1,10 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@page import="mes.dto.CustomerOrderBean"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	CustomerOrderBean custOrder = (CustomerOrderBean) session.getAttribute("custOrderInfo");
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,6 +26,9 @@
 	<title>Telstar-Hommel</title>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

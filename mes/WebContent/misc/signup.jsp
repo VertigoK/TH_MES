@@ -16,7 +16,22 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
-		.content { width: 100%; }
+		.content {
+			width: 100%;
+			grid-template-columns: repeat(5, 1fr);
+			grid-template-rows: repeat(5, 1fr);
+		}
+		.container {
+			grid-column: 3;
+			grid-row: 2 / span 3;
+			border-radius: 30px;
+			background-color: white;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.h2 { margin-bottom: 80px;}
 	</style>
 </head>
 <body>
@@ -30,7 +45,10 @@
             <a href="/" class="text-white btn btn-success login-btn float-right mr-sm-3"><i class="fas fa-home fa-lg"></i></a>
          </c:when>
          <c:otherwise>
-            <div class="container" align="center" style="width:364px">
+            <div class="container" align="center">
+            	<div class="h2">
+	            	<h2>Sign Up</h2>
+            	</div>
                <form action="/signUp" class="form-group" method="post">
                   <div class="form-group input-group">
                      <div class="input-group-prepend">
@@ -51,9 +69,9 @@
                      <input name="nm" type="text" class="form-control" placeholder="이름..." required/>
                   </div>
                   <div class="form-group mt-md-3">
-                     <a href="/" class="text-white btn btn-primary float-right login-btn"><i class="fas fa-home fa-lg"></i></a>
-                     <input type="reset" value="Reset" class="text-white btn btn-success float-right login-btn mr-sm-3"/>
-                     <input type="submit" value="Sign up" class="text-white btn btn-warning float-right login-btn mr-sm-3"/>
+                     <a href="/" class="btn btn-outline-primary float-right login-btn"><i class="fas fa-home fa-lg"></i></a>
+                     <input type="reset" value="Reset" class="btn btn-outline-success float-right login-btn mr-sm-3"/>
+                     <input type="submit" value="Sign up" class="btn btn-outline-danger float-right login-btn mr-sm-3"/>
                   </div>
                </form>
             </div>      

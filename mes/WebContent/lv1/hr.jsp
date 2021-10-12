@@ -19,53 +19,14 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Telstar-Hommel</title>
 	<style>
-		.line {
-			width: 140px;
-			height: 49px;
-			border-bottom: 1px solid #383636;
-			transform: translateY(-23px) translateX(5px) rotate(20deg);
-			position: absolute;
-			/* z-index: -1; */
-		}
-		th>div {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
-		}
-		.bottom {
-			position: absolute;
-			bottom: 1px;
-			left: 5px;
-		}
-		
-		.top {
-			position: absolute;
-			top: 1px;
-			right: 1px;
-		}
-		.title {
-			display: flex;
-			width: 100%;
-			height: 33.5px;
-			align-items: stretch;
-			margin: 0 0 10px 0;
-		 }
-		.title-left { width: calc(100% - 60px); }
-		.title-right {
-			width: 60px;
-			padding: 5px;
-			text-align: right;
-			font-wight: blod;
-			background-color: #3F5060;
-		}
-		.title-right a { color: white; }
 		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }
 	</style>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>

@@ -1,4 +1,9 @@
+<%@page import="mes.dto.MemberBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +63,9 @@
     </script>
 </head>
 <body>
+	<c:if test="<%= member == null %>">
+		<c:redirect url="/" />
+	</c:if>
 	<div id="tab">
 		<a href="/" class="btn shadow-none" id="home" data-toggle="tooltip" data-placement="right" title="Home"><i class="fas fa-home"></i></a>
 		<a href="/production" class="btn shadow-none" id="product" data-toggle="tooltip" data-placement="right" title="생산"><i class="fas fa-industry"></i></a> <!-- 생산 -->
