@@ -77,7 +77,7 @@ CREATE TABLE `PRODUCTION_HIST` (
 	`PLANT_CD` INT       NOT NULL, -- 공장코드
 	`LINE_CD`  INT       NOT NULL, -- 라인코드
 	`ITEM_CD`  INT       NOT NULL, -- 품목코드
-	`WO_SEQ`   INT       NOT NULL, -- 생산지시SEQ
+	`WO_SEQ`   INT       NULL, -- 생산지시SEQ
 	`START_DT` TIMESTAMP NOT NULL, -- 작업시작일
 	`END_DT`   TIMESTAMP NOT NULL, -- 작업종료일
 	`IN_QTY`   INT       NOT NULL, -- 투입수량
@@ -310,10 +310,10 @@ CREATE UNIQUE INDEX `UIX_ITEM`
 
 -- 품목입출고 테이블
 CREATE TABLE `ITEM_IO` (
+	`INOUT_CD`        INT         NOT NULL, -- 입출고코드
 	`PLANT_CD`        INT         NOT NULL, -- 공장코드
 	`ITEM_CD`         INT         NULL,     -- 품목코드
 	`ITEM_TYPE`       VARCHAR(10) NULL,     -- 품목타입
-	`INOUT_CD`        INT         NOT NULL, -- 입출고코드
 	`INOUT_DT`        TIMESTAMP   NOT NULL DEFAULT NOW(), -- 입출고시간
 	`INOUT_TYPE`      VARCHAR(10) NOT NULL, -- 입출고유형
 	`STORAGE_FROM`    INT         NOT NULL, -- 출발창고
