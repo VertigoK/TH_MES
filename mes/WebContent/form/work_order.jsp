@@ -86,10 +86,20 @@
 				</tr>
 				<c:forEach var="line" items="${lineList}">
 				<tr>
-					<td>${line.getLine_cd()}</td>
-					<td>${line.getPlant_cd()}</td>
-					<td>${line.isUse_yn()}</td>
-					<td>${line.getRemark()}</td>
+					<c:choose>
+						<c:when test="${line.isUse_yn()}">
+							<td>${line.getLine_cd()}</td>
+							<td>${line.getPlant_cd()}</td>
+							<td>${line.isUse_yn()}</td>
+							<td>${line.getRemark()}</td>
+						</c:when>
+						<c:otherwise>
+							<td style="color:red">${line.getLine_cd()}</td>
+							<td style="color:red">${line.getPlant_cd()}</td>
+							<td style="color:red">${line.isUse_yn()}</td>
+							<td style="color:red">${line.getRemark()}</td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				</c:forEach>
 			</table>

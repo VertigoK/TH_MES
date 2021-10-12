@@ -6,7 +6,7 @@
 <%
 	@SuppressWarnings("unchecked")
 	ArrayList<WorkOrderBean> workOrderList = (ArrayList<WorkOrderBean>) request.getAttribute("workOrderList");
-	@SuppressWarnings("unchecked")	
+	@SuppressWarnings("unchecked")
 	ArrayList<ProductionHistoryBean> productionHistoryList = (ArrayList<ProductionHistoryBean>) request.getAttribute("productionHistoryList");
 %>
 <!DOCTYPE html>

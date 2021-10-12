@@ -22,7 +22,7 @@ INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_T
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (2, 6, 'cut_6', '커팅', '생산', 1, NULL, '2021-09-26 22:02:45');
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (1, 1, 'drill_1', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (1, 2, 'drill_2', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
-INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (1, 3, 'drill_3', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
+INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (1, 3, 'drill_3', '드릴링', '생산', 0, 'repair', '2021-09-26 22:02:45');
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (2, 4, 'drill_4', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (2, 5, 'drill_5', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
 INSERT INTO `process` (`PLANT_CD`, `LINE_CD`, `PROCESS_CD`, `PROCESS_NM`, `USE_TYPE`, `USE_YN`, `REMARK`, `UPDATE_DT`) VALUES (2, 6, 'drill_6', '드릴링', '생산', 1, NULL, '2021-09-26 22:02:45');
