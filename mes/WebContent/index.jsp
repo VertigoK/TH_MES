@@ -33,7 +33,9 @@
 		.main {
 			grid-column: 1 / span 3;
 			grid-row: 1 / span 5;
-			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.notice {
 			grid-column: 1 / span 3;
@@ -73,9 +75,7 @@
 			align-items: center;
 			overflow: hidden;
 		}
-		img { width: auto; max-height: 100%; }
-		.line td { border-bottom: black; }
-		
+		img { max-width: 100%; max-height: auto; }
 	</style>
 </head>
 <body>
@@ -88,7 +88,7 @@
 		</div>
 		<div class="content">
 			<div class="item main">
-				<img src="/layout/telstarMain.png" alt="telstarMain" />
+				<img src="/layout/MES.jpg" alt="MES" />
 			</div>
 			<div class="item notice">
 				<div class="inner-notice">
@@ -162,7 +162,7 @@
 			</div>
 			<div class="item line">
 				<h5>비가동 라인/공정 현황</h5>
-				<table class="line-table" border="2">
+				<table>
 					<tr>
 						<th>공장</th>
 						<th>라인</th>
@@ -194,7 +194,7 @@
 	<c:if test="<%= member == null %>">
 		<div class="content null">
 			<div class="item nullMain">
-				<img src="/layout/telstarMain.png" alt="telstarMain" />
+				<img src="/layout/MES.jpg" alt="MES" />
 			</div>
 		</div>
 	</c:if>
