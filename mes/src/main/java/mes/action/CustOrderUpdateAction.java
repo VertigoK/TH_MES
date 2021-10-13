@@ -36,6 +36,7 @@ public class CustOrderUpdateAction implements Action {
 		
 		long differenceInTime = end_dt.getTime() - delivery_date.getTime();
 		int delayed_days = (int) Math.floor(differenceInTime / 1000 / 60 / 60 / 24);
+		if(delayed_days < 0) delayed_days -= 1;
 		
 		// 1. 고객 제품주문(cust_order) 테이블 업데이트: finished_date, order_status, delayed_days
 		boolean isUpdateSuccess = false;
