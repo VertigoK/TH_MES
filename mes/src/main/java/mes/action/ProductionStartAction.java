@@ -99,7 +99,7 @@ public class ProductionStartAction implements Action {
 		productionStartService.registerProductionQualityData(workOrder, start_dt, worker_no);
 		
 		// time delay: 외부 파일을 실행시켜 CSV 저장과 DB 등록까지 해야 하므로 실행 종료까지 약간의 시간이 필요함
-		TimeUnit.SECONDS.sleep(5); // 5초
+		TimeUnit.SECONDS.sleep(10); // 10초
 		
 		// 생산정보(production)와 품질검사정보(quality) 테이블 조회 (w/ wo_no)
 		ArrayList<ProductionBean> productionDataList = null;
@@ -111,7 +111,7 @@ public class ProductionStartAction implements Action {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>");
-			out.println("alert('생산 및 품질검사 데이터 생성에 실패했습니다!!');");
+			out.println("alert('생산 및 품질검사 데이터 생성에 실패했습니다!! 이 경우 지금까지 DB에 생성된 데이터를 모두 초기화하지 않으면 지금부터는 재고를 비롯한 모든 수치에 에러가 발생하게 됩니다.');");
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.flush();
