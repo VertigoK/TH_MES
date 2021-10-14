@@ -11,7 +11,7 @@
  Target Server Version : 100511
  File Encoding         : 65001
 
- Date: 13/10/2021 11:15:07
+ Date: 14/10/2021 16:08:16
 */
 
 SET NAMES utf8mb4;
@@ -439,8 +439,7 @@ CREATE TABLE `notice`  (
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES (1, '프로젝트 최종 발표회', '일시: 10/12/2021 화요일 오후 2시 30분\r\n장소: 하이미디어 5층 강의실', '2021-10-12 11:07:20');
-INSERT INTO `notice` VALUES (2, '교육과정 수료식', '일시: 10/14/2021 목요일\r\n장소: 하이미디어 5층 강의실', '2021-10-12 11:37:25');
+INSERT INTO `notice` VALUES (1, '창립 1000주년 기념 행사 개최', '일시: 2021년 11월 11일 오후 4시\r\n장소: 서울 신라호텔', '2021-10-14 16:07:47');
 
 -- ----------------------------
 -- Table structure for our_order
