@@ -26,7 +26,7 @@
 			text-align: center;
 		}
 	</style>
-	<title>라인별 품질 현황</title>
+	<title>Company</title>
 </head>
 <body>
 	<c:if test="<%= member == null %>">

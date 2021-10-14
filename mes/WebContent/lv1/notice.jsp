@@ -25,7 +25,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css" />
-	<title>공지사항</title>
+	<title>Company</title>
 	<style>
 		.content {
 			grid-template-rows: 33px 1fr;

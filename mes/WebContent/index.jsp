@@ -23,7 +23,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css" />
-	<title>Telstar-Hommel</title>
+	<title>Company</title>
 	<style>
 		.content {
 			grid-template-columns: repeat(10, 1fr);
@@ -88,7 +88,7 @@
 		</div>
 		<div class="content">
 			<div class="item main">
-				<img src="/layout/MES.jpg" alt="MES" />
+				<img src="/layout/MES_logo.png" height="100%" alt="MES" />
 			</div>
 			<div class="item notice">
 				<div class="inner-notice">
@@ -194,7 +194,7 @@
 	<c:if test="<%= member == null %>">
 		<div class="content null">
 			<div class="item nullMain">
-				<img src="/layout/MES.jpg" alt="MES" />
+				<img src="/layout/MES_logo.png" height="100%" alt="MES" />
 			</div>
 		</div>
 	</c:if>

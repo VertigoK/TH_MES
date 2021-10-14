@@ -37,7 +37,7 @@
 		.input-group-prepend { width: 100px; }
 		.wid {width: 150px; }
 	</style>
-	<title>Telstar-Hommel</title>
+	<title>Company</title>
 </head>
 <body>
 	<c:if test="<%= member == null %>">

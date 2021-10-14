@@ -15,7 +15,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
     <link rel="stylesheet" type="text/css" href="./style.css">
-	<title>Telstar-Hommel</title>
+	<title>Company</title>
     <style>
        	{
 		  margin: 0px;

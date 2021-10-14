@@ -17,7 +17,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
-	<title>Telstar-Hommel</title>
+	<title>Company</title>
 	<style>
 		.content {
 			grid-template-rows: 38px 1fr 1fr;
@@ -33,7 +33,7 @@
 		.line .percent, .line .title { pink; display: flex; align-items: center; }
 		.line .percent { width: 60px; }
 		.myProgress { height: 100%; width: 90%; background-color: #ddd; }
-		.myBar { width: 1%; height: 100%; background-color: #DF3C2F;}
+		.myBar { width: 1%; height: 100%; background-color: #DF3C2F; }
 	</style>
 </head>
 <body>
