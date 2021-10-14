@@ -50,10 +50,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_1</th>
+						<th rowspan="2" class="span">제품1</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_1</th>
+						<th rowspan="2" class="span">자재1</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>
@@ -77,10 +77,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_2</th>
+						<th rowspan="2" class="span">제품2</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_2</th>
+						<th rowspan="2" class="span">자재2</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>
@@ -104,10 +104,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_3</th>
+						<th rowspan="2" class="span">제품3</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_3</th>
+						<th rowspan="2" class="span">자재3</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>
@@ -134,10 +134,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_1</th>
+						<th rowspan="2" class="span">제품1</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_1</th>
+						<th rowspan="2" class="span">자재1</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>
@@ -161,10 +161,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_2</th>
+						<th rowspan="2" class="span">제품2</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_2</th>
+						<th rowspan="2" class="span">자재2</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>
@@ -188,10 +188,10 @@
 			<table>
 				<tr>
 					<c:if test="${ param.no == 1 }">
-						<th rowspan="2" class="span">자동차부품_3</th>
+						<th rowspan="2" class="span">제품3</th>
 					</c:if>
 					<c:if test="${ param.no == 2 }">
-						<th rowspan="2" class="span">자재_3</th>
+						<th rowspan="2" class="span">자재3</th>
 					</c:if>
 					<c:if test="${ param.no == 1 }">
 						<th>제품창고</th>

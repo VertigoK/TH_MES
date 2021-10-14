@@ -75,9 +75,9 @@
 					<th>자재1</th>
 					<th>자재2</th>
 					<th>자재3</th>
-					<th>자동차부품_1</th>
-					<th>자동차부품_2</th>
-					<th>자동차부품_3</th>
+					<th>제품1</th>
+					<th>제품2</th>
+					<th>제품3</th>
 				</tr>
 				<tr>
 					<c:forEach var="in" items="${ plantStockList }">
@@ -102,9 +102,9 @@
 					<th>자재1</th>
 					<th>자재2</th>
 					<th>자재3</th>
-					<th>자동차부품_1</th>
-					<th>자동차부품_2</th>
-					<th>자동차부품_3</th>
+					<th>제품1</th>
+					<th>제품2</th>
+					<th>제품3</th>
 				</tr>
 				<tr>
 					<c:forEach var="in" items="${ plantStockList }">
@@ -128,9 +128,9 @@
 					<th>자재1</th>
 					<th>자재2</th>
 					<th>자재3</th>
-					<th>자동차부품_1</th>
-					<th>자동차부품_2</th>
-					<th>자동차부품_3</th>
+					<th>제품1</th>
+					<th>제품2</th>
+					<th>제품3</th>
 				</tr>
 				<tr>
 					<c:forEach var="in" items="${ plantStockList }">
@@ -147,9 +147,9 @@
 			<table>
 				<tr>
 					<th rowspan="2" class="span">제품창고</th>
-					<th>자동차부품_1</th>
-					<th>자동차부품_2</th>
-					<th>자동차부품_3</th>
+					<th>제품1</th>
+					<th>제품2</th>
+					<th>제품3</th>
 				</tr>
 				<tr>
 					<c:forEach var="out" items="${ plantStockList }">
