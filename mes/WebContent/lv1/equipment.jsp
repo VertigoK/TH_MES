@@ -123,7 +123,7 @@
 					<th>타입</th>
 					<th>사용가능여부</th>
 					<th>에러코드</th>
-					<th>가동시간</th>
+					<th>가동시간(분)</th>
 				</tr>
 				<c:forEach var="equipment" items="${equipmentList}">
 				<tr>
@@ -142,8 +142,8 @@
 							<td>${equipment.getError_cd()}</td>
 						</c:when>
 						<c:otherwise>
-							<td style="color:red">${equipment.isUse_yn()}</td>
-							<td style="color:red">${equipment.getError_cd()}</td>
+							<td style="color:red"><strong>${equipment.isUse_yn()}</strong></td>
+							<td style="color:red"><strong>${equipment.getError_cd()}</strong></td>
 						</c:otherwise>
 					</c:choose>
 					<td>${equipment.getRun_time()}</td>

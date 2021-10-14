@@ -58,8 +58,7 @@
 					<th>마감일</th>
 					<th>납품여부</th>
 					<th>납기지연일</th>
-					<th>자재소요량 파악</th>
-					<th>생산지시 작성</th>
+					<th>자재 소요량 파악 후 생산 지시</th>
 				</tr>
 				<c:forEach var="orderIn" items="${orderInList}">
 				<tr>
@@ -76,14 +75,6 @@
 					<c:choose>
 						<c:when test="${orderIn.isOurorder_status() == false}">
 							<td><a href="/order/inList/checkOrderStock?order_no=${orderIn.getOrder_no()}" class="btn btn-info">확인</a></td>	
-						</c:when>
-						<c:otherwise>
-							<td></td>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${orderIn.isOurorder_status() == true && orderIn.isWo_status() == false}">
-							<td><a href="/production/workOrderForm?order_no=${orderIn.getOrder_no()}" class="btn btn-warning">확인</a></td>	
 						</c:when>
 						<c:otherwise>
 							<td></td>

@@ -1,6 +1,9 @@
 package mes.action;
 
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,7 @@ import mes.dto.ActionForward;
 import mes.dto.ProductionHistoryBean;
 import mes.dto.WorkOrderBean;
 import mes.svc.WorkOrderService;
+import mes.svc.WorkOrderTodayService;
 import mes.svc.WorkOrderUpdateService;
 
 public class WorkOrderUpdateAction implements Action {
@@ -42,6 +46,12 @@ public class WorkOrderUpdateAction implements Action {
 			WorkOrderService workOrderService = new WorkOrderService();
 			WorkOrderBean workOrderNew = workOrderService.getWorkOrder(wo_no);
 			session.setAttribute("workOrderNewInfo", workOrderNew);
+			
+			// 업데이트된 금일 생산일정 정보를 session 객체에 등록 (Home 화면 정보 업데이트 용도)
+			Date todayDate = Date.valueOf(LocalDate.now());
+			WorkOrderTodayService workOrderTodayService = new WorkOrderTodayService();
+			ArrayList<WorkOrderBean> workOrderTodayList = workOrderTodayService.getWorkOrderTodayList(todayDate);
+			session.setAttribute("workOrderTodayListInfo", workOrderTodayList);
 			
 			// 2. 설비(equipment) 테이블의 가동시간(run_time) 업데이트 위해 이동
 			forward = new ActionForward();
