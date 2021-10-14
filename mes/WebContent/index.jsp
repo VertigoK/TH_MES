@@ -88,7 +88,7 @@
 		</div>
 		<div class="content">
 			<div class="item main">
-				<img src="/layout/MES_logo.png" height="100%" alt="MES" />
+				<img src="/layout/MES_logo.png" width="100%" alt="MES" />
 			</div>
 			<div class="item notice">
 				<div class="inner-notice">
