@@ -17,7 +17,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
-	<title>Telstar-Hommel</title>
+	<title>Company</title>
 	<style>
 		.dropdown { margin-bottom: 10px; }
 		.dropdown-content a { background-color: white; }

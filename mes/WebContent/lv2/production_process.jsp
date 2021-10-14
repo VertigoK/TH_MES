@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>공정별 생산 현황</title>
+	<title>Company</title>
 </head>
 <body>
 	<h1>Process <%=no%></h1>

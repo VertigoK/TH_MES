@@ -25,7 +25,7 @@
 			grid-row: 3;
     	}
     </style>
-    <title>Telstar-Hommel</title>
+    <title>Company</title>
 </head>
 <body>
 	<c:if test="<%= member == null %>">

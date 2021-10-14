@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Company</title>
 </head>
 <body>
 	<h1>Quality Process <%=cd%></h1>

@@ -52,7 +52,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="left">
-			<p><strong>Telstar-Hommel</strong></p>
+			<p><strong>Company</strong></p>
 		</div>
 		<div class="right">
 			<c:if test="<%= member == null %>">
