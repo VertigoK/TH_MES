@@ -156,7 +156,7 @@
 			</table>
 		</div>
 		<div class="item">
-			<h5>품목별 입출고 내역</h5>
+			<h5>품목 입출고 내역</h5>
 			<table>
 				<tr>
 					<th>입출고코드</th>
