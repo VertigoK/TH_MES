@@ -47,7 +47,7 @@ public class WorkOrderUpdateAction implements Action {
 			WorkOrderBean workOrderNew = workOrderService.getWorkOrder(wo_no);
 			session.setAttribute("workOrderNewInfo", workOrderNew);
 			
-			// 업데이트된 금일 생산일정 정보를 session 객체에 등록 (Home 화면 정보 업데이트 용도)
+			// 업데이트된 금일 생산일정 정보를 session 객체에 저장 (Home 화면 정보 업데이트 용도)
 			Date todayDate = Date.valueOf(LocalDate.now());
 			WorkOrderTodayService workOrderTodayService = new WorkOrderTodayService();
 			ArrayList<WorkOrderBean> workOrderTodayList = workOrderTodayService.getWorkOrderTodayList(todayDate);

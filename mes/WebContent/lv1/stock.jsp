@@ -5,8 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	@SuppressWarnings("unchecked")
-	ArrayList<Integer> totalStockList = (ArrayList<Integer>) request.getAttribute("totalStockList");
+	int[] itemStockQtys = (int[]) request.getAttribute("itemStockQtys");
 	@SuppressWarnings("unchecked")
 	ArrayList<ItemInOutBean> itemInOutList = (ArrayList<ItemInOutBean>) request.getAttribute("itemInOutList");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
@@ -140,24 +139,24 @@
 				</tr>
 				<tr>
 					<td>공장 1</td>				
-					<c:forEach var="totalStock" items="${ totalStockList }" varStatus="status">
+					<c:forEach var="itemStockQty" items="${ itemStockQtys }" varStatus="status">
 						<c:if test="${ status.index < 6 }">
-							<td>${ totalStock }</td>
+							<td>${ itemStockQty }</td>
 						</c:if>
 					</c:forEach>				
 				</tr>
 				<tr>
 					<td>공장 2</td>				
-					<c:forEach var="totalStock" items="${ totalStockList }" varStatus="status">
+					<c:forEach var="itemStockQty" items="${ itemStockQtys }" varStatus="status">
 						<c:if test="${ status.index >= 6 }">
-							<td>${ totalStock }</td>
+							<td>${ itemStockQty }</td>
 						</c:if>
 					</c:forEach>				
 				</tr>
 			</table>
 		</div>
 		<div class="item">
-			<h5>재고 입출고 내역</h5>
+			<h5>품목별 입출고 내역</h5>
 			<table>
 				<tr>
 					<th>입출고코드</th>

@@ -784,7 +784,7 @@ public class MESDAO {
 
 
 	// '품목 재고 현황' 목록 전체 조회
-	public ArrayList<ItemStockBean> totalStockList() {
+	public ArrayList<ItemStockBean> selectItemStockList() {
 		
 		ArrayList<ItemStockBean> stockList = new ArrayList<ItemStockBean>();
 		ItemStockBean itemStock = null;

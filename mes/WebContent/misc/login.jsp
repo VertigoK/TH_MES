@@ -114,7 +114,7 @@
 					       <input type="submit" class="btn btn-primary" value="Log in"/>
 					    </div>
 					    <div class="bottomText">
-					        Don't you have ID? <a href="/signUpForm">sign up</a>
+					        Don't you have an ID? <a href="/signUpForm">Sign up</a>
 					  	</div>
 					</form>
 				</div>

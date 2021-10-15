@@ -18,13 +18,14 @@ public class StockAction implements Action {
 		
 		StockService stockService = new StockService();
 		
-		ArrayList<Integer> totalStockList = new ArrayList<Integer>();
-		totalStockList = stockService.getStockTotalList();
+		// 1. 재고 현황 전체 조회
+		int[] itemStockQtys = new int[12];
+		itemStockQtys = stockService.getItemStockList();
+		req.setAttribute("itemStockQtys", itemStockQtys);
 		
+		// 2. 품목별 입출고 내역 전체 조회 
 		ArrayList<ItemInOutBean> itemInOutList = new ArrayList<ItemInOutBean>();
 		itemInOutList = stockService.getItemInOutList();
-		
-		req.setAttribute("totalStockList", totalStockList);
 		req.setAttribute("itemInOutList", itemInOutList);
 		
 		// isRedirect = false (기본값) -> forward() 사용
