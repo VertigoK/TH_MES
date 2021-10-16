@@ -21,11 +21,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<style>
-		.table1 {
-			font-family: Helvectica;
-			font-size: 10;
-			width: 100%;
-			text-align: center;
+		.content {
+			grid-template-rows: 38px 1fr 1fr;
 		}
 	</style>
 	<title>Company</title>
@@ -43,7 +40,7 @@
 	<div class="content" align="center">
 		<div class="item">
 			<h5>제품 주문 정보</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>주문번호</th>
 					<th>주문회사</th>
@@ -61,7 +58,7 @@
 					<td><%=custOrder.getItem_cd()%></td>
 					<td><%=custOrder.getPlant_cd()%></td>
 					<td><%=custOrder.getItem_cd()%></td>
-					<td style="color:red"><%=custOrder.getOrder_qty()%></td>
+					<td style="color:red"><strong><%=custOrder.getOrder_qty()%></strong></td>
 					<td><%=custOrder.getOrder_date()%></td>
 					<td><%=custOrder.getDelivery_date()%></td>
 					<td><%=custOrder.getFinished_date()%></td>
@@ -71,7 +68,7 @@
 			</table>
 			<br /><br /><br />
 			<h5>[공장 <%=custOrder.getPlant_cd()%>] 제품 재고수량 및 자재 재고수량</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>제품</th>
 					<th>제품 <%=custOrder.getItem_cd()%></th>
@@ -91,7 +88,7 @@
 			</table>
 			<br /><br /><br />
 			<h5>[공장 <%=custOrder.getPlant_cd()%>] 생산 계획수량 및 자재 발주수량</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>제품</th>
 					<th>제품 <%=custOrder.getItem_cd()%></th>

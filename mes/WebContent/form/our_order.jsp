@@ -27,7 +27,7 @@
 	</div>
 	<div class="content" align="center">
 		<form action="/order/ourOrder" method="post">
-			<table class="table1">
+			<table>
 				<tr>
 					<td>납품공장</td>
 					<td>

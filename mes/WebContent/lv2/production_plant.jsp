@@ -4,7 +4,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	MemberBean member = (MemberBean) session.getAttribute("logInInfo");	
+	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
+	@SuppressWarnings("unchecked")
 	ArrayList<ProductionBean> productiontList = (ArrayList<ProductionBean>) request.getAttribute("productionList");
 	String no = request.getParameter("no");
 %>

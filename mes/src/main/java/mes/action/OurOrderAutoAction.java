@@ -15,7 +15,6 @@ import mes.dto.OurOrderBean;
 import mes.svc.ItemInOutService;
 import mes.svc.ItemStockService;
 import mes.svc.OurOrderAutoService;
-import mes.svc.ItemReservedService;
 
 public class OurOrderAutoAction implements Action {
 

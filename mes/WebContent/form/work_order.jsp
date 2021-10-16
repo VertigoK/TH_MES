@@ -25,12 +25,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<style>
-		.table1 {
-			font-family: Helvectica;
-			font-size: 10;
-			width: 100%;
-			text-align: center;
-		}
 		form {
 			width: 310px;
 		}
@@ -52,7 +46,7 @@
 	<div class="content" align="center">
 		<div class="item">
 			<h5>제품 주문 정보</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>주문번호</th>
 					<th>주문회사</th>
@@ -82,7 +76,7 @@
 			</table>
 			<br />
 			<h5>[공장 <%=custOrder.getPlant_cd()%>] 라인 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>라인코드</th>
 					<th>공장코드</th>
@@ -110,7 +104,7 @@
 			</table>
 			<br />
 			<h5>[공장 <%=custOrder.getPlant_cd()%>] 생산지시 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>주문번호</th>
 					<th>생산지시번호</th>
