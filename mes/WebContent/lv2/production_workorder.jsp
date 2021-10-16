@@ -18,11 +18,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<style>
-		.table1 {
-			font-family: Helvectica;
-			font-size: 10;
-			width: 100%;
-			text-align: center;
+		.content {
+			grid-template-rows: 38px 1fr 1fr;
 		}
 	</style>
 	<title>Company</title>
@@ -40,7 +37,7 @@
 	<div class="content" align="center">
 		<div class="item">
 			<h5>생산지시 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>생산지시번호</th>
 					<th>공장코드</th>

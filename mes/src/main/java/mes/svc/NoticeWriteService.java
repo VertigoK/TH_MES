@@ -1,7 +1,6 @@
 package mes.svc;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import mes.dao.MESDAO;
 import mes.dto.NoticeBean;

@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<NoticeBean> noticeList = (ArrayList<NoticeBean>) request.getAttribute("noticeList");
 	PageInfo pageInfo = (PageInfo) request.getAttribute("pageInfo");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");

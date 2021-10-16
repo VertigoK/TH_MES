@@ -1694,14 +1694,14 @@ public class MESDAO {
 		
 	}
 
-	// quality 테이블에서 라인별, 생산제품수별 양품률 구하기
+	// quality 테이블에서 라인별, 생산제품수별 최근 양품률 구하기
 	public float[] selectYield(int per) {
 		
 		float[] yield = new float[6];
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "select sum(t.check_result)/count(t.check_result)*100 from (select * from quality where line_cd = ? order by serial_no limit ?) t";
+		String sql = "select sum(t.check_result)/count(t.check_result)*100 from (select * from quality where line_cd = ? order by serial_no desc limit ?) t";
 		
 		for(int i = 1; i < 7; i++) {
 			try {	

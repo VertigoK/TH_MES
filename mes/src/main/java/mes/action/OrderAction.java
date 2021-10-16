@@ -10,7 +10,6 @@ import mes.dto.CustomerOrderBean;
 import mes.dto.OurOrderBean;
 import mes.svc.OrderInListService;
 import mes.svc.OrderOutListService;
-import mes.svc.OrderService;
 
 public class OrderAction implements Action {
 
@@ -19,7 +18,6 @@ public class OrderAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-//		OrderService orderService = new OrderService();
 		OrderInListService orderInListService = new OrderInListService();
 		ArrayList<CustomerOrderBean> orderInList = null;
 		orderInList = orderInListService.getOrderInList();

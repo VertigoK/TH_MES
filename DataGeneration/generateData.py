@@ -159,7 +159,7 @@ def simulateData(prdInfo, prdTime, plan_qty, specs, tols, k, specs_measured, tol
                   'dimcheck_x', 'dimcheck_y', 'holecheck_xc', 'holecheck_yc',
                   'dimcheck_hx', 'dimcheck_wy', 'holecheck_d', 'holecheck_ratio', 'check_result']
 
-        # 근무자번호 변경 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
+    # 근무자번호 변경 (품질검사공정 근무자번호 = 생산공정 근무자번호 + 1)
     df1['worker_no'] = df['worker_no'] + 1
 
     # 품질검사정보 데이터를 CSV로 저장

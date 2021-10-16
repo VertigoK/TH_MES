@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<h5>[생산지시 현황] **[경고]** 동일라인에서 작업시간이 조금이라도 겹치게 생산하게 되면(현실에서도 불가능한 경우) 에러가 발생하고 모든 수치가 부정확해집니다!</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>생산지시번호</th>
 					<th>공장코드</th>
@@ -126,12 +126,13 @@
 					<td>${workOrder.getEnd_date()}</td>
 					<td>${workOrder.getEnd_shift()}</td>
 					<td>${workOrder.getPlan_qty()}</td>
-					<td>${workOrder.isFlag_end()}</td>
 					<c:choose>
 						<c:when test="${workOrder.isFlag_end() == false}">
+							<td>미완료</td>
 							<td><a href="/production/start?wo_no=${workOrder.getWo_no()}" class="btn btn-danger">생산</a></td>
 						</c:when>
 						<c:otherwise>
+							<td>완료</td>
 							<td></td>
 						</c:otherwise>
 					</c:choose>
@@ -141,7 +142,7 @@
 		</div>
 		<div class="item">
 			<h5>생산 이력</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>생산지시번호</th>
 					<th>공장코드</th>

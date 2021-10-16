@@ -6,7 +6,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<CustomerOrderBean> orderInList = (ArrayList<CustomerOrderBean>) request.getAttribute("orderInList");
+	@SuppressWarnings("unchecked")	
 	ArrayList<OurOrderBean> orderOutList = (ArrayList<OurOrderBean>) request.getAttribute("orderOutList");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
 %>
@@ -40,13 +42,11 @@
 	</div>
 	<div class="content" align="center">
 		<div class="item">
-<!-- 			<a href="/order/outList" class="btn btn-outline-info"><strong>자재 발주 현황</strong></a> -->
-<!-- 			<a href="/order/inList" class="btn btn-outline-info"><strong>제품 주문 현황</strong></a> -->
 			<a href="/order/custOrderForm" class="btn btn-outline-danger"><strong>제품 주문</strong></a>
 		</div>
 		<div class="item">
 			<h5>고객사 제품 주문 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>주문번호</th>
 					<th>주문회사</th>
@@ -86,7 +86,7 @@
 		</div>
 		<div class="item">
 			<h5>자재 발주 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>주문번호</th>
 					<th>공급회사</th>
