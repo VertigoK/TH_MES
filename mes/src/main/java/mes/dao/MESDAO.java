@@ -1,6 +1,6 @@
 package mes.dao;
 
-import static db.JDBCUtility.close;
+import static db.JDBCUtility.*;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import mes.dto.CustomerOrderBean;
 import mes.dto.EquipmentBean;
+import mes.dto.ErrorBean;
+import mes.dto.ErrorLogBean;
 import mes.dto.ItemInOutBean;
 import mes.dto.ItemStockBean;
 import mes.dto.LineBean;
@@ -1718,6 +1720,73 @@ public class MESDAO {
 		}
 		
 		return yield;
+		
+	}
+
+	// 설비 에러 내용 조회 (w/ error_cd)
+	public ErrorBean selectEquipmentErrorDetail(int error_cd) {
+		
+		ErrorBean equipmentErrorDetail = new ErrorBean();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from error where error_cd = " + error_cd;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				equipmentErrorDetail.setError_cd(rs.getInt("error_cd"));
+				equipmentErrorDetail.setError_gd(rs.getString("error_gd"));
+				equipmentErrorDetail.setError_msg(rs.getString("error_msg"));
+				equipmentErrorDetail.setDown_dr(rs.getInt("down_dr"));
+				equipmentErrorDetail.setUpdate_dt(rs.getTimestamp("update_dt"));
+			}
+		} catch (SQLException e) {
+			System.out.println("에러 내용 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return equipmentErrorDetail;
+		
+	}
+
+	// 설비 에러 로그 조회 (w/ equip_id)
+	public ArrayList<ErrorLogBean> selectEquipmentErrorLog(int equip_id) {
+		
+		ArrayList<ErrorLogBean> equipmentErrorLog = new ArrayList<ErrorLogBean>();
+		ErrorLogBean equipmentError = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from error_log where equip_id = " + equip_id + " order by log_no desc";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				equipmentError = new ErrorLogBean();
+				equipmentError.setLog_no(rs.getInt("log_no"));
+				equipmentError.setPlant_cd(rs.getInt("plant_cd"));
+				equipmentError.setLine_cd(rs.getInt("line_cd"));
+				equipmentError.setProcess_cd(rs.getString("process_cd"));
+				equipmentError.setEquip_id(rs.getInt("equip_id"));
+				equipmentError.setError_cd(rs.getInt("error_cd"));
+				equipmentError.setError_gd(rs.getString("error_gd"));
+				equipmentError.setStart_dt(rs.getTimestamp("start_dt"));
+				equipmentError.setEnd_dt(rs.getTimestamp("end_dt"));
+				equipmentErrorLog.add(equipmentError);
+			}
+		} catch (SQLException e) {
+			System.out.println("설비 에러 로그 조회 실패! " + e.getMessage());
+		} finally {
+			close(pstmt, rs);
+		}
+		
+		return equipmentErrorLog;
 		
 	}
 	

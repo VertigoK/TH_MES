@@ -12,8 +12,8 @@ public class ErrorLogBean implements Serializable {
 	private int line_cd;
 	private String process_cd;
 	private int equip_id;
-	private int err_cd;
-	private String err_gd;
+	private int error_cd;
+	private String error_gd;
 	private Timestamp start_dt;
 	private Timestamp end_dt;
 	
@@ -47,17 +47,17 @@ public class ErrorLogBean implements Serializable {
 	public void setEquip_id(int equip_id) {
 		this.equip_id = equip_id;
 	}
-	public int getErr_cd() {
-		return err_cd;
+	public int getError_cd() {
+		return error_cd;
 	}
-	public void setErr_cd(int err_cd) {
-		this.err_cd = err_cd;
+	public void setError_cd(int error_cd) {
+		this.error_cd = error_cd;
 	}
-	public String getErr_gd() {
-		return err_gd;
+	public String getError_gd() {
+		return error_gd;
 	}
-	public void setErr_gd(String err_gd) {
-		this.err_gd = err_gd;
+	public void setError_gd(String error_gd) {
+		this.error_gd = error_gd;
 	}
 	public Timestamp getStart_dt() {
 		return start_dt;
