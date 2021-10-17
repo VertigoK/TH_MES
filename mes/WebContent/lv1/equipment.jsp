@@ -110,7 +110,7 @@
 		</div>
 		<div class="item">
 			<h5>설비 현황</h5>
-			<table class="table1 table-striped">
+			<table class="table-striped">
 				<tr>
 					<th>공장코드</th>
 					<th>라인코드</th>
@@ -142,8 +142,8 @@
 							<td>${equipment.getError_cd()}</td>
 						</c:when>
 						<c:otherwise>
-							<td style="color:red"><strong>${equipment.isUse_yn()}</strong></td>
-							<td style="color:red"><strong>${equipment.getError_cd()}</strong></td>
+							<td><a href="/equipment/error?equip_id=${equipment.getEquip_id()}&error_cd=${equipment.getError_cd()}" style="color:red"><strong>${equipment.isUse_yn()}</strong></a></td>
+							<td><a href="/equipment/error?equip_id=${equipment.getEquip_id()}&error_cd=${equipment.getError_cd()}" style="color:red"><strong>${equipment.getError_cd()}</strong></a></td>
 						</c:otherwise>
 					</c:choose>
 					<td>${equipment.getRun_time()}</td>

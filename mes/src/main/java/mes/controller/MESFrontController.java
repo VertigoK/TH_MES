@@ -15,6 +15,7 @@ import mes.action.CustOrderAction;
 import mes.action.CustOrderUpdateAction;
 import mes.action.CustOrderUpdateOurOrderAction;
 import mes.action.EquipmentAction;
+import mes.action.EquipmentErrorAction;
 import mes.action.EquipmentLineAction;
 import mes.action.EquipmentPlantAction;
 import mes.action.EquipmentProcessAction;
@@ -248,6 +249,13 @@ public class MESFrontController extends HttpServlet {
 			}
 		} else if(command.equals("/equipment/process")) {
 			action = new EquipmentProcessAction();
+			try {
+				forward = action.execute(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(command.equals("/equipment/error")) {
+			action = new EquipmentErrorAction();
 			try {
 				forward = action.execute(req, res);
 			} catch (Exception e) {

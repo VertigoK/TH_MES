@@ -43,5 +43,5 @@ public class ErrorBean implements Serializable {
 	public void setUpdate_dt(Timestamp update_dt) {
 		this.update_dt = update_dt;
 	}
-
+	
 }
