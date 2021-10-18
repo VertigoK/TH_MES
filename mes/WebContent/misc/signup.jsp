@@ -50,9 +50,9 @@
 		}
 		.button .btn {
 		  position: relative;
-		  left: 15%;
+		  left: 13%;
 		  transform: translateX(-50%);
-		  width: 90px;
+		  width: 78px;
 		  height:40px;
 		  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
 		  background-size: 200%;
@@ -81,13 +81,13 @@
                <form action="/signUp" class="SignupForm" method="post">
             	<h2>Sign Up</h2>
                   <div class="idForm">
-                     <input name="id" type="text" class="id" placeholder="ID..." required/>
+                     <input name="id" type="text" class="id" placeholder="ID" required/>
                   </div>
                   <div class="passForm">
-                     <input name="pw" type="password" class="pw" placeholder="PASSWORD..." required/>
+                     <input name="pw" type="password" class="pw" placeholder="PASSWORD" required/>
                   </div>
                   <div class="nameForm">
-                     <input name="nm" type="text" class="nm" placeholder="이름..." required/>
+                     <input name="nm" type="text" class="nm" placeholder="이름" required/>
                   </div>
                   <div class="button" align="center">
                      <a href="/" class="btn btn-outline-primary"><i class="fas fa-home fa-lg"></i></a>
