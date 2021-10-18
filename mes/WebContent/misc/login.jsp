@@ -82,7 +82,7 @@
 		  transition: 0.4s;
 		  display:inline;
 		}
-		content .btn:hover {
+		.content .btn:hover {
 		  background-position: right;
 		}
 		.bottomText {

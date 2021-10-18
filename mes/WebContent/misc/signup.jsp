@@ -16,22 +16,54 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Company</title>
 	<style>
-		.content {
-			width: 100%;
-			grid-template-columns: repeat(5, 1fr);
-			grid-template-rows: repeat(5, 1fr);
+		.content { width: 100%; }
+		body { background-image: #34495e; }
+		.SignupForm {
+		  position:absolute;
+		  width:300px;
+		  height:400px;
+		  padding: 30px, 20px;
+		  background-color:#FFFFFF;
+		  text-align:center;
+		  top:50%;
+		  left:50%;
+		  transform: translate(-50%,-50%);
+		  border-radius: 15px;
 		}
-		.container {
-			grid-column: 3;
-			grid-row: 2 / span 3;
-			border-radius: 30px;
-			background-color: white;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
+		.SignupForm h2 {
+		 text-aligh: center;
+		 margin: 30px;
 		}
-		.h2 { margin-bottom: 80px;}
+		.idForm, .passForm, .nameForm {
+		  border-bottom: 2px solid #adadad;
+		  margin: 30px;
+		  padding: 10px 10px;
+		}
+		.id, .pw, .nm {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
+		.button .btn {
+		  position: relative;
+		  left: 15%;
+		  transform: translateX(-50%);
+		  width: 90px;
+		  height:40px;
+		  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+		  background-size: 200%;
+		  color:white;
+		  font-weight: bold;
+		  border:none;
+		  transition: 0.4s;
+		}
+		.content .btn:hover {
+		  background-position: right;
+		}
 	</style>
 </head>
 <body>
@@ -45,33 +77,22 @@
             <a href="/" class="text-white btn btn-success login-btn float-right mr-sm-3"><i class="fas fa-home fa-lg"></i></a>
          </c:when>
          <c:otherwise>
-            <div class="container" align="center">
-            	<div class="h2">
-	            	<h2>Sign Up</h2>
-            	</div>
-               <form action="/signUp" class="form-group" method="post">
-                  <div class="form-group input-group">
-                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                     </div>
-                     <input name="id" type="text" class="form-control" placeholder="ID..." required/>
+            <div class="container">
+               <form action="/signUp" class="SignupForm" method="post">
+            	<h2>Sign Up</h2>
+                  <div class="idForm">
+                     <input name="id" type="text" class="id" placeholder="ID..." required/>
                   </div>
-                  <div class="form-group input-group">
-                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                     </div>
-                     <input name="pw" type="password" class="form-control" placeholder="PASSWORD..." required/>
+                  <div class="passForm">
+                     <input name="pw" type="password" class="pw" placeholder="PASSWORD..." required/>
                   </div>
-                  <div class="form-group input-group">
-                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                     </div>
-                     <input name="nm" type="text" class="form-control" placeholder="이름..." required/>
+                  <div class="nameForm">
+                     <input name="nm" type="text" class="nm" placeholder="이름..." required/>
                   </div>
-                  <div class="form-group mt-md-3">
-                     <a href="/" class="btn btn-outline-primary float-right login-btn"><i class="fas fa-home fa-lg"></i></a>
-                     <input type="reset" value="Reset" class="btn btn-outline-success float-right login-btn mr-sm-3"/>
-                     <input type="submit" value="Sign up" class="btn btn-outline-danger float-right login-btn mr-sm-3"/>
+                  <div class="button" align="center">
+                     <a href="/" class="btn btn-outline-primary"><i class="fas fa-home fa-lg"></i></a>
+                     <input type="reset" value="Reset" class="btn btn-outline-success"/>
+                     <input type="submit" value="Sign up" class="btn btn-outline-danger"/>
                   </div>
                </form>
             </div>      
