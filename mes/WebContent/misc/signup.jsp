@@ -70,7 +70,7 @@
    <div id="header">
       <jsp:include page="/layout/header.jsp" />
    </div>
-   <div class="content" align="center">
+   <div class="content">
       <c:choose>
          <c:when test="<%= member != null %>">   
             <a href="/logOut" class="text-white btn btn-warning login-btn float-right mr-sm-3">Log out</a>
@@ -87,9 +87,9 @@
                      <input name="pw" type="password" class="pw" placeholder="PASSWORD" required/>
                   </div>
                   <div class="nameForm">
-                     <input name="nm" type="text" class="nm" placeholder="이름" required/>
+                     <input name="nm" type="text" class="nm" placeholder="NAME" required/>
                   </div>
-                  <div class="button" align="center">
+                  <div class="button">
                      <a href="/" class="btn btn-outline-primary"><i class="fas fa-home fa-lg"></i></a>
                      <input type="reset" value="Reset" class="btn btn-outline-success"/>
                      <input type="submit" value="Sign up" class="btn btn-outline-danger"/>
@@ -101,7 +101,3 @@
    </div>
 </body>
 </html>
-
-
-
-

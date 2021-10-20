@@ -94,21 +94,21 @@
 	<div id="header">
 		<jsp:include page="/layout/header.jsp" />
 	</div>
-	<div class="content" align="center">
+	<div class="content">
 		<br>
 		<c:choose>
 			<c:when test="<%= member != null %>">	
 				<a href="/logOut" class="text-white btn btn-warning login-btn float-right mr-sm-3">Log out</a>
 			</c:when>
 			<c:otherwise>
-				<div class="container" align="center" style="width:364px">
+				<div class="container" style="width:364px">
 					<form action="/logIn" method="post"  class="loginForm">	
-						<h2>Login</h2>
+						<h2>Log In</h2>
 				     	<div class="idForm">
 				        	<input name="id" type="text" class="id" placeholder="ID" required>
 				      	</div>
 					  	<div class="passForm">
-					  		<input name="pw" type="password" class="pw" placeholder="PW">
+					  		<input name="pw" type="password" class="pw" placeholder="PASSWORD">
 					  	</div>
 						<div>
 					       <input type="submit" class="btn btn-primary" value="Log in"/>
