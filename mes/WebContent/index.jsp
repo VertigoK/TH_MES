@@ -62,7 +62,8 @@
 			text-align: right;
 			width: 60px;
 			padding: 5px;
-			background-color: #3F5060;
+			background-color: #092843;
+/* 			background-color: #3F5060; */
 		}
 		.inner-right a { color: white; }
 		.flex { display: inline-flex; }

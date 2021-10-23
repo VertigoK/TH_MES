@@ -35,7 +35,9 @@ html, body {
 }
 h5 {
 	padding: 5px;
-	background-color: #3F5060;
+	background-color: #092843;
+/* 	background-color: #265077; */
+/* 	background-color: #3F5060; */
 	color: white;
 	font-weight: bold;
 	width: 100%;
@@ -51,7 +53,8 @@ tr {
 }
 th {
 	height: 50px;
-	background-color: #C6C9E0;
+	background-color: #D1D7E0;
+/* 	background-color: #C6C9E0; */
 }
 td {
 	border-bottom: 1px solid #ddd;
