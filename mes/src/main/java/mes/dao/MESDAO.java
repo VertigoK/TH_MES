@@ -1,6 +1,6 @@
 package mes.dao;
 
-import static db.JDBCUtility.*;
+import static db.JDBCUtility.close;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -202,8 +202,8 @@ public class MESDAO {
 		ProductionBean production = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 200개 조회하기 
-		String sql = "select * from production where " + id +  " = " + no + " limit 200";
+		// 100개 조회하기 
+		String sql = "select * from production where " + id +  " = " + no + " limit 100";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -250,8 +250,8 @@ public class MESDAO {
 		QualityBean quality = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 200개 조회하기 
-		String sql = "select * from quality where " + id +  " = " + no + " limit 200";
+		// 100개 조회하기 
+		String sql = "select * from quality where " + id +  " = " + no + " limit 100";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
