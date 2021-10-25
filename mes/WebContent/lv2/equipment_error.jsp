@@ -9,6 +9,7 @@
 	@SuppressWarnings("unchecked")
 	ArrayList<ErrorLogBean> equipmentErrorLog = (ArrayList<ErrorLogBean>) request.getAttribute("equipmentErrorLog");
 	MemberBean member = (MemberBean) session.getAttribute("logInInfo");
+	int equip_id = Integer.parseInt(request.getParameter("equip_id"));
 %>
 <!DOCTYPE html>
 <html>
@@ -21,76 +22,9 @@
 	<link rel="stylesheet" href="/css/lv1StyleSheet.css"/>
 	<title>Company</title>
 	<style>
-		.line {
-			width: 140px;
-			height: 49px;
-			border-bottom: 1px solid #383636;
-			transform: translateY(-23px) translateX(5px) rotate(20deg);
-			position: absolute;
-			/* z-index: -1; */
+		.content {
+			grid-template-rows: 38px 1fr 1fr;
 		}
-		th>div {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			top: 0;
-			left: 0;
-		}
-		.bottom {
-			position: absolute;
-			bottom: 1px;
-			left: 5px;
-		}
-		
-		.top {
-			position: absolute;
-			top: 1px;
-			right: 1px;
-		}
-		.title {
-			display: flex;
-			width: 100%;
-			height: 33.5px;
-			align-items: stretch;
-			margin: 0 0 10px 0;
-		 }
-		.title-left { width: calc(100% - 60px); }
-		.title-right {
-			width: 60px;
-			padding: 5px;
-			text-align: right;
-			font-wight: blod;
-			background-color: #3F5060;
-		}
-		.inner-notice {
-			display: flex;
-			width: 100%;
-			height: 33px;
-			align-items: stretch;
-			margin: 0 0 10px 0;
-			overflow: hidden;
-		}
-		.inner-left { width: calc(100% - 60px); }
-		.inner-right { 
-			text-align: right;
-			width: 60px;
-			padding: 5px;
-			background-color: #3F5060;
-		}
-		.inner-right a { color: white; }
-		.flex { display: inline-flex; }
-		.flex a p { display: inline-block; }
-		.nullMain {
-			grid-column: 1 / span 12;
-			grid-row: 1 / span 12;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			overflow: hidden;
-		}
-		.title-right a { color: white; }
-		.dropdown { margin-bottom: 10px; }
-		.dropdown-content a { background-color: white; }
 	</style>
 </head>
 <body>
@@ -105,7 +39,10 @@
 	</div>
 	<div class="content" align="center">
 		<div class="item">
-			<h5>설비 에러 내용</h5>
+			<a href="#" class="btn btn-outline-danger"><strong>에러 해제</strong></a>
+		</div>
+		<div class="item">
+			<h5><%=equip_id%>번 설비 에러 내용</h5>
 			<table class="table-striped">
 				<tr>
 					<th>에러코드</th>
@@ -124,7 +61,7 @@
 			</table>
 		</div>
 		<div class="item">
-			<h5>해당 설비 에러 발생 이력</h5>
+			<h5><%=equip_id%>번 설비 에러 발생 이력</h5>
 			<table class="table-striped">
 				<tr>
 					<th>로그번호</th>
