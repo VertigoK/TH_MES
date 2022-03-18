@@ -1,5 +1,5 @@
 # MES: Manufacturing Execution System
-This is the MES project which was developed as a short-term project by Kyungeun Kim (김경은) and Yeongmin Baek (백영민) using Java, JSP, Servlet, Python, HTML and CSS.
+This is the MES project which was developed as a short-term project by Kyungeun Kim (김경은) and Yeongmin Baek (백영민) using Java, JSP, Servlet, Python, Bootstrap and jQuery.
 
 © 2021-2022 Kyungeun Kim, Yeongmin Baek All Rights Reserved
 
